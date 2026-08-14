@@ -1,0 +1,910 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#24745b">
+  <title>口诀森林探险队｜2至9的乘法口诀</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #17362c;
+      --muted: #526d63;
+      --paper: #fffdf4;
+      --forest: #24745b;
+      --forest-dark: #16513e;
+      --leaf: #d9f2d7;
+      --sun: #ffd66b;
+      --sky: #dff3ff;
+      --berry: #b94e72;
+      --line: #cbded2;
+      --shadow: 0 18px 50px rgba(21, 81, 62, .18);
+    }
+
+    * { box-sizing: border-box; }
+    html { min-height: 100%; background: #e8f3e9; }
+    body {
+      min-height: 100vh;
+      margin: 0;
+      color: var(--ink);
+      font: 19px/1.65 system-ui, -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+      background:
+        radial-gradient(circle at 10% 7%, rgba(255, 214, 107, .75) 0 7%, transparent 7.5%),
+        radial-gradient(circle at 90% 13%, rgba(132, 207, 246, .36) 0 10%, transparent 10.5%),
+        linear-gradient(145deg, #f5f8df 0%, #e1f5e9 50%, #e8f5ff 100%);
+    }
+    button, input { font: inherit; }
+    button {
+      min-height: 48px;
+      border: 0;
+      border-radius: 16px;
+      cursor: pointer;
+      touch-action: manipulation;
+    }
+    button:focus-visible, input:focus-visible, [tabindex]:focus-visible, summary:focus-visible {
+      outline: 4px solid #175fbd;
+      outline-offset: 4px;
+    }
+    .app-shell { width: min(1120px, calc(100% - 28px)); margin: 0 auto; padding: 18px 0 42px; }
+    .topbar {
+      display: grid;
+      grid-template-columns: auto minmax(120px, 1fr) auto;
+      gap: 16px;
+      align-items: center;
+      margin-bottom: 18px;
+      padding: 12px 16px;
+      border: 1px solid rgba(36, 116, 91, .16);
+      border-radius: 20px;
+      background: rgba(255, 255, 255, .9);
+      box-shadow: 0 8px 24px rgba(21, 81, 62, .1);
+      backdrop-filter: blur(12px);
+    }
+    .brand { color: var(--forest-dark); font-weight: 950; white-space: nowrap; }
+    .progress-track { height: 14px; overflow: hidden; border-radius: 99px; background: #dfeadf; }
+    .progress-fill { width: 0; height: 100%; border-radius: inherit; background: linear-gradient(90deg, #3f976c, #e8b735); transition: width .35s ease; }
+    .toolbar-actions { display: flex; gap: 8px; }
+    .compact-button { padding: 8px 13px; color: var(--forest-dark); background: #e2f1e5; font-weight: 900; }
+    .card {
+      min-height: 660px;
+      padding: clamp(24px, 4vw, 52px);
+      border: 1px solid rgba(36, 116, 91, .13);
+      border-radius: 32px;
+      background: rgba(255, 253, 244, .97);
+      box-shadow: var(--shadow);
+    }
+    .hero { max-width: 940px; margin: 0 auto; text-align: center; }
+    .forest-mark { font-size: clamp(72px, 11vw, 118px); line-height: 1; filter: drop-shadow(0 10px 10px rgba(21, 81, 62, .18)); }
+    h1, h2, h3, p { margin-top: 0; }
+    h1 { margin-bottom: 16px; color: var(--forest-dark); font-size: clamp(2rem, 5.3vw, 3.6rem); line-height: 1.15; }
+    h2 { color: #1d624b; }
+    .lead { max-width: 780px; margin-right: auto; margin-left: auto; color: var(--muted); font-size: 1.14rem; }
+    .facts { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin: 24px 0; }
+    .fact, .phase-chip, .activity-count, .status-pill {
+      display: inline-flex;
+      align-items: center;
+      min-height: 40px;
+      padding: 5px 13px;
+      border-radius: 999px;
+      color: #205a47;
+      background: #e4f3e5;
+      font-weight: 900;
+    }
+    .route { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin: 28px 0; text-align: left; }
+    .route-stop { min-height: 100px; padding: 14px; border: 2px solid #d7e6d7; border-radius: 20px; background: white; }
+    .route-stop strong { display: block; color: #205a47; }
+    .route-stop small { color: var(--muted); }
+    .objectives { margin: 24px auto; padding: 18px 22px; border-radius: 22px; background: #f0f8ed; text-align: left; }
+    .objectives li { margin: 5px 0; }
+    .primary-button, .secondary-button, .tool-button {
+      padding: 12px 24px;
+      font-weight: 950;
+      box-shadow: 0 8px 18px rgba(21, 81, 62, .14);
+    }
+    .primary-button { color: white; background: linear-gradient(135deg, var(--forest), #2d8d69); }
+    .primary-button:hover { background: linear-gradient(135deg, #195e48, #24745b); }
+    .secondary-button { color: #533e00; background: var(--sun); }
+    .tool-button { color: #1d5c47; background: #e1efe3; }
+    .primary-button:disabled, .secondary-button:disabled { cursor: not-allowed; opacity: .46; box-shadow: none; }
+    .lesson-header { display: flex; justify-content: space-between; gap: 12px; align-items: center; margin-bottom: 22px; }
+    .activity-count { color: #1b5b70; background: var(--sky); }
+    .prompt { max-width: 840px; font-size: clamp(1.7rem, 4vw, 2.65rem); }
+    .instruction { max-width: 800px; color: var(--muted); font-size: 1.08rem; }
+    .expression {
+      width: min(650px, 100%);
+      margin: 22px auto;
+      padding: 18px;
+      border: 3px solid #cfe1d1;
+      border-radius: 22px;
+      color: #174b39;
+      background: #f4fbef;
+      text-align: center;
+      font-size: clamp(1.8rem, 5vw, 3rem);
+      font-weight: 950;
+    }
+    .exploration-board { margin: 24px 0; padding: clamp(16px, 3vw, 28px); border: 3px solid #cae2ce; border-radius: 26px; background: #f7fcf4; }
+    .skip-track { display: grid; grid-template-columns: repeat(6, minmax(58px, 1fr)); gap: 10px; align-items: end; }
+    .track-step { min-width: 0; padding: 10px 4px; border: 3px solid #95c8a2; color: #1a5a43; background: white; font-weight: 950; }
+    .track-step.reached { border-color: #d49913; background: #fff0b5; }
+    .pattern-row, .card-pairs { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
+    .pattern-tile, .fact-card { min-width: 82px; padding: 13px; border: 2px solid #b8d5bf; border-radius: 16px; background: white; text-align: center; font-weight: 900; }
+    button.fact-card { color: var(--forest-dark); }
+    button.fact-card[aria-pressed="true"] { border-color: #b67800; background: #fff0b5; box-shadow: inset 0 0 0 2px #d49913; }
+    .dot-array { display: grid; grid-template-columns: repeat(var(--columns, 6), 28px); gap: 9px; justify-content: center; margin: 18px auto; }
+    .dot { width: 28px; height: 28px; border: 3px solid #267757; border-radius: 50%; background: #8dd4a8; }
+    .dot.group-highlight { border-color: #b67800; background: var(--sun); box-shadow: 0 0 0 3px rgba(255, 214, 107, .35); }
+    .equation-bridge { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 10px; font-size: clamp(1.3rem, 4vw, 2rem); font-weight: 950; }
+    .equation-part { padding: 12px 15px; border-radius: 16px; background: white; border: 2px solid #bdd8c2; }
+    .choice-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; margin: 24px 0; }
+    .answer-option { padding: 16px; border: 3px solid #cfded1; color: #184c39; background: white; font-size: 1.13rem; font-weight: 950; }
+    .answer-option:hover { border-color: #579b72; background: #f3faf1; }
+    .answer-option.selected { border-color: var(--forest); background: #dff2df; box-shadow: inset 0 0 0 2px var(--forest); }
+    .feedback { margin: 22px 0; padding: 20px; border-radius: 22px; }
+    .feedback.success { border: 3px solid #77c29a; background: #e5f8ea; }
+    .feedback.hint { border: 3px solid #e0b649; background: #fff5cf; }
+    .feedback.misconception { border: 3px solid #df967e; background: #ffede5; }
+    .feedback h2 { margin-bottom: 6px; }
+    .visual-hint { margin-top: 14px; padding: 14px; border-radius: 16px; background: rgba(255, 255, 255, .75); }
+    .action-row { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 24px; }
+    .break-card { max-width: 720px; margin: 28px auto; text-align: center; }
+    .stretch-steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 26px 0; }
+    .stretch-step { padding: 18px 12px; border-radius: 22px; background: #e6f5e8; }
+    .stretch-step span { display: block; font-size: 2.4rem; }
+    .report-title { text-align: center; }
+    .badges { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin: 18px 0; font-size: 2rem; }
+    .report-summary { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin: 24px 0; }
+    .summary-card { padding: 18px; border-radius: 20px; background: #f1f8ee; text-align: center; }
+    .summary-card strong { display: block; color: #195a43; font-size: 2rem; }
+    .report-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin: 26px 0; }
+    .skill-card { padding: 20px; border: 2px solid #ceded0; border-radius: 22px; background: white; }
+    .skill-card h3 { margin-bottom: 8px; color: #1d624b; }
+    .parent-panel { margin-top: 28px; padding: 18px; border: 2px solid #ccdbcd; border-radius: 20px; background: #f9fbf5; }
+    .parent-panel summary { cursor: pointer; color: #195a43; font-weight: 950; }
+    .table-wrap { max-width: 100%; overflow-x: auto; }
+    table { width: 100%; margin-top: 16px; border-collapse: collapse; font-size: .91rem; }
+    th, td { padding: 10px; border-bottom: 1px solid #d5e1d6; text-align: left; vertical-align: top; }
+    th { color: #205a47; background: #e8f3e6; }
+    .dialog-backdrop { position: fixed; inset: 0; z-index: 20; display: grid; place-items: center; padding: 18px; background: rgba(14, 46, 36, .68); }
+    .dialog-card { width: min(540px, 100%); padding: 28px; border-radius: 26px; background: white; box-shadow: var(--shadow); }
+    .toast { position: fixed; right: 18px; bottom: 18px; z-index: 30; max-width: min(430px, calc(100% - 36px)); padding: 13px 18px; border-radius: 15px; color: white; background: #174e3c; box-shadow: var(--shadow); font-weight: 900; }
+    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+
+    @media (max-width: 720px) {
+      .app-shell { width: min(100% - 16px, 1120px); padding-top: 8px; }
+      .topbar { grid-template-columns: 1fr auto; gap: 9px; padding: 9px; }
+      .progress-track { grid-column: 1 / -1; grid-row: 2; }
+      .button-label { display: none; }
+      .card { min-height: calc(100vh - 118px); padding: 22px 16px; border-radius: 22px; }
+      .route, .choice-grid, .report-grid, .report-summary, .stretch-steps { grid-template-columns: 1fr; }
+      .route-stop { min-height: auto; }
+      .skip-track { grid-template-columns: repeat(3, minmax(58px, 1fr)); }
+      .dot-array { grid-template-columns: repeat(var(--mobile-columns, 4), 25px); gap: 7px; }
+      .dot { width: 25px; height: 25px; }
+      table { min-width: 720px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .001ms !important; animation-duration: .001ms !important; animation-iteration-count: 1 !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar" aria-label="课程工具栏">
+      <div class="brand">🌲 口诀森林</div>
+      <div class="progress-track" aria-label="课程进度">
+        <div id="progress-bar" class="progress-fill" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"></div>
+      </div>
+      <div class="toolbar-actions">
+        <button id="speech-button" class="compact-button" type="button" aria-label="朗读当前内容">🔊<span class="button-label"> 朗读</span></button>
+        <button id="pause-button" class="compact-button" type="button" aria-label="暂停并返回首页" hidden>⏸️<span class="button-label"> 暂停</span></button>
+      </div>
+    </header>
+
+    <main id="app" class="card">
+      <section class="hero" aria-labelledby="course-title">
+        <div class="forest-mark" aria-hidden="true">🌳</div>
+        <p class="fact">二年级数学 · 第五单元预习</p>
+        <h1 id="course-title">口诀森林探险队</h1>
+        <p class="lead">用跳数、点阵和邻近口诀发现2至9的乘法规律，再把口诀带进生活问题。</p>
+        <div class="facts"><span class="fact">⏱️ 建议60分钟</span><span class="fact">🧩 9个探索</span><span class="fact">✏️ 24道固定练习</span><span class="fact">🌿 中途可休息</span></div>
+        <button id="start-course" class="primary-button" type="button">进入口诀森林 🧭</button>
+      </section>
+    </main>
+    <div id="live-region" class="sr-only" aria-live="polite" aria-atomic="true"></div>
+  </div>
+
+  <script>
+    'use strict';
+
+    /* TESTABLE_CORE_START */
+    const PHASES = {
+      twoFive: { title: '2和5规律小径', minutes: 7, icon: '🐾' },
+      threeFour: { title: '3和4点阵林', minutes: 8, icon: '🍄' },
+      sixSeven: { title: '6和7邻居桥', minutes: 10, icon: '🌉' },
+      break: { title: '伸展休息站', minutes: 2, icon: '🌿' },
+      eightNine: { title: '8和9智慧树', minutes: 10, icon: '🌳' },
+      strategyCamp: { title: '口诀策略营', minutes: 8, icon: '⛺' },
+      mixedValley: { title: '乘加乘减谷', minutes: 6, icon: '🏞️' },
+      application: { title: '生活应用站', minutes: 6, icon: '🎒' },
+      report: { title: '探险报告', minutes: 3, icon: '🏆' }
+    };
+
+    const EXPLORATIONS = [
+      { id: 'explore-skip-2', phase: 'twoFive', type: 'skip-track', title: '沿着2的脚印向前跳', instruction: '按顺序点击脚印，每次都多2。也可以用Tab找到脚印，再按Enter。', actionLabel: '完成跳数', success: '2、4、6、8、10、12，每次都增加2。' },
+      { id: 'explore-ending-5', phase: 'twoFive', type: 'ending-five', title: '发现5的口诀末位', instruction: '观察5、10、15、20、25、30的个位。', actionLabel: '圈出0和5', success: '5的乘法口诀，积的个位总是5或0。' },
+      { id: 'explore-array-3-4', phase: 'threeFour', type: 'array', title: '点亮3行4列蘑菇灯', instruction: '先按行数，再看每行有几个，数一数一共有多少。', actionLabel: '按组点亮', success: '3行，每行4个，一共12个；也可以看成4组3个。' },
+      { id: 'explore-neighbor-6-7', phase: 'sixSeven', type: 'neighbor', title: '从6×6走到6×7', instruction: '已知6×6＝36，再添一组6。', actionLabel: '再添一组6', success: '36＋6＝42，所以6×7＝42。' },
+      { id: 'explore-double-8', phase: 'eightNine', type: 'double', title: '用4的口诀推8的口诀', instruction: '4×6＝24，把24再加倍。', actionLabel: '把24加倍', success: '24＋24＝48，所以8×6＝48。' },
+      { id: 'explore-nine-minus', phase: 'eightNine', type: 'nine-minus', title: '十组减一组推9的口诀', instruction: '求9×7，可以先看10组7，再减去1组7。', actionLabel: '从70减去7', success: '70－7＝63，所以9×7＝63。' },
+      { id: 'explore-swap-match', phase: 'strategyCamp', type: 'swap', title: '交换因数找朋友', instruction: '把3×7和7×3配成一对。', actionLabel: '配对口诀卡', success: '交换两个因数，积不变：3×7和7×3都等于21。' },
+      { id: 'explore-split-8', phase: 'strategyCamp', type: 'split', title: '把8组拆成5组和3组', instruction: '8×7可以拆成5×7和3×7。', actionLabel: '合并35和21', success: '35＋21＝56，所以8×7＝56。' },
+      { id: 'explore-mixed-groups', phase: 'mixedValley', type: 'mixed', title: '完整组旁边还有零散果实', instruction: '4篮每篮5个，旁边还有2个，要先乘再加。', actionLabel: '摆成4×5＋2', success: '完整组用乘法，零散的再加上：4×5＋2＝22。' }
+    ];
+
+    function makeQuestion(id, phase, dimension, objective, factors, prompt, expression, answer, options, hints, explanation, misconceptionRules = [], tags = []) {
+      return { id, phase, dimension, objective, factors, type: 'choice', prompt, expression, answer, options, hints, explanation, misconceptionRules, tags };
+    }
+
+    const QUESTION_BANK = [
+      makeQuestion('two-01', 'twoFive', 'pattern', 'skip-pattern', [2, 6], '沿着2的脚印跳6次，会到哪里？', '2 × 6 ＝ ?', 12, [8, 10, 12, 14], ['每次都增加2。', '脚印是2、4、6、8、10、12。', '第6个脚印是12，所以2×6＝12。'], '2组6个和6组2个都有12个。', [{ code: 'factor-addition', answers: [8] }], ['2的口诀', '跳数']),
+      makeQuestion('two-02', 'twoFive', 'recall', 'multiply-recall', [2, 8], '2只瓢虫各有8个斑点，一共有多少个？', '2 × 8 ＝ ?', 16, [10, 14, 16, 18], ['想一想8再加8。', '8＋8就是2个8。', '8＋8＝16，所以2×8＝16。'], '2个8相加是16。', [{ code: 'factor-addition', answers: [10] }], ['2的口诀', '连加']),
+      makeQuestion('five-01', 'twoFive', 'pattern', 'ending-pattern', [5, 7], '7组5个松果，一共有多少个？', '5 × 7 ＝ ?', 35, [12, 30, 35, 40], ['5的口诀积的个位是0或5。', '从5开始跳7次：5、10、15、20、25、30、35。', '第7个数是35，所以5×7＝35。'], '5的口诀按5、10、15……向前数，第7个是35。', [{ code: 'factor-addition', answers: [12] }, { code: 'neighbor-missing-group', answers: [30] }], ['5的口诀', '末位规律']),
+      makeQuestion('five-02', 'twoFive', 'recall', 'multiply-recall', [5, 9], '算一算5×9。', '5 × 9 ＝ ?', 45, [14, 40, 45, 50], ['从5×10往回想。', '5×10＝50，少一组5。', '50－5＝45，所以5×9＝45。'], '10组5少1组5，就是45。', [{ code: 'factor-addition', answers: [14] }, { code: 'neighbor-extra-group', answers: [50] }], ['5的口诀', '邻近口诀']),
+      makeQuestion('three-01', 'threeFour', 'pattern', 'array-pattern', [3, 4], '点阵有3行，每行4个，一共有多少个点？', '3 × 4 ＝ ?', 12, [7, 10, 12, 16], ['按行一组一组数。', '4＋4＋4表示3组4。', '4＋4＋4＝12，所以3×4＝12。'], '3行，每行4个，用3×4表示，一共12个。', [{ code: 'factor-addition', answers: [7] }], ['3的口诀', '点阵']),
+      makeQuestion('three-02', 'threeFour', 'recall', 'multiply-recall', [3, 7], '算一算3×7。', '3 × 7 ＝ ?', 21, [10, 18, 21, 24], ['从3×6继续加一组3。', '3×6＝18，再加3。', '18＋3＝21，所以3×7＝21。'], '3的7倍是21。', [{ code: 'factor-addition', answers: [10] }, { code: 'neighbor-missing-group', answers: [18] }, { code: 'neighbor-extra-group', answers: [24] }], ['3的口诀', '邻近口诀']),
+      makeQuestion('four-01', 'threeFour', 'pattern', 'double-pattern', [4, 6], '已知2×6＝12，4×6是多少？', '4 × 6 ＝ ?', 24, [10, 18, 22, 24], ['4是2的两倍。', '把2×6的12加倍。', '12＋12＝24，所以4×6＝24。'], '4组6是2组6的两倍，12加倍得24。', [{ code: 'factor-addition', answers: [10] }], ['4的口诀', '加倍']),
+      makeQuestion('four-02', 'threeFour', 'recall', 'multiply-recall', [4, 8], '算一算4×8。', '4 × 8 ＝ ?', 32, [12, 28, 32, 36], ['从4×7再添一组4。', '4×7＝28，再加4。', '28＋4＝32，所以4×8＝32。'], '4的8倍是32。', [{ code: 'factor-addition', answers: [12] }, { code: 'neighbor-missing-group', answers: [28] }, { code: 'neighbor-extra-group', answers: [36] }], ['4的口诀', '邻近口诀']),
+      makeQuestion('six-01', 'sixSeven', 'strategy', 'neighbor-fact', [6, 7], '已知6×6＝36，怎样得到6×7？', '36 ＋ 6 ＝ ?', 42, [13, 36, 42, 48], ['7组比6组多一组。', '在36上再加一组6。', '36＋6＝42，所以6×7＝42。'], '从6×6再添一组6，就得到6×7＝42。', [{ code: 'factor-addition', answers: [13] }, { code: 'neighbor-missing-group', answers: [36] }, { code: 'neighbor-extra-group', answers: [48] }], ['6的口诀', '邻近口诀']),
+      makeQuestion('six-02', 'sixSeven', 'recall', 'multiply-recall', [6, 8], '算一算6×8。', '6 × 8 ＝ ?', 48, [14, 42, 48, 54], ['从6×7继续加一组6。', '6×7＝42，再加6。', '42＋6＝48，所以6×8＝48。'], '6的8倍是48。', [{ code: 'factor-addition', answers: [14] }, { code: 'neighbor-missing-group', answers: [42] }, { code: 'neighbor-extra-group', answers: [54] }], ['6的口诀', '邻近口诀']),
+      makeQuestion('seven-01', 'sixSeven', 'strategy', 'neighbor-fact', [7, 8], '已知7×7＝49，7×8是多少？', '49 ＋ 7 ＝ ?', 56, [15, 49, 56, 63], ['8组比7组多一组。', '在49上再加一组7。', '49＋7＝56，所以7×8＝56。'], '从7×7再添一组7，得到7×8＝56。', [{ code: 'factor-addition', answers: [15] }, { code: 'neighbor-missing-group', answers: [49] }, { code: 'neighbor-extra-group', answers: [63] }], ['7的口诀', '邻近口诀']),
+      makeQuestion('seven-02', 'sixSeven', 'recall', 'multiply-recall', [7, 9], '算一算7×9。', '7 × 9 ＝ ?', 63, [16, 56, 63, 70], ['从7×10往回退一组7。', '7×10＝70，减去7。', '70－7＝63，所以7×9＝63。'], '10组7少1组7，就是63。', [{ code: 'factor-addition', answers: [16] }, { code: 'neighbor-missing-group', answers: [56] }, { code: 'neighbor-extra-group', answers: [70] }], ['7的口诀', '十减一']),
+      makeQuestion('eight-01', 'eightNine', 'strategy', 'double-fact', [8, 6], '已知4×6＝24，8×6是多少？', '24 ＋ 24 ＝ ?', 48, [14, 40, 48, 56], ['8是4的两倍。', '把4×6的积24加倍。', '24＋24＝48，所以8×6＝48。'], '8组6是4组6的两倍，24加倍得48。', [{ code: 'factor-addition', answers: [14] }], ['8的口诀', '加倍策略']),
+      makeQuestion('eight-02', 'eightNine', 'recall', 'multiply-recall', [8, 8], '算一算8×8。', '8 × 8 ＝ ?', 64, [16, 56, 64, 72], ['从8×7再添一组8。', '8×7＝56，再加8。', '56＋8＝64，所以8×8＝64。'], '8个8是64。', [{ code: 'factor-addition', answers: [16] }, { code: 'neighbor-missing-group', answers: [56] }, { code: 'neighbor-extra-group', answers: [72] }], ['8的口诀', '邻近口诀']),
+      makeQuestion('nine-01', 'eightNine', 'pattern', 'nine-pattern', [9, 7], '用10组减1组，9×7是多少？', '70 − 7 ＝ ?', 63, [16, 62, 63, 64], ['先算10×7。', '10×7＝70，再减去一组7。', '70－7＝63，所以9×7＝63。'], '9组7比10组7少一组7，所以是63。', [{ code: 'factor-addition', answers: [16] }, { code: 'nine-off-by-one', answers: [62, 64] }], ['9的口诀', '十减一规律']),
+      makeQuestion('nine-02', 'eightNine', 'recall', 'multiply-recall', [9, 9], '算一算9×9。', '9 × 9 ＝ ?', 81, [18, 72, 80, 81], ['从9×10往回想。', '9×10＝90，少一组9。', '90－9＝81，所以9×9＝81。'], '10组9少1组9，就是81。', [{ code: 'factor-addition', answers: [18] }, { code: 'neighbor-missing-group', answers: [72] }, { code: 'nine-off-by-one', answers: [80] }], ['9的口诀', '十减一规律']),
+      makeQuestion('swap-01', 'strategyCamp', 'strategy', 'swap-factors', [3, 7], '3×7的交换因数朋友是哪一道？', '3 × 7 ＝ 21', '7 × 3', ['3 × 4', '7 × 3', '7 × 7', '21 × 1'], ['交换两个因数的位置。', '把3和7前后交换，积不变。', '3×7的朋友是7×3，两道都等于21。'], '交换因数3和7，得到7×3。', [], ['交换因数', '口诀策略']),
+      makeQuestion('neighbor-01', 'strategyCamp', 'strategy', 'neighbor-fact', [6, 7], '哪一步能用6×6＝36推到6×7？', '6 × 6 ＋ 6 ＝ ?', 42, [30, 36, 42, 48], ['多一组，要加上一组的个数。', '从36再加6。', '36＋6＝42，所以6×7＝42。'], '邻近口诀多一组就加一个因数6。', [{ code: 'neighbor-missing-group', answers: [36] }, { code: 'neighbor-extra-group', answers: [48] }], ['邻近口诀', '口诀策略']),
+      makeQuestion('split-01', 'strategyCamp', 'strategy', 'split-fact', [8, 7], '把8×7拆成5×7和3×7，结果是多少？', '35 ＋ 21 ＝ ?', 56, [15, 42, 56, 63], ['先分别算5×7和3×7。', '5×7＝35，3×7＝21。', '35＋21＝56，所以8×7＝56。'], '把8组拆成5组和3组，总数不变。', [{ code: 'factor-addition', answers: [15] }], ['拆分口诀', '口诀策略']),
+      makeQuestion('mixed-add-01', 'mixedValley', 'application', 'multiply-add', [4, 5], '4篮苹果，每篮5个，旁边还有2个，一共有多少个？', '4 × 5 ＋ 2 ＝ ?', 22, [11, 18, 20, 22], ['先算4个完整组。', '4×5＝20，零散的2个要加上。', '20＋2＝22，所以一共有22个。'], '完整组先乘，零散部分再加。', [{ code: 'factor-addition', answers: [11] }, { code: 'mixed-direction', answers: [18] }], ['乘加', '完整组']),
+      makeQuestion('mixed-sub-01', 'mixedValley', 'application', 'multiply-subtract', [5, 6], '5排座位，每排6个，其中2个不能坐，可坐多少人？', '5 × 6 − 2 ＝ ?', 28, [11, 24, 28, 32], ['先算完整的5排。', '5×6＝30，不能坐的2个要减去。', '30－2＝28，所以可坐28人。'], '完整组先乘，缺少部分再减。', [{ code: 'factor-addition', answers: [11] }, { code: 'mixed-direction', answers: [32] }], ['乘减', '接近整组']),
+      makeQuestion('app-01', 'application', 'application', 'choose-multiplication', [6, 4], '6盒蜡笔，每盒4支，一共有多少支？', '6 × 4 ＝ ?', 24, [10, 20, 24, 28], ['有6个相同的4。', '可以用6×4表示。', '6×4＝24，所以一共有24支。'], '6组，每组4支，用乘法6×4。', [{ code: 'factor-addition', answers: [10] }], ['生活应用', '求总数']),
+      makeQuestion('app-02', 'application', 'application', 'choose-multiplication', [7, 5], '操场摆了7排小旗，每排5面，一共有多少面？', '7 × 5 ＝ ?', 35, [12, 30, 35, 40], ['找出排数和每排数。', '7排，每排5面，用7×5。', '7×5＝35，所以一共有35面。'], '相同的每排数重复7次，用乘法。', [{ code: 'factor-addition', answers: [12] }, { code: 'neighbor-missing-group', answers: [30] }], ['生活应用', '行列问题']),
+      makeQuestion('app-03', 'application', 'pattern', 'explain-groups', [4, 6], '算式4×6表示下面哪种分组？', '4 × 6', '4组，每组6个', ['4个和6个合起来', '4组，每组6个', '6组，每组6个', '4组，每组4个'], ['先看第一个因数表示几组。', '4表示4组，6表示每组6个。', '4×6表示4组，每组6个，一共24个。'], '乘法算式4×6可以表示4组，每组6个。', [], ['乘法意义', '解释分组'])
+    ];
+
+    function skipCount(step, count) {
+      if (!Number.isInteger(step) || step <= 0 || !Number.isInteger(count) || count <= 0) throw new Error('步长和次数必须是正整数');
+      return Array.from({ length: count }, (_, index) => step * (index + 1));
+    }
+
+    function swapFact(a, b) {
+      if (!Number.isInteger(a) || !Number.isInteger(b) || a <= 0 || b <= 0) throw new Error('因数必须是正整数');
+      return { expression: `${b} × ${a}`, product: a * b };
+    }
+
+    function neighborFact(a, knownB, delta) {
+      if (![a, knownB, delta].every(Number.isInteger) || a <= 0 || knownB <= 0 || Math.abs(delta) !== 1) throw new Error('邻近口诀只能相邻一组');
+      return a * knownB + a * delta;
+    }
+
+    function nineFact(n) {
+      if (!Number.isInteger(n) || n <= 0) throw new Error('因数必须是正整数');
+      return 10 * n - n;
+    }
+
+    function multiplyAdd(groups, perGroup, extra) {
+      return Number(groups) * Number(perGroup) + Number(extra);
+    }
+
+    function multiplySubtract(groups, perGroup, missing) {
+      return Number(groups) * Number(perGroup) - Number(missing);
+    }
+
+    function evaluateAnswer(question, answer) {
+      if (answer === null || answer === undefined || String(answer).trim() === '') return false;
+      if (typeof question.answer === 'number') return Number(answer) === question.answer;
+      return String(answer).trim() === String(question.answer).trim();
+    }
+
+    function getHint(question, requestedLevel) {
+      const level = Math.min(Math.max(Number(requestedLevel) || 1, 1), 3);
+      return { level, text: question.hints[level - 1] };
+    }
+
+    function detectMisconception(question, answer) {
+      if (answer === null || answer === undefined || String(answer).trim() === '') return null;
+      const rules = Array.isArray(question.misconceptionRules) ? question.misconceptionRules : [];
+      for (const rule of rules) {
+        if (Array.isArray(rule.answers) && rule.answers.some((candidate) => String(candidate) === String(answer).trim())) return rule.code;
+      }
+      return null;
+    }
+
+    function buildActivityQueue() {
+      const exploration = (id) => {
+        const item = EXPLORATIONS.find((candidate) => candidate.id === id);
+        return { kind: 'exploration', id, phase: item.phase };
+      };
+      const question = (id) => {
+        const item = QUESTION_BANK.find((candidate) => candidate.id === id);
+        return { kind: 'question', id, phase: item.phase };
+      };
+      return [
+        exploration('explore-skip-2'), question('two-01'), question('two-02'),
+        exploration('explore-ending-5'), question('five-01'), question('five-02'),
+        exploration('explore-array-3-4'), question('three-01'), question('three-02'), question('four-01'), question('four-02'),
+        exploration('explore-neighbor-6-7'), question('six-01'), question('six-02'), question('seven-01'), question('seven-02'),
+        { kind: 'break', id: 'mid-course-break', phase: 'break' },
+        exploration('explore-double-8'), question('eight-01'), question('eight-02'),
+        exploration('explore-nine-minus'), question('nine-01'), question('nine-02'),
+        exploration('explore-swap-match'), question('swap-01'), question('neighbor-01'),
+        exploration('explore-split-8'), question('split-01'),
+        exploration('explore-mixed-groups'), question('mixed-add-01'), question('mixed-sub-01'),
+        question('app-01'), question('app-02'), question('app-03')
+      ];
+    }
+
+    const DIMENSION_KEYS = ['pattern', 'recall', 'strategy', 'application'];
+
+    function buildReport(records, questionBank = QUESTION_BANK, retryResults = []) {
+      const bank = Array.isArray(questionBank) ? questionBank : QUESTION_BANK;
+      const knownIds = new Set(bank.map((question) => question.id));
+      const safeRecords = Array.isArray(records)
+        ? records.filter((record) => record && knownIds.has(record.questionId) && DIMENSION_KEYS.includes(record.dimension))
+        : [];
+      const recordById = new Map(safeRecords.map((record) => [record.questionId, record]));
+      const dimensions = {};
+      for (const key of DIMENSION_KEYS) {
+        const total = bank.filter((question) => question.dimension === key).length;
+        const related = safeRecords.filter((record) => record.dimension === key && record.resolved === true);
+        dimensions[key] = {
+          total,
+          completed: related.length,
+          independent: related.filter((record) => record.firstCorrect === true && record.firstHintLevel === 0).length,
+          supported: related.filter((record) => record.firstCorrect === true && record.firstHintLevel > 0).length,
+          needsPractice: related.filter((record) => record.firstCorrect === false).length
+        };
+      }
+      const resolvedRecords = safeRecords.filter((record) => record.resolved === true);
+      const misconceptions = {};
+      for (const record of resolvedRecords) {
+        if (!record.firstMisconception) continue;
+        misconceptions[record.firstMisconception] = (misconceptions[record.firstMisconception] || 0) + 1;
+      }
+      const safeRetries = Array.isArray(retryResults)
+        ? retryResults.filter((item) => item && knownIds.has(item.questionId) && typeof item.correct === 'boolean')
+        : [];
+      const independentFirstCorrect = resolvedRecords.filter((record) => record.firstCorrect === true && record.firstHintLevel === 0).length;
+      const supportedFirstCorrect = resolvedRecords.filter((record) => record.firstCorrect === true && record.firstHintLevel > 0).length;
+      const unansweredIds = bank.filter((question) => !recordById.get(question.id)?.resolved).map((question) => question.id);
+      const strengths = [];
+      for (const key of DIMENSION_KEYS) {
+        if (dimensions[key].independent > 0 || dimensions[key].supported > 0) strengths.push(key);
+      }
+      if (!strengths.length) strengths.push('愿意开始探索就是第一步');
+      const needsRetryIds = resolvedRecords.filter((record) => record.firstCorrect === false).map((record) => record.questionId);
+      const nextSteps = needsRetryIds.length
+        ? [`重看${needsRetryIds.slice(0, 2).join('、')}的点阵或邻近口诀，再做一次。`]
+        : unansweredIds.length
+          ? ['继续完成还没有作答的固定题。']
+          : ['把今天的口诀分成几天，每天用点阵复习几组。'];
+      return {
+        completed: resolvedRecords.length,
+        unanswered: unansweredIds.length,
+        unansweredIds,
+        independentFirstCorrect,
+        supportedFirstCorrect,
+        dimensions,
+        misconceptions,
+        hintUsage: { questions: resolvedRecords.filter((record) => record.maxHintLevel > 0).length },
+        retry: { attempted: safeRetries.length, correct: safeRetries.filter((item) => item.correct).length },
+        needsRetryIds,
+        strengths,
+        nextSteps
+      };
+    }
+
+    function createInitialState() {
+      return {
+        version: 1,
+        screen: 'home',
+        activityIndex: 0,
+        completedExplorations: [],
+        records: [],
+        badges: [],
+        mode: 'course',
+        retryQueue: [],
+        retryIndex: 0,
+        retryResults: [],
+        breakCompleted: false,
+        current: {
+          attempts: 0,
+          maxHintLevel: 0,
+          selectedAnswer: null,
+          lastMisconception: null,
+          resolved: false,
+          lastHint: null,
+          explorationStep: 0
+        }
+      };
+    }
+
+    function validRecord(record) {
+      if (!record || typeof record !== 'object') return false;
+      const question = QUESTION_BANK.find((item) => item.id === record.questionId);
+      if (!question || record.dimension !== question.dimension || record.objective !== question.objective) return false;
+      if (!(typeof record.firstAnswer === 'number' || (typeof record.firstAnswer === 'string' && record.firstAnswer.trim() !== ''))) return false;
+      if (typeof record.firstCorrect !== 'boolean') return false;
+      if (!Number.isInteger(record.firstHintLevel) || record.firstHintLevel < 0 || record.firstHintLevel > 3) return false;
+      if (!(record.firstMisconception === null || typeof record.firstMisconception === 'string')) return false;
+      if (!Number.isInteger(record.attempts) || record.attempts < 1) return false;
+      if (!Number.isInteger(record.maxHintLevel) || record.maxHintLevel < record.firstHintLevel || record.maxHintLevel > 3) return false;
+      if (typeof record.resolved !== 'boolean' || (record.firstCorrect && !record.resolved)) return false;
+      return true;
+    }
+
+    function validRetry(record) {
+      return Boolean(record)
+        && QUESTION_BANK.some((question) => question.id === record.questionId)
+        && (typeof record.answer === 'string' || typeof record.answer === 'number')
+        && typeof record.correct === 'boolean'
+        && Number.isInteger(record.attempts) && record.attempts >= 1;
+    }
+
+    function validateSave(value) {
+      if (!value || typeof value !== 'object' || value.version !== 1) return false;
+      const queueLength = buildActivityQueue().length;
+      const questionIds = QUESTION_BANK.map((question) => question.id);
+      const questionIdSet = new Set(questionIds);
+      const explorationIds = new Set(EXPLORATIONS.map((exploration) => exploration.id));
+      const badgePhases = new Set(['twoFive', 'threeFour', 'sixSeven', 'eightNine', 'strategyCamp', 'mixedValley', 'application']);
+      if (!['home', 'activity', 'report'].includes(value.screen)) return false;
+      if (!Number.isInteger(value.activityIndex) || value.activityIndex < 0 || value.activityIndex > queueLength) return false;
+      if (!Array.isArray(value.completedExplorations) || !value.completedExplorations.every((id) => explorationIds.has(id)) || new Set(value.completedExplorations).size !== value.completedExplorations.length) return false;
+      if (!Array.isArray(value.records) || !value.records.every(validRecord) || new Set(value.records.map((record) => record.questionId)).size !== value.records.length) return false;
+      const recordPositions = value.records.map((record) => questionIds.indexOf(record.questionId));
+      if (!recordPositions.every((position, index) => index === 0 || position > recordPositions[index - 1])) return false;
+      if (!Array.isArray(value.badges) || !value.badges.every((phase) => badgePhases.has(phase)) || new Set(value.badges).size !== value.badges.length) return false;
+      if (!['course', 'retry'].includes(value.mode)) return false;
+      if (!Array.isArray(value.retryQueue) || !value.retryQueue.every((id) => questionIdSet.has(id)) || new Set(value.retryQueue).size !== value.retryQueue.length) return false;
+      if (!Number.isInteger(value.retryIndex) || value.retryIndex < 0 || value.retryIndex > value.retryQueue.length) return false;
+      if (!Array.isArray(value.retryResults) || !value.retryResults.every(validRetry) || new Set(value.retryResults.map((item) => item.questionId)).size !== value.retryResults.length) return false;
+      if (typeof value.breakCompleted !== 'boolean') return false;
+      const current = value.current;
+      if (!current || typeof current !== 'object') return false;
+      if (!Number.isInteger(current.attempts) || current.attempts < 0) return false;
+      if (!Number.isInteger(current.maxHintLevel) || current.maxHintLevel < 0 || current.maxHintLevel > 3) return false;
+      if (!(current.selectedAnswer === null || ['string', 'number'].includes(typeof current.selectedAnswer))) return false;
+      if (!(current.lastMisconception === null || typeof current.lastMisconception === 'string')) return false;
+      if (typeof current.resolved !== 'boolean') return false;
+      if (!(current.lastHint === null || (typeof current.lastHint === 'object' && Number.isInteger(current.lastHint.level) && current.lastHint.level >= 1 && current.lastHint.level <= 3 && typeof current.lastHint.text === 'string'))) return false;
+      if (!Number.isInteger(current.explorationStep) || current.explorationStep < 0) return false;
+      if (value.screen === 'report' && (value.activityIndex !== queueLength || value.records.length !== QUESTION_BANK.length || !value.records.every((record) => record.resolved))) return false;
+      return true;
+    }
+
+    window.TimesTableForestTestHooks = {
+      PHASES,
+      EXPLORATIONS,
+      QUESTION_BANK,
+      skipCount,
+      swapFact,
+      neighborFact,
+      nineFact,
+      multiplyAdd,
+      multiplySubtract,
+      evaluateAnswer,
+      getHint,
+      detectMisconception,
+      buildActivityQueue,
+      buildReport,
+      createInitialState,
+      validateSave
+    };
+    /* TESTABLE_CORE_END */
+
+    const SAVE_KEY = 'mathQuest.grade2.unit5.v1';
+    const COURSE_QUEUE = buildActivityQueue();
+    const LEARNING_PHASES = ['twoFive', 'threeFour', 'sixSeven', 'eightNine', 'strategyCamp', 'mixedValley', 'application'];
+    const DIMENSIONS = {
+      pattern: { title: '规律发现', icon: '🔍', copy: '跳数、点阵、末位和9的规律' },
+      recall: { title: '口诀回忆', icon: '🗂️', copy: '理解后初步回忆2至9口诀' },
+      strategy: { title: '策略推导', icon: '🧠', copy: '交换、邻近、加倍和拆分' },
+      application: { title: '生活应用', icon: '🎒', copy: '乘加、乘减和真实分组' }
+    };
+    const MISCONCEPTION_COPY = {
+      'factor-addition': { feedback: '你把两个因数直接相加了。乘法要表示“几组相同的数”，可以先画点阵。', report: '把因数直接相加' },
+      'neighbor-missing-group': { feedback: '你停在了前一句邻近口诀，还少加一组。看看这一组有几个。', report: '邻近口诀少一组' },
+      'neighbor-extra-group': { feedback: '你多加了一组。先数清目标一共有几组。', report: '邻近口诀多一组' },
+      'nine-off-by-one': { feedback: '9的口诀是10组减去整整1组，不是只减1。', report: '9口诀只差1' },
+      'mixed-direction': { feedback: '先判断零散部分是“另外还有”还是“缺少”。还有就加，缺少就减。', report: '乘加乘减方向相反' }
+    };
+    const STRENGTH_COPY = { pattern: '能从图和数列中找规律', recall: '能回忆并使用口诀', strategy: '会用熟悉口诀推新口诀', application: '能把分组关系带进生活问题' };
+
+    const app = document.getElementById('app');
+    const progressBar = document.getElementById('progress-bar');
+    const speechButton = document.getElementById('speech-button');
+    const pauseButton = document.getElementById('pause-button');
+    const liveRegion = document.getElementById('live-region');
+
+    function escapeHtml(value) {
+      return String(value).replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;').replaceAll("'", '&#039;');
+    }
+
+    function loadProgress() {
+      try {
+        const raw = localStorage.getItem(SAVE_KEY);
+        if (!raw) return null;
+        const value = JSON.parse(raw);
+        return validateSave(value) ? value : null;
+      } catch (_error) {
+        return null;
+      }
+    }
+
+    function saveProgress() {
+      if (!validateSave(state)) return;
+      try {
+        localStorage.setItem(SAVE_KEY, JSON.stringify(state));
+      } catch (_error) {
+        showToast('浏览器暂时无法保存进度，请保持本页打开。');
+      }
+    }
+
+    function clearProgress() {
+      localStorage.removeItem(SAVE_KEY);
+    }
+
+    let state = loadProgress() || createInitialState();
+
+    function getCurrentActivity() {
+      if (state.mode === 'retry') {
+        const id = state.retryQueue[state.retryIndex];
+        const question = QUESTION_BANK.find((item) => item.id === id);
+        return question ? { kind: 'question', id, phase: question.phase } : null;
+      }
+      return COURSE_QUEUE[state.activityIndex] || null;
+    }
+
+    function getCurrentQuestion() {
+      const activity = getCurrentActivity();
+      return activity?.kind === 'question' ? QUESTION_BANK.find((item) => item.id === activity.id) || null : null;
+    }
+
+    function getCurrentExploration() {
+      const activity = getCurrentActivity();
+      return activity?.kind === 'exploration' ? EXPLORATIONS.find((item) => item.id === activity.id) || null : null;
+    }
+
+    function progressPercent() {
+      if (state.screen === 'report') return 100;
+      if (state.mode === 'retry') return state.retryQueue.length ? Math.round((state.retryIndex / state.retryQueue.length) * 100) : 0;
+      return Math.round((state.activityIndex / COURSE_QUEUE.length) * 100);
+    }
+
+    function updateToolbar() {
+      const value = progressPercent();
+      progressBar.style.width = `${value}%`;
+      progressBar.setAttribute('aria-valuenow', String(value));
+    }
+
+    function resetCurrent() {
+      state.current = { attempts: 0, maxHintLevel: 0, selectedAnswer: null, lastMisconception: null, resolved: false, lastHint: null, explorationStep: 0 };
+    }
+
+    function renderHome() {
+      pauseButton.hidden = true;
+      updateToolbar();
+      const hasProgress = state.activityIndex > 0 || state.records.length > 0 || state.completedExplorations.length > 0 || state.screen === 'report' || state.mode === 'retry';
+      const label = state.screen === 'report' ? '查看探险报告 🏆' : hasProgress ? '继续探险 🧭' : '进入口诀森林 🧭';
+      app.innerHTML = `<section class="hero" aria-labelledby="course-title">
+        <div class="forest-mark" aria-hidden="true">🌳</div><p class="fact">二年级数学 · 第五单元预习</p>
+        <h1 id="course-title">口诀森林探险队</h1>
+        <p class="lead">用跳数、点阵和邻近口诀发现2至9的乘法规律，再把口诀带进生活问题。目标是理解规律并初步回忆，不要求一次背熟。</p>
+        <div class="facts"><span class="fact">⏱️ 建议60分钟</span><span class="fact">🧩 9个探索</span><span class="fact">✏️ 24道固定练习</span><span class="fact">🌿 中途可休息</span></div>
+        <div class="route" aria-label="课程路线">
+          <div class="route-stop"><strong>🐾 2和5规律小径</strong><small>跳数和末位规律 · 7分钟</small></div>
+          <div class="route-stop"><strong>🍄 3和4点阵林</strong><small>连加、点阵和加倍 · 8分钟</small></div>
+          <div class="route-stop"><strong>🌉 6和7邻居桥</strong><small>已知积再加一组 · 10分钟</small></div>
+          <div class="route-stop"><strong>🌿 伸展休息站</strong><small>随时继续，不倒计时 · 2分钟</small></div>
+          <div class="route-stop"><strong>🌳 8和9智慧树</strong><small>加倍和十组减一组 · 10分钟</small></div>
+          <div class="route-stop"><strong>⛺ 策略与应用</strong><small>交换、拆分、乘加乘减 · 20分钟</small></div>
+        </div>
+        <div class="objectives"><strong>今天会留下这些证据：</strong><ul><li>发现2、5、9等口诀规律</li><li>用交换因数和邻近口诀推新口诀</li><li>计算覆盖2至9的固定题</li><li>用乘加、乘减和乘法解决生活问题</li></ul></div>
+        <p class="instruction">60分钟只是建议节奏。课程不计时、不排名，累了可随时暂停并在这台设备上续学。</p>
+        <div class="action-row" style="justify-content:center"><button id="start-course" class="primary-button" type="button">${label}</button>${hasProgress ? '<button id="home-restart" class="tool-button" type="button">重新开始</button>' : ''}</div>
+      </section>`;
+      document.getElementById('start-course').addEventListener('click', () => {
+        if (!hasProgress) state = createInitialState();
+        if (state.screen === 'report') renderReport();
+        else { state.screen = 'activity'; saveProgress(); renderCurrent(); }
+      });
+      document.getElementById('home-restart')?.addEventListener('click', openRestartDialog);
+    }
+
+    function dots(rows, columns, highlighted = false) {
+      return `<div class="dot-array" style="--columns:${columns};--mobile-columns:${Math.min(columns, 4)}" aria-label="${rows}行，每行${columns}个点">${Array.from({ length: rows * columns }, () => `<span class="dot${highlighted ? ' group-highlight' : ''}"></span>`).join('')}</div>`;
+    }
+
+    function renderExplorationVisual(exploration) {
+      const step = state.current.explorationStep;
+      if (exploration.type === 'skip-track') {
+        return `<div class="skip-track" role="group" aria-label="2的跳数轨道">${skipCount(2, 6).map((value, index) => `<button type="button" class="track-step${index < step ? ' reached' : ''}" data-track-step="${index}" aria-label="第${index + 1}步，到${value}" aria-pressed="${index < step}">${index < step ? value : '👣'}</button>`).join('')}</div><p class="instruction">已经到达：${step ? skipCount(2, step).join('、') : '还没出发'}</p>`;
+      }
+      if (exploration.type === 'ending-five') return `<div class="pattern-row">${[5, 10, 15, 20, 25, 30].map((value) => `<span class="pattern-tile">${value}</span>`).join('')}</div><p>个位轮流出现 <strong>5、0、5、0、5、0</strong></p>`;
+      if (exploration.type === 'array') return `${dots(3, 4, state.current.resolved)}<div class="equation-bridge"><span class="equation-part">4＋4＋4</span><span>＝</span><span class="equation-part">3×4</span></div>`;
+      if (exploration.type === 'neighbor') return `${dots(6, 7)}<div class="equation-bridge"><span class="equation-part">6×6＝36</span><span>＋</span><span class="equation-part">一组6</span><span>＝42</span></div>`;
+      if (exploration.type === 'double') return `<div class="equation-bridge"><span class="equation-part">4×6＝24</span><span>加倍</span><span class="equation-part">24＋24＝48</span></div>${dots(8, 6)}`;
+      if (exploration.type === 'nine-minus') return `<div class="equation-bridge"><span class="equation-part">10×7＝70</span><span>－</span><span class="equation-part">1×7＝7</span><span>＝63</span></div>${dots(9, 7)}`;
+      if (exploration.type === 'swap') {
+        const cards = ['3×7＝21', '7×3＝21'];
+        return `<div class="card-pairs" role="group" aria-label="交换因数口诀卡">${cards.map((card, index) => `<button type="button" class="fact-card" data-match-card="${index}" aria-pressed="${state.current.resolved || state.current.selectedAnswer === card}">${card}</button>`).join('<span class="fact-card" aria-hidden="true">↔</span>')}</div>`;
+      }
+      if (exploration.type === 'split') return `<div class="equation-bridge"><span class="equation-part">5×7＝35</span><span>＋</span><span class="equation-part">3×7＝21</span><span>＝56</span></div>`;
+      return `<div class="equation-bridge"><span class="equation-part">4篮 × 5个</span><span>＋</span><span class="equation-part">零散2个</span><span>＝22</span></div>`;
+    }
+
+    function completeExploration(exploration) {
+      state.current.resolved = true;
+      if (!state.completedExplorations.includes(exploration.id)) state.completedExplorations.push(exploration.id);
+      saveProgress();
+      renderExploration(exploration);
+      announce(`${exploration.success}`);
+    }
+
+    function renderExploration(exploration) {
+      const number = EXPLORATIONS.findIndex((item) => item.id === exploration.id) + 1;
+      app.innerHTML = `<section aria-labelledby="exploration-heading">
+        <div class="lesson-header"><span class="phase-chip">${PHASES[exploration.phase].icon} ${escapeHtml(PHASES[exploration.phase].title)}</span><span class="activity-count">探索 ${number} / 9</span></div>
+        <h1 id="exploration-heading" class="prompt" tabindex="-1">${escapeHtml(exploration.title)}</h1><p class="instruction">${escapeHtml(exploration.instruction)}</p>
+        <div class="exploration-board">${renderExplorationVisual(exploration)}</div>
+        ${state.current.resolved ? `<div class="feedback success" role="status" aria-live="polite"><h2>🎉 探索完成！</h2><p>${escapeHtml(exploration.success)}</p></div><div class="action-row"><button id="next-activity" class="primary-button" type="button">继续前进 ➜</button></div>` : exploration.type === 'skip-track' ? '<p class="instruction">按顺序走完6个脚印，就能继续。</p>' : exploration.type === 'swap' ? '<p class="instruction">依次选择两张交换因数的口诀卡。</p>' : `<div class="action-row"><button id="do-exploration" class="secondary-button" type="button">${escapeHtml(exploration.actionLabel)}</button></div>`}
+      </section>`;
+      document.querySelectorAll('[data-track-step]').forEach((button) => button.addEventListener('click', () => {
+        const chosen = Number(button.dataset.trackStep);
+        if (chosen !== state.current.explorationStep) { announce(`请先走第${state.current.explorationStep + 1}个脚印。`); return; }
+        state.current.explorationStep += 1;
+        if (state.current.explorationStep === 6) completeExploration(exploration);
+        else { saveProgress(); renderExploration(exploration); document.querySelector(`[data-track-step="${state.current.explorationStep}"]`)?.focus(); }
+      }));
+      document.querySelectorAll('[data-match-card]').forEach((button) => button.addEventListener('click', () => {
+        const cards = ['3×7＝21', '7×3＝21'];
+        const chosen = cards[Number(button.dataset.matchCard)];
+        if (state.current.selectedAnswer === null) {
+          state.current.selectedAnswer = chosen;
+          saveProgress();
+          renderExploration(exploration);
+          const otherIndex = Number(button.dataset.matchCard) === 0 ? 1 : 0;
+          document.querySelector(`[data-match-card="${otherIndex}"]`)?.focus();
+          return;
+        }
+        if (state.current.selectedAnswer === chosen) { announce('再选择另一张交换因数的口诀卡。'); return; }
+        completeExploration(exploration);
+      }));
+      document.getElementById('do-exploration')?.addEventListener('click', () => completeExploration(exploration));
+      document.getElementById('next-activity')?.addEventListener('click', moveNext);
+      focusHeading('exploration-heading');
+    }
+
+    function renderQuestionVisual(question) {
+      if (question.tags.includes('点阵') || ['six-01', 'seven-01', 'eight-01', 'nine-01'].includes(question.id)) {
+        const [a, b] = question.factors;
+        return `<div class="exploration-board">${dots(a, b)}</div>`;
+      }
+      if (question.id.startsWith('mixed-')) return `<div class="exploration-board"><div class="equation-bridge"><span class="equation-part">完整组</span><span>${question.id.includes('add') ? '＋ 零散' : '－ 缺少'}</span></div></div>`;
+      if (question.phase === 'application') return `<div class="exploration-board"><div class="equation-bridge"><span aria-hidden="true">📦 📦 📦</span><span class="equation-part">先找组数和每组数</span></div></div>`;
+      return '';
+    }
+
+    function renderHint(question) {
+      const hint = state.current.lastHint;
+      if (!hint) return '';
+      const titles = { 1: '💡 先找方向', 2: '🧩 看图表示', 3: '🪄 完整推导' };
+      const misconception = state.current.lastMisconception ? MISCONCEPTION_COPY[state.current.lastMisconception] : null;
+      return `${misconception ? `<div class="feedback misconception" role="status"><strong>找到一个想法岔路：</strong> ${escapeHtml(misconception.feedback)}</div>` : ''}<aside class="feedback hint" role="status" aria-live="polite"><h2>${titles[hint.level]}</h2><p>${escapeHtml(hint.text)}</p>${hint.level >= 2 ? `<div class="visual-hint">${hint.level === 2 ? renderQuestionVisual(question) || '<strong>把因数看成相同的组。</strong>' : `<strong>${escapeHtml(question.explanation)}</strong>`}</div>` : ''}</aside>`;
+    }
+
+    function renderQuestion(question) {
+      if (state.current.resolved) { renderResolvedQuestion(question); return; }
+      const questionNumber = QUESTION_BANK.findIndex((item) => item.id === question.id) + 1;
+      app.innerHTML = `<section aria-labelledby="question-heading">
+        <div class="lesson-header"><span class="phase-chip">${PHASES[question.phase].icon} ${escapeHtml(PHASES[question.phase].title)}</span><span class="activity-count">${state.mode === 'retry' ? '错题重练' : `练习 ${questionNumber} / 24`}</span></div>
+        <h1 id="question-heading" class="prompt" tabindex="-1">${escapeHtml(question.prompt)}</h1>${renderQuestionVisual(question)}
+        <div class="expression" aria-label="题目算式">${escapeHtml(question.expression)}</div>
+        <div class="choice-grid" role="group" aria-label="请选择一个答案">${question.options.map((option, index) => `<button type="button" class="answer-option${String(state.current.selectedAnswer) === String(option) ? ' selected' : ''}" data-option-index="${index}" aria-pressed="${String(state.current.selectedAnswer) === String(option)}">${escapeHtml(option)}</button>`).join('')}</div>
+        ${renderHint(question)}
+        <div class="action-row"><button id="submit-answer" class="primary-button" type="button" ${state.current.selectedAnswer === null ? 'disabled' : ''}>提交答案</button><button id="hint-button" class="tool-button" type="button" ${state.current.maxHintLevel >= 3 ? 'disabled' : ''}>${state.current.maxHintLevel ? '再看一级提示' : '看提示'}</button></div>
+      </section>`;
+      document.querySelectorAll('[data-option-index]').forEach((button) => button.addEventListener('click', () => {
+        state.current.selectedAnswer = question.options[Number(button.dataset.optionIndex)];
+        saveProgress(); renderQuestion(question);
+      }));
+      document.getElementById('submit-answer').addEventListener('click', submitAnswer);
+      document.getElementById('hint-button').addEventListener('click', () => revealHint(question));
+      focusHeading('question-heading');
+    }
+
+    function revealHint(question) {
+      const nextLevel = Math.min(state.current.maxHintLevel + 1, 3);
+      const hint = getHint(question, nextLevel);
+      state.current.maxHintLevel = hint.level;
+      state.current.lastHint = hint;
+      saveProgress(); renderQuestion(question); announce(hint.text);
+    }
+
+    function submitAnswer() {
+      const question = getCurrentQuestion();
+      const answer = state.current.selectedAnswer;
+      if (!question || answer === null || String(answer).trim() === '') { announce('请先选择一个答案。'); return; }
+      state.current.attempts += 1;
+      const correct = evaluateAnswer(question, answer);
+      const misconception = correct ? null : detectMisconception(question, answer);
+
+      if (state.mode === 'retry') {
+        if (correct) {
+          const result = { questionId: question.id, answer, correct: true, attempts: state.current.attempts };
+          const existing = state.retryResults.findIndex((item) => item.questionId === question.id);
+          if (existing >= 0) state.retryResults[existing] = result;
+          else state.retryResults.push(result);
+          state.current.resolved = true;
+          state.current.lastHint = null;
+          saveProgress(); renderResolvedQuestion(question); return;
+        }
+        state.current.lastMisconception = misconception;
+        revealHint(question); return;
+      }
+
+      let record = state.records.find((item) => item.questionId === question.id);
+      if (!record) {
+        record = {
+          questionId: question.id,
+          objective: question.objective,
+          dimension: question.dimension,
+          firstAnswer: answer,
+          firstCorrect: correct,
+          firstHintLevel: state.current.maxHintLevel,
+          firstMisconception: misconception,
+          attempts: 1,
+          maxHintLevel: state.current.maxHintLevel,
+          resolved: correct
+        };
+        state.records.push(record);
+      } else {
+        record.attempts = state.current.attempts;
+        record.maxHintLevel = Math.max(record.maxHintLevel, state.current.maxHintLevel);
+        record.resolved = correct;
+      }
+      if (correct) {
+        state.current.resolved = true;
+        state.current.lastHint = null;
+        saveProgress(); renderResolvedQuestion(question); return;
+      }
+      state.current.lastMisconception = misconception || state.current.lastMisconception;
+      revealHint(question);
+    }
+
+    function renderResolvedQuestion(question) {
+      const nextLabel = state.mode === 'retry' && state.retryIndex >= state.retryQueue.length - 1 ? '返回探险报告 🏆' : state.mode === 'course' && state.activityIndex >= COURSE_QUEUE.length - 1 ? '查看探险报告 🏆' : '继续前进 ➜';
+      app.innerHTML = `<section aria-labelledby="correct-heading"><div class="lesson-header"><span class="phase-chip">${PHASES[question.phase].icon} ${escapeHtml(PHASES[question.phase].title)}</span><span class="activity-count">完成</span></div><div class="expression">${escapeHtml(question.expression)}</div><div class="feedback success" role="status" aria-live="polite"><h1 id="correct-heading" tabindex="-1">🎉 这条口诀走通了！</h1><p>${escapeHtml(question.explanation)}</p></div><div class="action-row"><button id="next-activity" class="primary-button" type="button">${nextLabel}</button></div></section>`;
+      document.getElementById('next-activity').addEventListener('click', moveNext);
+      focusHeading('correct-heading'); announce(`答对了。${question.explanation}`);
+    }
+
+    function renderBreak() {
+      app.innerHTML = `<section class="break-card" aria-labelledby="break-heading"><div class="forest-mark" aria-hidden="true">🌿</div><p class="phase-chip">路线走到中点啦</p><h1 id="break-heading" tabindex="-1">伸展休息站</h1><p class="lead">眼睛和身体休息约2分钟。没有倒计时，准备好了随时继续。</p><div class="stretch-steps"><div class="stretch-step"><span>👀</span>看看远处</div><div class="stretch-step"><span>🙆</span>伸伸手臂</div><div class="stretch-step"><span>🥛</span>喝一口水</div></div><button id="next-activity" class="primary-button" type="button">准备好了，继续 ➜</button></section>`;
+      document.getElementById('next-activity').addEventListener('click', () => { state.breakCompleted = true; moveNext(); });
+      focusHeading('break-heading');
+    }
+
+    function renderCurrent() {
+      const activity = getCurrentActivity();
+      if (!activity) { finishCurrentMode(); return; }
+      state.screen = 'activity'; pauseButton.hidden = false; updateToolbar(); saveProgress();
+      if (activity.kind === 'exploration') renderExploration(getCurrentExploration());
+      else if (activity.kind === 'question') renderQuestion(getCurrentQuestion());
+      else renderBreak();
+    }
+
+    function moveNext() {
+      const current = getCurrentActivity();
+      if (state.mode === 'retry') {
+        state.retryIndex += 1; resetCurrent();
+        if (state.retryIndex >= state.retryQueue.length) finishCurrentMode();
+        else { saveProgress(); renderCurrent(); }
+        return;
+      }
+      const next = COURSE_QUEUE[state.activityIndex + 1] || null;
+      if (current && LEARNING_PHASES.includes(current.phase) && (!next || next.phase !== current.phase) && !state.badges.includes(current.phase)) state.badges.push(current.phase);
+      state.activityIndex += 1; resetCurrent();
+      if (state.activityIndex >= COURSE_QUEUE.length) finishCurrentMode();
+      else { saveProgress(); renderCurrent(); }
+    }
+
+    function finishCurrentMode() {
+      if (state.mode === 'retry') { state.mode = 'course'; state.retryIndex = state.retryQueue.length; }
+      state.screen = 'report'; state.activityIndex = COURSE_QUEUE.length; resetCurrent(); saveProgress(); renderReport();
+    }
+
+    function reportMisconception(code) {
+      return MISCONCEPTION_COPY[code]?.report || '—';
+    }
+
+    function renderReport() {
+      const report = buildReport(state.records, QUESTION_BANK, state.retryResults);
+      state.screen = 'report'; pauseButton.hidden = true; updateToolbar(); saveProgress();
+      app.innerHTML = `<section aria-labelledby="report-heading"><div class="report-title"><div class="forest-mark" aria-hidden="true">🏆</div><h1 id="report-heading" tabindex="-1">口诀森林探险完成！</h1><p class="lead">这份报告记录第一次怎样思考，也把提示支持和重练恢复分开呈现。</p><div class="badges" aria-label="获得${state.badges.length}枚路线徽章">${state.badges.map((phase) => `<span title="${escapeHtml(PHASES[phase].title)}">${PHASES[phase].icon}</span>`).join('')}</div></div>
+        <div class="report-summary"><div class="summary-card"><strong>${report.independentFirstCorrect}</strong>无提示首答正确</div><div class="summary-card"><strong>${report.supportedFirstCorrect}</strong>提示支持后首答正确</div><div class="summary-card"><strong>${report.retry.correct}</strong>重练恢复正确</div></div>
+        <div class="report-grid">${Object.entries(DIMENSIONS).map(([key, meta]) => { const item = report.dimensions[key]; return `<article class="skill-card"><div style="font-size:2.1rem" aria-hidden="true">${meta.icon}</div><h3>${meta.title}</h3><p>${escapeHtml(meta.copy)}</p><p><span class="status-pill">独立 ${item.independent}</span> <span class="status-pill">提示支持 ${item.supported}</span></p><p>需要再练 ${item.needsPractice} 题 · 已完成 ${item.completed}/${item.total}</p></article>`; }).join('')}</div>
+        <div class="feedback ${report.needsRetryIds.length ? 'hint' : 'success'}"><h2>${report.needsRetryIds.length ? '🌱 下一步建议' : '🌟 继续巩固规律'}</h2><p>${escapeHtml(report.nextSteps[0])}</p><p><strong>看见的优势：</strong>${report.strengths.map((key) => escapeHtml(STRENGTH_COPY[key] || key)).join('；')}</p></div>
+        <div class="action-row">${report.needsRetryIds.length ? '<button id="retry-wrong" class="primary-button" type="button">只重练首答错题 🌱</button>' : ''}<button id="report-home" class="tool-button" type="button">返回课程首页</button><button id="report-restart" class="tool-button" type="button">重新探险</button></div>
+        <details class="parent-panel"><summary>家长查看学习详情</summary><p>完成 ${report.completed}/24 题，未答 ${report.unanswered} 题；${report.hintUsage.questions} 道题使用过提示。重练不会覆盖下面的首次证据。</p>${Object.keys(report.misconceptions).length ? `<p><strong>本次出现的想法岔路：</strong>${Object.entries(report.misconceptions).map(([code, count]) => `${escapeHtml(reportMisconception(code))} ${count}次`).join('；')}</p>` : ''}<div class="table-wrap"><table><thead><tr><th>题目</th><th>首次答案</th><th>首次分类</th><th>提示</th><th>错因</th><th>重练</th></tr></thead><tbody>${state.records.map((record) => { const question = QUESTION_BANK.find((item) => item.id === record.questionId); const retry = state.retryResults.find((item) => item.questionId === record.questionId); const category = record.firstCorrect ? (record.firstHintLevel === 0 ? '独立正确' : '提示支持正确') : '首答需练'; return `<tr><td>${escapeHtml(question?.expression || record.questionId)}</td><td>${escapeHtml(record.firstAnswer)}</td><td>${category}</td><td>${record.maxHintLevel ? `${record.maxHintLevel}级` : '未用'}</td><td>${escapeHtml(reportMisconception(record.firstMisconception))}</td><td>${retry ? (retry.correct ? '✅ 恢复正确' : '仍需练习') : '—'}</td></tr>`; }).join('')}</tbody></table></div></details>
+      </section>`;
+      document.getElementById('retry-wrong')?.addEventListener('click', startWrongRetry);
+      document.getElementById('report-home').addEventListener('click', renderHome);
+      document.getElementById('report-restart').addEventListener('click', openRestartDialog);
+      focusHeading('report-heading'); announce('口诀森林探险报告已经准备好了。');
+    }
+
+    function startWrongRetry() {
+      const report = buildReport(state.records, QUESTION_BANK, state.retryResults);
+      state.mode = 'retry'; state.retryQueue = [...report.needsRetryIds]; state.retryIndex = 0; state.retryResults = []; state.screen = 'activity'; resetCurrent(); saveProgress(); renderCurrent();
+    }
+
+    function openRestartDialog() {
+      const trigger = document.activeElement;
+      const backdrop = document.createElement('div');
+      backdrop.className = 'dialog-backdrop'; backdrop.id = 'restart-dialog'; backdrop.setAttribute('role', 'dialog'); backdrop.setAttribute('aria-modal', 'true'); backdrop.setAttribute('aria-labelledby', 'restart-title');
+      backdrop.innerHTML = `<div class="dialog-card"><h2 id="restart-title">要重新开始口诀森林吗？</h2><p>这只会清除第五单元的进度和报告，不影响第一至第四单元。</p><div class="action-row"><button id="confirm-restart" class="primary-button" type="button">确定重新开始</button><button id="cancel-restart" class="tool-button" type="button">保留进度</button></div></div>`;
+      document.body.appendChild(backdrop);
+      const confirmButton = document.getElementById('confirm-restart');
+      const cancelButton = document.getElementById('cancel-restart');
+      const close = () => { backdrop.remove(); if (trigger && typeof trigger.focus === 'function') trigger.focus(); };
+      confirmButton.addEventListener('click', () => { clearProgress(); state = createInitialState(); backdrop.remove(); renderHome(); });
+      cancelButton.addEventListener('click', close);
+      backdrop.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') { event.preventDefault(); close(); return; }
+        if (event.key !== 'Tab') return;
+        if (event.shiftKey && document.activeElement === confirmButton) {
+          event.preventDefault();
+          cancelButton.focus();
+        } else if (!event.shiftKey && document.activeElement === cancelButton) {
+          event.preventDefault();
+          confirmButton.focus();
+        }
+      });
+      confirmButton.focus();
+    }
+
+    function focusHeading(id) {
+      requestAnimationFrame(() => document.getElementById(id)?.focus({ preventScroll: true }));
+    }
+
+    function announce(text) {
+      liveRegion.textContent = '';
+      window.setTimeout(() => { liveRegion.textContent = text; }, 20);
+    }
+
+    function showToast(message) {
+      document.querySelector('.toast')?.remove();
+      const toast = document.createElement('div'); toast.className = 'toast'; toast.setAttribute('role', 'status'); toast.textContent = message; document.body.appendChild(toast); window.setTimeout(() => toast.remove(), 3200);
+    }
+
+    pauseButton.addEventListener('click', () => { saveProgress(); renderHome(); showToast('进度已经保存在这台设备上。'); });
+    speechButton.addEventListener('click', () => {
+      if (!('speechSynthesis' in window) || typeof SpeechSynthesisUtterance === 'undefined') return;
+      window.speechSynthesis.cancel();
+      const utterance = new SpeechSynthesisUtterance((app.innerText || '').replace(/\s+/g, ' ').trim().slice(0, 1000));
+      utterance.lang = 'zh-CN'; utterance.rate = .9; window.speechSynthesis.speak(utterance);
+    });
+    if (!('speechSynthesis' in window) || typeof SpeechSynthesisUtterance === 'undefined') speechButton.hidden = true;
+
+    Object.assign(window.TimesTableForestTestHooks, {
+      getCurrentActivity,
+      getCurrentQuestion,
+      getState: () => JSON.parse(JSON.stringify(state)),
+      clearProgress
+    });
+    renderHome();
+  </script>
+</body>
+</html>

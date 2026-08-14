@@ -7,6 +7,9 @@
 - 网站首页（第一单元）：`index.html`
 - 第一单元独立地址：`grade2-math-unit1.html`
 - 第二单元独立地址：`grade2-math-unit2.html`
+- 第三单元独立地址：`grade2-math-unit3.html`
+- 第四单元独立地址：`grade2-math-unit4.html`
+- 第五单元独立地址：`grade2-math-unit5.html`
 
 ## 更新课程
 
@@ -16,7 +19,10 @@
 cp ../grade2-math-unit1.html index.html
 cp ../grade2-math-unit1.html grade2-math-unit1.html
 cp ../grade2-math-unit2.html grade2-math-unit2.html
-git add index.html grade2-math-unit1.html grade2-math-unit2.html
+cp ../grade2-math-unit3.html grade2-math-unit3.html
+cp ../grade2-math-unit4.html grade2-math-unit4.html
+cp ../grade2-math-unit5.html grade2-math-unit5.html
+git add index.html grade2-math-unit1.html grade2-math-unit2.html grade2-math-unit3.html grade2-math-unit4.html grade2-math-unit5.html
 git commit -m "Update course content"
 git push
 ```
