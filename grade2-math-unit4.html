@@ -205,7 +205,7 @@
         <div id="progress-bar" class="progress-fill" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"></div>
       </div>
       <div class="toolbar-actions">
-        <button id="speech-button" class="compact-button" type="button" aria-label="朗读当前内容">🔊<span class="button-label"> 朗读</span></button>
+        <button id="speech-button" class="compact-button" type="button" aria-label="朗读当前内容" aria-pressed="false">🔊<span class="button-label"> 朗读</span></button>
         <button id="pause-button" class="compact-button" type="button" aria-label="暂停并返回首页" hidden>⏸️<span class="button-label"> 暂停</span></button>
       </div>
     </header>
@@ -1066,15 +1066,53 @@
     }
 
     pauseButton.addEventListener('click', () => { saveProgress(); renderHome(); showToast('进度已经保存在这台设备上。'); });
-    speechButton.addEventListener('click', () => {
-      if (!('speechSynthesis' in window) || typeof SpeechSynthesisUtterance === 'undefined') return;
+    const supportsSpeech = 'speechSynthesis' in window && typeof SpeechSynthesisUtterance !== 'undefined';
+    let activeUtterance = null;
+
+    function setSpeechButtonState(isSpeaking) {
+      speechButton.innerHTML = isSpeaking
+        ? '⏹<span class="button-label"> 停止</span>'
+        : '🔊<span class="button-label"> 朗读</span>';
+      speechButton.setAttribute('aria-label', isSpeaking ? '停止朗读' : '朗读当前内容');
+      speechButton.setAttribute('aria-pressed', String(isSpeaking));
+    }
+
+    function stopSpeaking() {
+      activeUtterance = null;
+      window.speechSynthesis.cancel();
+      setSpeechButtonState(false);
+    }
+
+    function toggleSpeech() {
+      if (!supportsSpeech) return;
+      if (activeUtterance) {
+        stopSpeaking();
+        return;
+      }
+
       window.speechSynthesis.cancel();
       const utterance = new SpeechSynthesisUtterance((app.innerText || '').replace(/\s+/g, ' ').trim().slice(0, 900));
       utterance.lang = 'zh-CN';
       utterance.rate = .9;
-      window.speechSynthesis.speak(utterance);
-    });
-    if (!('speechSynthesis' in window) || typeof SpeechSynthesisUtterance === 'undefined') speechButton.hidden = true;
+      activeUtterance = utterance;
+      const finishSpeech = () => {
+        if (activeUtterance !== utterance) return;
+        activeUtterance = null;
+        setSpeechButtonState(false);
+      };
+      utterance.onend = finishSpeech;
+      utterance.onerror = finishSpeech;
+      setSpeechButtonState(true);
+      try {
+        window.speechSynthesis.speak(utterance);
+      } catch {
+        finishSpeech();
+      }
+    }
+
+    speechButton.addEventListener('click', toggleSpeech);
+    if (!supportsSpeech) speechButton.hidden = true;
+    else setSpeechButtonState(false);
 
     Object.assign(window.MultiplicationLabTestHooks, {
       getCurrentActivity,
