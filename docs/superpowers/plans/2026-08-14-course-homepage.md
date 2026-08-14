@@ -53,11 +53,11 @@ const here = path.dirname(fileURLToPath(import.meta.url));
 const siteRoot = path.join(here, '..', 'github-pages-grade2-math-course');
 const htmlPath = path.join(siteRoot, 'index.html');
 const units = [
-  ['1', '数学星球大冒险', 'grade2-math-unit1.html'],
-  ['2', '计算城建造师', 'grade2-math-unit2.html'],
-  ['3', '小小店长', 'grade2-math-unit3.html'],
-  ['4', '乘法乐园建筑师', 'grade2-math-unit4.html'],
-  ['5', '口诀森林探险队', 'grade2-math-unit5.html']
+  ['第一单元', '数学星球大冒险', 'grade2-math-unit1.html'],
+  ['第二单元', '计算城建造师', 'grade2-math-unit2.html'],
+  ['第三单元', '小小店长', 'grade2-math-unit3.html'],
+  ['第四单元', '乘法乐园建筑师', 'grade2-math-unit4.html'],
+  ['第五单元', '口诀森林探险队', 'grade2-math-unit5.html']
 ];
 
 function readHtml() {
@@ -67,10 +67,10 @@ function readHtml() {
 
 test('首页提供五个且仅五个正确的单元链接', () => {
   const html = readHtml();
-  for (const [number, title, href] of units) {
+  for (const [label, title, href] of units) {
     assert.equal(fs.existsSync(path.join(siteRoot, href)), true, `${href} 应存在`);
     assert.equal((html.match(new RegExp(`href=["']${href}["']`, 'g')) || []).length, 1, `${href} 应恰好出现一次`);
-    assert.match(html, new RegExp(`第${number}单元[\\s\\S]*${title}`), `第${number}单元名称应完整`);
+    assert.match(html, new RegExp(`${label}[\\s\\S]*${title}`), `${label}名称应完整`);
   }
   assert.equal((html.match(/class=["'][^"']*course-link[^"']*["']/g) || []).length, 5);
 });
