@@ -4,7 +4,7 @@
 
 ## 页面
 
-- 网站首页（第一单元）：`index.html`
+- 课程目录首页：`index.html`
 - 第一单元独立地址：`grade2-math-unit1.html`
 - 第二单元独立地址：`grade2-math-unit2.html`
 - 第三单元独立地址：`grade2-math-unit3.html`
@@ -16,18 +16,17 @@
 将课程源文件复制到对应的发布文件后提交并推送：
 
 ```bash
-cp ../grade2-math-unit1.html index.html
 cp ../grade2-math-unit1.html grade2-math-unit1.html
 cp ../grade2-math-unit2.html grade2-math-unit2.html
 cp ../grade2-math-unit3.html grade2-math-unit3.html
 cp ../grade2-math-unit4.html grade2-math-unit4.html
 cp ../grade2-math-unit5.html grade2-math-unit5.html
-git add index.html grade2-math-unit1.html grade2-math-unit2.html grade2-math-unit3.html grade2-math-unit4.html grade2-math-unit5.html
+git add grade2-math-unit1.html grade2-math-unit2.html grade2-math-unit3.html grade2-math-unit4.html grade2-math-unit5.html
 git commit -m "Update course content"
 git push
 ```
 
-第一单元同时复制为 `index.html`，因此访问站点根地址会直接进入第一单元。
+`index.html` 是独立课程目录。更新单元课程时只复制对应的 `grade2-math-unitN.html`，不要用第一单元覆盖首页。
 
 ## 本地预览
 

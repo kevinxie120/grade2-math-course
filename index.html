@@ -4,1389 +4,435 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#5b5bd6">
-  <title>数学星球大冒险｜基础能量唤醒</title>
+  <meta name="description" content="二年级数学互动自学课程目录，包含五个可独立学习的数学单元。">
+  <title>二年级数学互动自学课程｜课程目录</title>
   <style>
     :root {
       color-scheme: light;
       --ink: #26304a;
       --muted: #5e6880;
       --primary: #5b5bd6;
-      --primary-dark: #3f3fae;
-      --surface: rgba(255, 255, 255, .94);
-      --line: #dfe5f2;
-      --shadow: 0 18px 50px rgba(48, 61, 112, .14);
+      --focus: #312e81;
+      --surface: rgba(255, 255, 255, .9);
+      --shadow: 0 18px 45px rgba(48, 61, 112, .14);
     }
 
     * { box-sizing: border-box; }
 
+    html { scroll-behavior: smooth; }
+
     body {
-      margin: 0;
+      min-width: 0;
       min-height: 100vh;
+      margin: 0;
+      overflow-x: hidden;
       color: var(--ink);
-      background: linear-gradient(155deg, #eef7ff 0%, #f4efff 50%, #fff8e9 100%);
+      background:
+        radial-gradient(circle at 8% 8%, rgba(126, 211, 255, .38), transparent 26%),
+        radial-gradient(circle at 92% 18%, rgba(255, 196, 121, .38), transparent 24%),
+        linear-gradient(145deg, #eef7ff 0%, #f6f0ff 48%, #fff8e8 100%);
       font-family: ui-rounded, "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
       font-size: 18px;
       line-height: 1.6;
     }
 
-    button { font: inherit; }
-
-    .app-shell {
-      width: min(980px, calc(100% - 28px));
-      margin: 0 auto;
-      padding: 20px 0 40px;
+    body::before,
+    body::after {
+      position: fixed;
+      z-index: -1;
+      width: 210px;
+      height: 210px;
+      border: 3px dashed rgba(91, 91, 214, .13);
+      border-radius: 50%;
+      content: "";
     }
 
-    .topbar {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      min-height: 58px;
-    }
+    body::before { top: -92px; left: -72px; }
+    body::after { right: -76px; bottom: -96px; }
 
-    .brand { font-weight: 900; }
+    a { color: inherit; }
 
-    .progress-track {
-      flex: 1;
-      height: 14px;
-      overflow: hidden;
-      background: #fff;
-      border: 2px solid #d7def0;
-      border-radius: 999px;
-    }
-
-    .progress-fill {
-      width: 0;
-      height: 100%;
-      background: linear-gradient(90deg, #6e67e8, #ffaf5f);
-      transition: width .35s ease;
-    }
-
-    .card {
-      margin-top: 18px;
-      padding: clamp(24px, 5vw, 52px);
-      background: var(--surface);
-      border: 1px solid rgba(255, 255, 255, .85);
-      border-radius: 32px;
-      box-shadow: var(--shadow);
-    }
-
-    .hero { text-align: center; }
-    .planet { font-size: clamp(70px, 14vw, 118px); line-height: 1; }
-    h1 { margin: 16px 0 8px; font-size: clamp(32px, 6vw, 56px); line-height: 1.15; }
-    .lead { max-width: 680px; margin: 0 auto 24px; color: var(--muted); }
-
-    .primary-button,
-    .tool-button {
-      min-height: 52px;
-      padding: 12px 24px;
-      border: 0;
-      border-radius: 16px;
-      cursor: pointer;
-      font-weight: 800;
-    }
-
-    .primary-button {
+    .skip-link {
+      position: fixed;
+      top: 12px;
+      left: 12px;
+      z-index: 10;
+      padding: 10px 16px;
+      border-radius: 12px;
       color: #fff;
-      background: var(--primary);
-      box-shadow: 0 8px 0 var(--primary-dark);
+      background: var(--focus);
+      font-weight: 900;
+      transform: translateY(-150%);
+      transition: transform .18s ease;
     }
 
-    .primary-button:active { transform: translateY(3px); box-shadow: 0 5px 0 var(--primary-dark); }
+    .skip-link:focus { transform: translateY(0); }
 
-    .tool-button {
-      color: var(--ink);
-      background: #fff;
-      border: 2px solid var(--line);
+    .site-shell {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 48px 0 36px;
     }
 
-    .facts {
+    .hero {
+      position: relative;
+      max-width: 820px;
+      margin: 0 auto 42px;
+      text-align: center;
+    }
+
+    .hero-mark {
+      display: grid;
+      width: 88px;
+      height: 88px;
+      margin: 0 auto 16px;
+      place-items: center;
+      border: 3px solid rgba(255, 255, 255, .9);
+      border-radius: 28px;
+      background: linear-gradient(145deg, #6e67e8, #9b77ed);
+      box-shadow: 0 16px 30px rgba(72, 66, 179, .24);
+      font-size: 48px;
+      line-height: 1;
+      transform: rotate(-4deg);
+    }
+
+    .eyebrow,
+    .section-kicker {
+      margin: 0;
+      color: var(--primary);
+      font-weight: 950;
+      letter-spacing: .08em;
+    }
+
+    h1 {
+      margin: 10px 0 14px;
+      font-size: clamp(36px, 7vw, 68px);
+      font-weight: 950;
+      line-height: 1.08;
+      letter-spacing: -.035em;
+    }
+
+    .lead {
+      max-width: 720px;
+      margin: 0 auto;
+      color: var(--muted);
+      font-size: clamp(18px, 2.3vw, 22px);
+    }
+
+    .hero-facts {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
       gap: 10px;
-      margin: 26px 0;
+      margin: 24px 0 0;
+      padding: 0;
+      list-style: none;
     }
 
-    .fact {
-      padding: 8px 14px;
-      background: #f5f7ff;
+    .hero-facts li {
+      padding: 7px 13px;
+      border: 1px solid rgba(255, 255, 255, .9);
       border-radius: 999px;
+      background: rgba(255, 255, 255, .7);
       color: #515c75;
-      font-weight: 700;
+      font-size: 15px;
+      font-weight: 850;
+      box-shadow: 0 8px 18px rgba(48, 61, 112, .08);
     }
 
-    .toolbar-actions { display: flex; gap: 8px; }
+    .section-heading { margin-bottom: 22px; }
 
-    .compact-button {
-      min-width: 52px;
-      min-height: 52px;
-      padding: 9px 14px;
-      border: 2px solid var(--line);
-      border-radius: 15px;
-      color: var(--ink);
-      background: #fff;
-      cursor: pointer;
-      font-weight: 800;
+    .section-heading h2 {
+      margin: 4px 0 0;
+      font-size: clamp(28px, 4vw, 40px);
+      line-height: 1.2;
     }
 
-    .lesson-header {
+    .course-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 22px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .course-card {
+      min-width: 0;
+      padding: 4px;
+      border-radius: 30px;
+      box-shadow: var(--shadow);
+    }
+
+    .course-link {
       display: flex;
+      min-height: 100%;
+      padding: 26px;
+      overflow: hidden;
+      border: 3px solid rgba(255, 255, 255, .75);
+      border-radius: 26px;
+      color: var(--ink);
+      background: var(--surface);
+      text-decoration: none;
+      flex-direction: column;
+      transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+    }
+
+    .course-link:hover {
+      border-color: rgba(255, 255, 255, 1);
+      box-shadow: 0 22px 55px rgba(48, 61, 112, .2);
+      transform: translateY(-5px);
+    }
+
+    .course-link:focus-visible {
+      outline: 4px solid var(--focus);
+      outline-offset: 4px;
+    }
+
+    .card-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 14px;
+    }
+
+    .unit-number,
+    .course-meta {
+      align-self: flex-start;
+      padding: 5px 11px;
+      border-radius: 999px;
+      font-size: 15px;
+      font-weight: 900;
+    }
+
+    .unit-number {
+      color: var(--card-strong);
+      background: var(--card-chip);
+    }
+
+    .unit-icon {
+      display: grid;
+      width: 58px;
+      height: 58px;
+      place-items: center;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, .8);
+      box-shadow: 0 9px 20px rgba(48, 61, 112, .1);
+      font-size: 35px;
+      line-height: 1;
+      transform: rotate(3deg);
+    }
+
+    .course-card h3 {
+      margin: 22px 0 0;
+      font-size: 27px;
+      font-weight: 950;
+      line-height: 1.25;
+    }
+
+    .course-card p {
+      margin: 10px 0 20px;
+      color: var(--muted);
+    }
+
+    .course-meta {
+      margin-top: auto;
+      color: #596178;
+      background: rgba(255, 255, 255, .72);
+    }
+
+    .course-action {
+      display: inline-flex;
+      min-height: 48px;
+      margin-top: 18px;
       align-items: center;
       justify-content: space-between;
-      gap: 18px;
-      margin-bottom: 20px;
-    }
-
-    .stage-chip,
-    .question-count {
-      display: inline-flex;
-      align-items: center;
-      min-height: 42px;
-      padding: 6px 14px;
-      border-radius: 999px;
-      font-weight: 900;
-    }
-
-    .stage-chip { color: #3f3fae; background: #eeedff; }
-    .question-count { color: #7a5120; background: #fff2d9; }
-
-    .prompt {
-      max-width: 760px;
-      margin: 0 auto;
-      text-align: center;
-      font-size: clamp(23px, 4vw, 32px);
-      font-weight: 850;
-      line-height: 1.45;
-    }
-
-    .expression {
-      display: grid;
-      place-items: center;
-      min-height: 120px;
-      margin: 22px auto;
-      padding: 20px;
-      color: #302f80;
-      background: linear-gradient(135deg, #f0efff, #fff8e8);
-      border: 3px dashed #c8c5ef;
-      border-radius: 24px;
-      font-size: clamp(30px, 7vw, 52px);
+      color: var(--card-strong);
       font-weight: 950;
-      letter-spacing: .04em;
-      text-align: center;
     }
 
-    .answer-area { max-width: 720px; margin: 0 auto; }
-
-    .options-grid {
+    .course-action span {
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 14px;
-    }
-
-    .answer-option {
-      min-height: 64px;
-      padding: 12px;
-      color: var(--ink);
-      background: #fff;
-      border: 3px solid #dce2f0;
-      border-radius: 18px;
-      cursor: pointer;
-      font-size: clamp(22px, 4vw, 30px);
-      font-weight: 900;
-      transition: transform .15s ease, border-color .15s ease, background .15s ease;
-    }
-
-    .answer-option:hover { transform: translateY(-2px); border-color: #aaa8e8; }
-    .answer-option.selected { color: #38378f; background: #eeeeff; border-color: var(--primary); }
-
-    .number-line-control {
-      position: relative;
-      display: grid;
-      grid-template-columns: repeat(5, minmax(48px, 1fr));
-      gap: 8px;
-      padding: 30px 0 0;
-    }
-
-    .number-line-control::before {
-      content: "";
-      position: absolute;
-      top: 22px;
-      left: 7%;
-      right: 7%;
-      height: 5px;
-      background: #7473c8;
-      border-radius: 999px;
-    }
-
-    .number-line-tick {
-      position: relative;
-      z-index: 1;
-      min-height: 64px;
-      padding: 14px 4px 8px;
-      color: var(--ink);
-      background: transparent;
-      border: 0;
-      border-radius: 15px;
-      cursor: pointer;
-      font-size: 22px;
-      font-weight: 900;
-    }
-
-    .number-line-tick::before {
-      content: "";
-      position: absolute;
-      top: -15px;
-      left: 50%;
-      width: 18px;
-      height: 18px;
-      background: #fff;
-      border: 4px solid #7473c8;
-      border-radius: 50%;
-      transform: translateX(-50%);
-    }
-
-    .number-line-tick:hover,
-    .number-line-tick.selected { color: #343393; background: #eeeeff; }
-    .number-line-tick.selected::before { background: #ffbb5c; border-color: #514fc0; }
-
-    .number-entry {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 14px;
-    }
-
-    .answer-input {
-      width: min(260px, 100%);
-      min-height: 70px;
-      padding: 8px 18px;
-      color: #302f80;
-      background: #fff;
-      border: 4px solid #cbd2e7;
-      border-radius: 18px;
-      font: 950 36px/1.2 ui-rounded, system-ui, sans-serif;
-      text-align: center;
-    }
-
-    .keypad {
-      display: grid;
-      grid-template-columns: repeat(6, minmax(48px, 1fr));
-      gap: 8px;
-      width: min(560px, 100%);
-    }
-
-    .keypad button {
-      min-height: 52px;
-      color: var(--ink);
-      background: #f7f8ff;
-      border: 2px solid #dce2f0;
-      border-radius: 13px;
-      cursor: pointer;
-      font-size: 22px;
-      font-weight: 900;
-    }
-
-    .action-row {
-      display: flex;
-      justify-content: center;
-      gap: 12px;
-      margin-top: 24px;
-    }
-
-    .primary-button:disabled {
-      color: #727b91;
-      background: #dce1eb;
-      box-shadow: 0 6px 0 #bdc5d5;
-      cursor: not-allowed;
-    }
-
-    .feedback {
-      max-width: 720px;
-      margin: 22px auto 0;
-      padding: 20px;
-      border-radius: 20px;
-    }
-
-    .feedback h2 { margin: 0 0 6px; font-size: 26px; }
-    .feedback p { margin: 0; }
-    .feedback.hint { color: #67471c; background: #fff4d8; border: 2px solid #f0cf80; }
-    .feedback.correct { color: #15573f; background: #e7f8ef; border: 2px solid #8ed3b4; }
-
-    .visual-hint {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 8px;
-      margin-top: 14px;
-      padding: 14px;
-      background: rgba(255, 255, 255, .7);
-      border-radius: 14px;
-      font-size: 26px;
-    }
-
-    .stage-map {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 12px;
-      max-width: 700px;
-      margin: 26px auto;
-      text-align: left;
-    }
-
-    .stage-stop {
-      padding: 14px;
-      background: #f7f8ff;
-      border: 2px solid #e1e5f1;
-      border-radius: 16px;
-      font-weight: 800;
-    }
-
-    .report-title { text-align: center; }
-
-    .report-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 14px;
-      margin: 26px 0;
-    }
-
-    .skill-card {
-      padding: 20px;
-      background: #f7f8ff;
-      border: 2px solid #e0e4f2;
-      border-radius: 20px;
-      text-align: center;
-    }
-
-    .skill-icon { font-size: 42px; }
-    .skill-card h3 { margin: 6px 0; }
-    .status-pill { display: inline-block; padding: 5px 10px; background: #fff; border-radius: 999px; font-weight: 900; }
-
-    .celebration {
-      display: flex;
-      justify-content: center;
-      gap: 8px;
-      margin: 12px 0;
-      font-size: 38px;
-      letter-spacing: .1em;
-    }
-
-    .parent-panel {
-      margin-top: 22px;
-      padding: 16px 20px;
-      border: 2px solid var(--line);
-      border-radius: 18px;
-      background: #fff;
-    }
-
-    .parent-panel summary { cursor: pointer; font-weight: 900; }
-    .parent-panel table { width: 100%; margin-top: 14px; border-collapse: collapse; }
-    .parent-panel th, .parent-panel td { padding: 10px 6px; border-bottom: 1px solid var(--line); text-align: left; }
-
-    .home-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; }
-
-    .dialog-backdrop {
-      position: fixed;
-      inset: 0;
-      z-index: 10;
-      display: grid;
+      width: 38px;
+      height: 38px;
       place-items: center;
-      padding: 18px;
-      background: rgba(27, 32, 58, .55);
+      border-radius: 50%;
+      background: var(--card-chip);
+      font-size: 22px;
+      transition: transform .2s ease;
     }
 
-    .dialog-card {
-      width: min(470px, 100%);
-      padding: 28px;
-      background: #fff;
-      border-radius: 24px;
-      box-shadow: var(--shadow);
+    .course-link:hover .course-action span { transform: translateX(3px); }
+
+    .unit-1 {
+      --card-strong: #4740b5;
+      --card-chip: #dedcff;
+      background: linear-gradient(135deg, #c9c9ff, #ece7ff);
+    }
+
+    .unit-2 {
+      --card-strong: #176579;
+      --card-chip: #d3f2f8;
+      background: linear-gradient(135deg, #c8edff, #dff7f0);
+    }
+
+    .unit-3 {
+      --card-strong: #85521a;
+      --card-chip: #ffedc3;
+      background: linear-gradient(135deg, #ffe3a3, #fff3d8);
+    }
+
+    .unit-4 {
+      --card-strong: #a13f39;
+      --card-chip: #ffdcd5;
+      background: linear-gradient(135deg, #ffcfc3, #ffebe5);
+    }
+
+    .unit-5 {
+      --card-strong: #34713b;
+      --card-chip: #daf0d5;
+      background: linear-gradient(135deg, #c8ebc4, #e8f7df);
+    }
+
+    footer {
+      margin-top: 34px;
+      padding: 20px;
+      border: 1px solid rgba(255, 255, 255, .9);
+      border-radius: 20px;
+      color: var(--muted);
+      background: rgba(255, 255, 255, .7);
+      box-shadow: 0 12px 30px rgba(48, 61, 112, .08);
       text-align: center;
     }
 
-    .dialog-card h2 { margin-top: 0; }
+    footer p { margin: 0; }
 
-    .toast {
-      position: fixed;
-      right: 18px;
-      bottom: 18px;
-      z-index: 20;
-      max-width: min(420px, calc(100% - 36px));
-      padding: 12px 18px;
-      color: #fff;
-      background: #2e3860;
-      border-radius: 14px;
-      box-shadow: var(--shadow);
-      font-weight: 800;
+    @media (max-width: 900px) {
+      .course-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     }
 
-    .sr-only {
-      position: absolute;
-      width: 1px;
-      height: 1px;
-      padding: 0;
-      margin: -1px;
-      overflow: hidden;
-      clip: rect(0, 0, 0, 0);
-      white-space: nowrap;
-      border: 0;
-    }
+    @media (max-width: 640px) {
+      .site-shell {
+        width: min(calc(100% - 22px), 1180px);
+        padding-top: 32px;
+      }
 
-    button:focus-visible { outline: 4px solid #ffbf47; outline-offset: 3px; }
-
-    @media (max-width: 620px) {
-      .app-shell { width: min(100% - 18px, 980px); padding-top: 10px; }
-      .topbar { gap: 8px; }
-      .brand { display: none; }
-      .card { padding: 24px 18px; border-radius: 24px; }
-      .primary-button { width: 100%; }
-      .tool-button .button-label { display: none; }
-      .options-grid, .report-grid, .stage-map { grid-template-columns: 1fr; }
-      .keypad { grid-template-columns: repeat(4, minmax(48px, 1fr)); }
-      .lesson-header { align-items: flex-start; }
-      .action-row { flex-direction: column; }
-      .parent-panel { padding: 14px; overflow-x: auto; }
+      .hero { margin-bottom: 30px; }
+      .hero-mark { width: 76px; height: 76px; font-size: 42px; }
+      .course-grid { grid-template-columns: minmax(0, 1fr); gap: 16px; }
+      .course-link { padding: 22px; }
+      .course-card h3 { margin-top: 18px; font-size: 25px; }
     }
 
     @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after {
+      html { scroll-behavior: auto; }
+
+      *,
+      *::before,
+      *::after {
         scroll-behavior: auto !important;
+        transition-duration: .01ms !important;
         animation-duration: .01ms !important;
         animation-iteration-count: 1 !important;
-        transition-duration: .01ms !important;
       }
     }
   </style>
 </head>
 <body>
-  <div class="app-shell">
-    <header class="topbar" aria-label="课程工具栏">
-      <div class="brand">🚀 数学星球</div>
-      <div class="progress-track" aria-label="课程进度">
-        <div id="progress-bar" class="progress-fill" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"></div>
-      </div>
-      <div class="toolbar-actions">
-        <button id="speech-button" class="compact-button" type="button" aria-label="朗读当前内容">🔊<span class="button-label"> 朗读</span></button>
-        <button id="pause-button" class="compact-button" type="button" aria-label="暂停并返回首页">⏸️<span class="button-label"> 暂停</span></button>
-      </div>
+  <a class="skip-link" href="#course-list">跳到课程目录</a>
+
+  <div class="site-shell">
+    <header class="hero">
+      <div class="hero-mark" aria-hidden="true">🚀</div>
+      <p class="eyebrow">二年级数学 · 互动自学</p>
+      <h1>二年级数学互动自学课程</h1>
+      <p class="lead">选择一个单元，带着好奇心出发。每次学习约 60 分钟，可以随时暂停再回来。</p>
+      <ul class="hero-facts" aria-label="课程特点">
+        <li>五个主题单元</li>
+        <li>互动探索与练习</li>
+        <li>本机保存进度</li>
+      </ul>
     </header>
 
-    <main id="app" class="card">
-      <section class="hero" aria-labelledby="course-title">
-        <div class="planet" aria-hidden="true">🪐</div>
-        <p class="fact" style="display:inline-block">二年级数学 · 基础复习</p>
-        <h1 id="course-title">数学星球大冒险</h1>
-        <p class="lead">唤醒你的数学能量！完成 6 个轻松的小任务，看看哪些本领已经很稳啦。</p>
-        <div class="facts" aria-label="课程特点">
-          <span class="fact">⏱️ 约30分钟</span>
-          <span class="fact">⭐ 6个关卡</span>
-          <span class="fact">💡 不会就有提示</span>
+    <main>
+      <section id="course-list" aria-labelledby="course-list-title">
+        <div class="section-heading">
+          <p class="section-kicker">课程目录</p>
+          <h2 id="course-list-title">今天想去哪里学习？</h2>
         </div>
-        <button id="start-course" class="primary-button" type="button">开始冒险 🚀</button>
+
+        <ul class="course-grid">
+          <li class="course-card unit-1">
+            <a class="course-link" href="grade2-math-unit1.html" aria-label="第一单元 数学星球大冒险，开始学习">
+              <span class="card-top">
+                <span class="unit-number">第一单元</span>
+                <span class="unit-icon" aria-hidden="true">🪐</span>
+              </span>
+              <h3>数学星球大冒险</h3>
+              <p>20以内加减、100以内数感与基础应用</p>
+              <span class="course-meta">约 60 分钟</span>
+              <span class="course-action">开始学习 <span aria-hidden="true">→</span></span>
+            </a>
+          </li>
+
+          <li class="course-card unit-2">
+            <a class="course-link" href="grade2-math-unit2.html" aria-label="第二单元 计算城建造师，开始学习">
+              <span class="card-top">
+                <span class="unit-number">第二单元</span>
+                <span class="unit-icon" aria-hidden="true">🏗️</span>
+              </span>
+              <h3>计算城建造师</h3>
+              <p>100以内加减法、进位、退位与验算</p>
+              <span class="course-meta">约 60 分钟</span>
+              <span class="course-action">开始学习 <span aria-hidden="true">→</span></span>
+            </a>
+          </li>
+
+          <li class="course-card unit-3">
+            <a class="course-link" href="grade2-math-unit3.html" aria-label="第三单元 小小店长，开始学习">
+              <span class="card-top">
+                <span class="unit-number">第三单元</span>
+                <span class="unit-icon" aria-hidden="true">🛍️</span>
+              </span>
+              <h3>小小店长</h3>
+              <p>人民币认识、付款、找零与预算</p>
+              <span class="course-meta">约 60 分钟</span>
+              <span class="course-action">开始学习 <span aria-hidden="true">→</span></span>
+            </a>
+          </li>
+
+          <li class="course-card unit-4">
+            <a class="course-link" href="grade2-math-unit4.html" aria-label="第四单元 乘法乐园建筑师，开始学习">
+              <span class="card-top">
+                <span class="unit-number">第四单元</span>
+                <span class="unit-icon" aria-hidden="true">🧱</span>
+              </span>
+              <h3>乘法乐园建筑师</h3>
+              <p>相同加数、乘法意义、阵列与生活模型</p>
+              <span class="course-meta">约 60 分钟</span>
+              <span class="course-action">开始学习 <span aria-hidden="true">→</span></span>
+            </a>
+          </li>
+
+          <li class="course-card unit-5">
+            <a class="course-link" href="grade2-math-unit5.html" aria-label="第五单元 口诀森林探险队，开始学习">
+              <span class="card-top">
+                <span class="unit-number">第五单元</span>
+                <span class="unit-icon" aria-hidden="true">🌲</span>
+              </span>
+              <h3>口诀森林探险队</h3>
+              <p>2至9乘法口诀与灵活计算策略</p>
+              <span class="course-meta">约 60 分钟</span>
+              <span class="course-action">开始学习 <span aria-hidden="true">→</span></span>
+            </a>
+          </li>
+        </ul>
       </section>
     </main>
+
+    <footer>
+      <p>学习进度只保存在当前浏览器，不会上传，也不会跨设备同步。</p>
+    </footer>
   </div>
-  <script>
-    'use strict';
-
-    /* TESTABLE_CORE_START */
-    const QUESTION_BANK = [
-      {
-        id: 'add-1', stage: 'addition20', dimension: 'calculation', tag: '20以内加法', type: 'choice',
-        prompt: '欢迎来到加法补给站！7 加 5 等于多少？', expression: '7 + 5 = ?', answer: 12,
-        options: [10, 11, 12, 13], hint1: '先从 7 往后数 5 下。',
-        hint2: '把 5 分成 3 和 2：7 + 3 = 10，再加 2。', explanation: '7 + 5 = 7 + 3 + 2 = 12。'
-      },
-      {
-        id: 'add-2', stage: 'addition20', dimension: 'calculation', tag: '20以内加法', type: 'number-input',
-        prompt: '补给箱里有 9 颗能量球，又送来 8 颗，一共有多少颗？', expression: '9 + 8 = ?', answer: 17,
-        hint1: '可以先把 9 凑成 10。', hint2: '从 8 里面拿 1 给 9，还剩 7。', explanation: '9 + 8 = 10 + 7 = 17。'
-      },
-      {
-        id: 'add-3', stage: 'addition20', dimension: 'calculation', tag: '20以内加法', type: 'choice',
-        prompt: '哪一个算式的结果是 15？', expression: '找一找结果是 15 的算式', answer: '8 + 7',
-        options: ['6 + 7', '8 + 7', '9 + 5', '7 + 6'], hint1: '分别算一算，看看谁刚好到 15。',
-        hint2: '8 再加 2 是 10，还要加 5，所以 8 + 7 = 15。', explanation: '8 + 7 = 15，其他三个算式的结果都不是 15。'
-      },
-      {
-        id: 'sub-1', stage: 'subtraction20', dimension: 'calculation', tag: '20以内减法', type: 'choice',
-        prompt: '飞船上有 16 位乘客，下去 7 位，还剩多少位？', expression: '16 − 7 = ?', answer: 9,
-        options: [7, 8, 9, 10], hint1: '想一想：7 加几等于 16？', hint2: '7 + 9 = 16，所以 16 − 7 = 9。', explanation: '减法可以用加法来检查：9 + 7 = 16。'
-      },
-      {
-        id: 'sub-2', stage: 'subtraction20', dimension: 'calculation', tag: '20以内减法', type: 'number-input',
-        prompt: '陨石带有 13 块小陨石，清理了 8 块，还剩多少块？', expression: '13 − 8 = ?', answer: 5,
-        hint1: '可以先减 3，回到 10。', hint2: '把 8 分成 3 和 5：13 − 3 = 10，再减 5。', explanation: '13 − 8 = 13 − 3 − 5 = 5。'
-      },
-      {
-        id: 'sub-3', stage: 'subtraction20', dimension: 'calculation', tag: '20以内减法', type: 'choice',
-        prompt: '算一算：18 减 9 的结果是哪一个？', expression: '18 − 9 = ?', answer: 9,
-        options: [8, 9, 10, 11], hint1: '9 加几可以回到 18？', hint2: '9 + 9 = 18。', explanation: '因为 9 + 9 = 18，所以 18 − 9 = 9。'
-      },
-      {
-        id: 'sub-4', stage: 'subtraction20', dimension: 'calculation', tag: '20以内减法', type: 'number-input',
-        prompt: '一颗星星上有 15 个光点，熄灭了 6 个，还亮着几个？', expression: '15 − 6 = ?', answer: 9,
-        hint1: '可以从 15 倒着数 6 下。', hint2: '15 − 5 = 10，再减 1。', explanation: '15 − 6 = 15 − 5 − 1 = 9。'
-      },
-      {
-        id: 'sense-1', stage: 'numberSense100', dimension: 'numberSense', tag: '数的组成', type: 'choice',
-        prompt: '观测器显示：4 个十和 6 个一。这个数是多少？', expression: '4个十 + 6个一', answer: 46,
-        options: [406, 64, 46, 40], hint1: '4 个十就是 40。', hint2: '40 和 6 合起来是多少？', explanation: '4 个十是 40，6 个一是 6，合起来是 46。'
-      },
-      {
-        id: 'sense-2', stage: 'numberSense100', dimension: 'numberSense', tag: '大小比较', type: 'compare',
-        prompt: '比较两颗星球上的数字，选择正确的符号。', expression: '58　□　63', answer: '<',
-        options: ['<', '=', '>'], hint1: '先比较十位上的数字。', hint2: '58 的十位是 5，63 的十位是 6。', explanation: '5 个十少于 6 个十，所以 58 < 63。'
-      },
-      {
-        id: 'sense-3', stage: 'numberSense100', dimension: 'numberSense', tag: '数序', type: 'number-input',
-        prompt: '按顺序填数：67、68、69、____、71。', expression: '67　68　69　?　71', answer: 70,
-        hint1: '这些数每次增加 1。', hint2: '69 后面的一个数是什么？', explanation: '69 后面是 70，再后面是 71。'
-      },
-      {
-        id: 'sense-4', stage: 'numberSense100', dimension: 'numberSense', tag: '数轴', type: 'number-line',
-        prompt: '数轴上，40 和 60 正中间的数是多少？', expression: '40 ─── ? ─── 60', answer: 50,
-        options: [40, 45, 50, 55, 60], hint1: '从 40 到 60 一共相差 20。', hint2: '一半是 10，40 加 10。', explanation: '40 加 10 是 50，50 再加 10 是 60。'
-      },
-      {
-        id: 'sense-5', stage: 'numberSense100', dimension: 'numberSense', tag: '大小比较', type: 'compare',
-        prompt: '十位相同时，再比较个位。请选择正确符号。', expression: '72　□　27', answer: '>',
-        options: ['<', '=', '>'], hint1: '先看十位：一个是 7，一个是 2。', hint2: '7 个十比 2 个十大。', explanation: '72 有 7 个十，27 有 2 个十，所以 72 > 27。'
-      },
-      {
-        id: 'calc100-1', stage: 'calculation100', dimension: 'calculation', tag: '整十加减', type: 'choice',
-        prompt: '给动力舱充能：30 加 40 等于多少？', expression: '30 + 40 = ?', answer: 70,
-        options: [60, 70, 80, 90], hint1: '3 个十加 4 个十。', hint2: '3 + 4 = 7，所以是 7 个十。', explanation: '3 个十加 4 个十是 7 个十，也就是 70。'
-      },
-      {
-        id: 'calc100-2', stage: 'calculation100', dimension: 'calculation', tag: '两位数加一位数', type: 'number-input',
-        prompt: '动力值是 42，又增加 6。现在是多少？', expression: '42 + 6 = ?', answer: 48,
-        hint1: '十位不变，先算个位。', hint2: '个位 2 + 6 = 8。', explanation: '42 是 4 个十和 2 个一，再加 6 个一，得到 48。'
-      },
-      {
-        id: 'calc100-3', stage: 'calculation100', dimension: 'calculation', tag: '两位数减一位数', type: 'choice',
-        prompt: '动力值是 76，用掉 5。还剩多少？', expression: '76 − 5 = ?', answer: 71,
-        options: [70, 71, 72, 81], hint1: '十位不变，个位 6 减 5。', hint2: '6 − 5 = 1。', explanation: '76 减 5，只需要从 6 个一里减去 5 个一，得到 71。'
-      },
-      {
-        id: 'calc100-4', stage: 'calculation100', dimension: 'calculation', tag: '整十加减', type: 'number-input',
-        prompt: '算一算：85 减 20 等于多少？', expression: '85 − 20 = ?', answer: 65,
-        hint1: '减去 20，就是减去 2 个十。', hint2: '8 个十减 2 个十，剩 6 个十；个位 5 不变。', explanation: '85 − 20 = 65。'
-      },
-      {
-        id: 'app-1', stage: 'application', dimension: 'application', tag: '求总数', type: 'scene',
-        prompt: '任务港有 8 艘蓝色飞船和 7 艘黄色飞船。一共有多少艘？', expression: '🚙×8　＋　🚕×7', answer: 15,
-        options: [1, 14, 15, 16], hint1: '求一共有多少，要把两部分合起来。', hint2: '用加法：8 + 7。', explanation: '8 艘和 7 艘合起来：8 + 7 = 15 艘。'
-      },
-      {
-        id: 'app-2', stage: 'application', dimension: 'application', tag: '求剩余', type: 'scene',
-        prompt: '小宇有 20 枚星星币，买贴纸用了 6 枚，还剩多少枚？', expression: '🪙 20枚　买东西用去6枚', answer: 14,
-        options: [12, 13, 14, 26], hint1: '“用去”以后，数量会变少。', hint2: '用减法：20 − 6。', explanation: '20 − 6 = 14，所以还剩 14 枚。'
-      },
-      {
-        id: 'app-3', stage: 'application', dimension: 'application', tag: '比较多少', type: 'choice',
-        prompt: '红队收集了 35 颗能量石，蓝队收集了 30 颗。红队比蓝队多几颗？', expression: '红队35颗　蓝队30颗', answer: 5,
-        options: [5, 30, 35, 65], hint1: '求“多几颗”，要比较两个数量的差。', hint2: '用减法：35 − 30。', explanation: '35 − 30 = 5，红队比蓝队多 5 颗。'
-      },
-      {
-        id: 'app-4', stage: 'application', dimension: 'application', tag: '选择运算', type: 'choice',
-        prompt: '上午送到 12 箱补给，下午又送到 5 箱。下面哪一个算式能解决“一共多少箱”？', expression: '选择正确算式', answer: '12 + 5',
-        options: ['12 − 5', '12 + 5', '12 + 12', '5 − 12'], hint1: '“又送到”表示补给变多了。',
-        hint2: '求两部分合起来的总数，要用加法。', explanation: '上午 12 箱和下午 5 箱合起来，算式是 12 + 5。'
-      }
-    ];
-
-    function evaluateAnswer(question, answer) {
-      const expected = question && question.answer;
-      if (answer === null || answer === undefined || String(answer).trim() === '') return false;
-      if (typeof expected === 'number') {
-        const numeric = Number(String(answer).trim());
-        return Number.isFinite(numeric) && numeric === expected;
-      }
-      return String(answer).trim() === String(expected).trim();
-    }
-
-    function getHint(question, attempts) {
-      const level = Math.min(Math.max(Number(attempts) || 1, 1), 3);
-      const text = level === 1 ? question.hint1 : level === 2 ? question.hint2 : question.explanation;
-      return { level, text };
-    }
-
-    function buildReport(records) {
-      const safeRecords = Array.isArray(records) ? records.filter((record) => record && record.completed) : [];
-      const dimensionKeys = ['calculation', 'numberSense', 'application'];
-      const dimensions = {};
-
-      dimensionKeys.forEach((key) => {
-        const items = safeRecords.filter((record) => record.dimension === key);
-        if (items.length === 0) {
-          dimensions[key] = { total: 0, correct: 0, rate: 0, maxHint: 0, status: '还没有题目' };
-          return;
-        }
-
-        const correct = items.filter((record) => record.firstTryCorrect).length;
-        const rate = Math.round((correct / items.length) * 100);
-        const maxHint = Math.max(0, ...items.map((record) => Number(record.maxHint) || 0));
-        const status = rate >= 80 && maxHint === 0
-          ? '很稳'
-          : rate >= 60 && maxHint <= 1
-            ? '继续练一练'
-            : '需要一起复习';
-        dimensions[key] = { total: items.length, correct, rate, maxHint, status };
-      });
-
-      const firstTryCorrect = safeRecords.filter((record) => record.firstTryCorrect).length;
-      return {
-        dimensions,
-        wrongQuestionIds: safeRecords.filter((record) => !record.firstTryCorrect).map((record) => record.questionId),
-        firstTryRate: safeRecords.length ? Math.round((firstTryCorrect / safeRecords.length) * 100) : 0
-      };
-    }
-
-    function validateSave(value) {
-      if (!value || typeof value !== 'object' || value.version !== 1) return false;
-      if (!['home', 'demo', 'lesson', 'report'].includes(value.screen)) return false;
-      if (!Number.isInteger(value.questionIndex) || value.questionIndex < 0 || value.questionIndex > QUESTION_BANK.length) return false;
-      if (!Array.isArray(value.records) || !Array.isArray(value.stars) || !Array.isArray(value.retryQueue)) return false;
-      if (!Array.isArray(value.retryResults)) return false;
-      if (!['course', 'retry'].includes(value.mode)) return false;
-      if (!Number.isInteger(value.currentAttempts) || value.currentAttempts < 0 || value.currentAttempts > 20) return false;
-      if (!Number.isInteger(value.currentMaxHint) || value.currentMaxHint < 0 || value.currentMaxHint > 3) return false;
-      if (typeof value.currentResolved !== 'boolean') return false;
-      const validLastHint = value.lastHint === null
-        || (value.lastHint
-          && typeof value.lastHint === 'object'
-          && Number.isInteger(value.lastHint.level)
-          && value.lastHint.level >= 1
-          && value.lastHint.level <= 3
-          && typeof value.lastHint.text === 'string');
-      if (!validLastHint) return false;
-      const questionIds = new Set(QUESTION_BANK.map((question) => question.id));
-      const dimensions = new Set(['calculation', 'numberSense', 'application']);
-      const validRecord = (record) => record
-        && typeof record === 'object'
-        && questionIds.has(record.questionId)
-        && dimensions.has(record.dimension)
-        && typeof record.firstTryCorrect === 'boolean'
-        && Number.isInteger(record.attempts)
-        && record.attempts >= 1
-        && Number.isInteger(record.maxHint)
-        && record.maxHint >= 0
-        && record.maxHint <= 3
-        && record.completed === true;
-      if (!value.records.every(validRecord)) return false;
-      if (!value.retryResults.every(validRecord)) return false;
-      if (!value.retryQueue.every((id) => questionIds.has(id))) return false;
-      if (new Set(value.records.map((record) => record.questionId)).size !== value.records.length) return false;
-      if (new Set(value.retryQueue).size !== value.retryQueue.length) return false;
-      if (new Set(value.retryResults.map((record) => record.questionId)).size !== value.retryResults.length) return false;
-      const validStars = new Set(['launch', 'addition20', 'subtraction20', 'numberSense100', 'calculation100', 'application']);
-      if (!value.stars.every((star) => validStars.has(star)) || new Set(value.stars).size !== value.stars.length) return false;
-      if (value.currentResolved && value.currentAttempts < 1) return false;
-      if (!value.currentResolved && value.currentAttempts === 0 && (value.currentMaxHint !== 0 || value.lastHint !== null)) return false;
-      if (!value.currentResolved && value.currentAttempts > 0) {
-        if (!value.lastHint || value.currentMaxHint !== value.lastHint.level) return false;
-      }
-      if (value.currentResolved && value.lastHint !== null) return false;
-
-      if (value.screen === 'demo') {
-        return value.mode === 'course'
-          && value.questionIndex === 0
-          && value.records.length === 0
-          && value.stars.length === 0
-          && value.currentAttempts === 0
-          && !value.currentResolved;
-      }
-
-      if (value.screen === 'home') {
-        return value.mode === 'course'
-          && value.questionIndex === 0
-          && value.records.length === 0
-          && value.currentAttempts === 0
-          && !value.currentResolved;
-      }
-
-      if (value.screen === 'report') {
-        return value.mode === 'course'
-          && value.questionIndex === QUESTION_BANK.length
-          && value.records.length === QUESTION_BANK.length
-          && !value.currentResolved;
-      }
-
-      if (value.mode === 'course') {
-        if (value.questionIndex >= QUESTION_BANK.length) return false;
-        const expectedCount = value.questionIndex + (value.currentResolved ? 1 : 0);
-        if (value.records.length !== expectedCount) return false;
-        if (!value.records.every((record, index) => record.questionId === QUESTION_BANK[index].id)) return false;
-        return true;
-      }
-
-      if (value.retryQueue.length === 0 || value.questionIndex >= value.retryQueue.length) return false;
-      if (value.records.length !== QUESTION_BANK.length) return false;
-      const expectedRetryCount = value.questionIndex + (value.currentResolved ? 1 : 0);
-      if (value.retryResults.length !== expectedRetryCount) return false;
-      if (!value.retryResults.every((record, index) => record.questionId === value.retryQueue[index])) return false;
-      const originalWrongIds = new Set(value.records.filter((record) => !record.firstTryCorrect).map((record) => record.questionId));
-      if (!value.retryQueue.every((id) => originalWrongIds.has(id))) return false;
-      return true;
-    }
-
-    window.MathQuestTestHooks = { QUESTION_BANK, evaluateAnswer, getHint, buildReport, validateSave };
-    /* TESTABLE_CORE_END */
-
-    const SAVE_KEY = 'mathQuest.grade2.unit1.v1';
-    const STAGE_SEQUENCE = ['addition20', 'subtraction20', 'numberSense100', 'calculation100', 'application'];
-    const STAGES = {
-      addition20: { icon: '➕', title: '加法补给站', short: '20以内加法' },
-      subtraction20: { icon: '☄️', title: '减法陨石带', short: '20以内减法' },
-      numberSense100: { icon: '🔭', title: '百数观测塔', short: '百以内数感' },
-      calculation100: { icon: '⚡', title: '计算动力舱', short: '百以内加减' },
-      application: { icon: '🛸', title: '生活任务港', short: '生活应用' }
-    };
-    const DIMENSIONS = {
-      calculation: { icon: '🧮', title: '计算能力' },
-      numberSense: { icon: '🔢', title: '数感' },
-      application: { icon: '🏪', title: '生活应用' }
-    };
-
-    const app = document.getElementById('app');
-    const progressBar = document.getElementById('progress-bar');
-    const speechButton = document.getElementById('speech-button');
-    const pauseButton = document.getElementById('pause-button');
-
-    function createInitialState() {
-      return {
-        version: 1,
-        screen: 'home',
-        questionIndex: 0,
-        records: [],
-        stars: [],
-        mode: 'course',
-        retryQueue: [],
-        retryResults: [],
-        currentAttempts: 0,
-        currentMaxHint: 0,
-        currentResolved: false,
-        lastHint: null
-      };
-    }
-
-    function loadProgress() {
-      try {
-        const raw = localStorage.getItem(SAVE_KEY);
-        if (!raw) return null;
-        const parsed = JSON.parse(raw);
-        return validateSave(parsed) ? { ...createInitialState(), ...parsed } : null;
-      } catch (error) {
-        return null;
-      }
-    }
-
-    function saveProgress() {
-      try {
-        localStorage.setItem(SAVE_KEY, JSON.stringify(state));
-      } catch (error) {
-        showToast('这次无法保存进度，但可以继续学习。');
-      }
-    }
-
-    function clearProgress() {
-      try {
-        localStorage.removeItem(SAVE_KEY);
-      } catch (error) {
-        // Storage may be unavailable in a private browsing context.
-      }
-    }
-
-    function escapeHtml(value) {
-      return String(value)
-        .replaceAll('&', '&amp;')
-        .replaceAll('<', '&lt;')
-        .replaceAll('>', '&gt;')
-        .replaceAll('"', '&quot;')
-        .replaceAll("'", '&#039;');
-    }
-
-    function currentQuestions() {
-      if (state.mode === 'retry') {
-        return state.retryQueue
-          .map((id) => QUESTION_BANK.find((question) => question.id === id))
-          .filter(Boolean);
-      }
-      return QUESTION_BANK;
-    }
-
-    function getCurrentQuestion() {
-      return currentQuestions()[state.questionIndex] || null;
-    }
-
-    function progressPercent() {
-      if (state.screen === 'report') return 100;
-      if (state.mode === 'retry') {
-        return state.retryQueue.length
-          ? Math.round((state.retryResults.length / state.retryQueue.length) * 100)
-          : 0;
-      }
-      return Math.round((state.records.length / QUESTION_BANK.length) * 100);
-    }
-
-    function updateToolbar() {
-      const value = progressPercent();
-      progressBar.style.width = `${value}%`;
-      progressBar.setAttribute('aria-valuenow', String(value));
-      progressBar.setAttribute('aria-label', `课程已完成 ${value}%`);
-    }
-
-    function renderHome() {
-      const hasProgress = Boolean(savedState) || state.records.length > 0;
-      const completed = state.screen === 'report';
-      pauseButton.hidden = true;
-      updateToolbar();
-      app.innerHTML = `
-        <section class="hero" aria-labelledby="course-title">
-          <div class="planet" aria-hidden="true">🪐</div>
-          <p class="fact" style="display:inline-block">二年级数学 · 基础复习</p>
-          <h1 id="course-title">数学星球大冒险</h1>
-          <p class="lead">唤醒你的数学能量！完成 6 个轻松的小任务，看看哪些本领已经很稳啦。</p>
-          <div class="stage-map" aria-label="冒险地图">
-            <div class="stage-stop">🚀 启航小练习</div>
-            ${STAGE_SEQUENCE.map((key) => `<div class="stage-stop">${STAGES[key].icon} ${STAGES[key].short}</div>`).join('')}
-          </div>
-          <div class="facts" aria-label="课程特点">
-            <span class="fact">⏱️ 约30分钟</span>
-            <span class="fact">⭐ 6个关卡</span>
-            <span class="fact">💡 不会就有提示</span>
-          </div>
-          <div class="home-actions">
-            ${hasProgress
-              ? `<button id="continue-course" class="primary-button" type="button">${completed ? '查看成长报告 🌟' : '继续冒险 🚀'}</button>
-                 <button id="restart-course" class="tool-button" type="button">重新开始</button>`
-              : '<button id="start-course" class="primary-button" type="button">开始冒险 🚀</button>'}
-          </div>
-        </section>`;
-
-      const startButton = document.getElementById('start-course');
-      if (startButton) startButton.addEventListener('click', startNewCourse);
-      const continueButton = document.getElementById('continue-course');
-      if (continueButton) continueButton.addEventListener('click', continueCourse);
-      const restartButton = document.getElementById('restart-course');
-      if (restartButton) restartButton.addEventListener('click', openRestartDialog);
-      focusHeading();
-    }
-
-    function startNewCourse() {
-      state = createInitialState();
-      state.screen = 'demo';
-      savedState = state;
-      saveProgress();
-      renderDemo();
-    }
-
-    function continueCourse() {
-      if (state.screen === 'report') {
-        state.screen = 'report';
-        renderReport();
-      } else if (state.screen === 'demo') {
-        renderDemo();
-      } else {
-        state.screen = 'lesson';
-        renderLesson();
-      }
-    }
-
-    function renderDemo(feedback = '') {
-      state.screen = 'demo';
-      pauseButton.hidden = false;
-      updateToolbar();
-      app.innerHTML = `
-        <section aria-labelledby="demo-heading">
-          <div class="lesson-header">
-            <span class="stage-chip">🚀 启航小练习</span>
-            <span class="question-count">不计入成绩</span>
-          </div>
-          <h1 id="demo-heading" class="prompt" tabindex="-1">先试试怎么答题</h1>
-          <p class="lead" style="text-align:center">点击一个答案，再按“提交示范答案”。选错也没关系，我们会一起找到办法。</p>
-          <div class="expression" aria-label="示范题">7 + 3 = ?</div>
-          <div class="answer-area">
-            <div class="options-grid" role="group" aria-label="示范题答案">
-              ${[9, 10, 11, 12].map((answer) => `<button class="answer-option demo-option" type="button" data-demo-answer="${answer}" aria-pressed="false">${answer}</button>`).join('')}
-            </div>
-          </div>
-          ${feedback ? `<aside class="feedback hint" role="status"><h2>💡 再想一想</h2><p>${escapeHtml(feedback)}</p></aside>` : ''}
-          <div class="action-row">
-            <button id="demo-submit" class="primary-button" type="button" disabled>提交示范答案</button>
-          </div>
-        </section>`;
-
-      let demoAnswer = null;
-      const submit = document.getElementById('demo-submit');
-      document.querySelectorAll('[data-demo-answer]').forEach((button) => {
-        button.addEventListener('click', () => {
-          document.querySelectorAll('[data-demo-answer]').forEach((item) => {
-            item.classList.remove('selected');
-            item.setAttribute('aria-pressed', 'false');
-          });
-          button.classList.add('selected');
-          button.setAttribute('aria-pressed', 'true');
-          demoAnswer = Number(button.dataset.demoAnswer);
-          submit.disabled = false;
-        });
-      });
-      submit.addEventListener('click', () => {
-        if (demoAnswer === 10) renderDemoSuccess();
-        else renderDemo('7 加 3，可以从 7 往后数 3 下：8、9、10。再选一次吧。');
-      });
-      focusHeading('demo-heading');
-    }
-
-    function renderDemoSuccess() {
-      app.innerHTML = `
-        <section aria-labelledby="demo-success-heading">
-          <div class="lesson-header">
-            <span class="stage-chip">🚀 启航小练习</span>
-            <span class="question-count">操作完成</span>
-          </div>
-          <div class="expression">7 + 3 = 10</div>
-          <div class="feedback correct" role="status">
-            <h1 id="demo-success-heading" tabindex="-1">操作成功！</h1>
-            <p>你已经会选择答案、提交并查看反馈了。现在开始真正的数学冒险！</p>
-          </div>
-          <div class="action-row">
-            <button id="enter-course" class="primary-button" type="button">进入第一关 ⭐</button>
-          </div>
-        </section>`;
-      document.getElementById('enter-course').addEventListener('click', () => {
-        state.stars = ['launch'];
-        state.screen = 'lesson';
-        saveProgress();
-        renderLesson();
-      });
-      focusHeading('demo-success-heading');
-      announce('操作成功！现在进入第一关。');
-    }
-
-    function stagePosition(question) {
-      return STAGE_SEQUENCE.indexOf(question.stage) + 1;
-    }
-
-    function renderLesson() {
-      const question = getCurrentQuestion();
-      if (!question) {
-        finishCurrentMode();
-        return;
-      }
-
-      state.screen = 'lesson';
-      pauseButton.hidden = false;
-      updateToolbar();
-      if (state.currentResolved) {
-        renderResolvedQuestion(question);
-        return;
-      }
-
-      const questions = currentQuestions();
-      const stage = STAGES[question.stage];
-      const stageNumber = stagePosition(question);
-      const hint = state.lastHint;
-      app.innerHTML = `
-        <section aria-labelledby="question-heading">
-          <div class="lesson-header">
-            <span class="stage-chip">${stage.icon} ${escapeHtml(stage.title)}</span>
-            <span class="question-count">${state.mode === 'retry' ? '错题重练' : `第 ${state.questionIndex + 1} / ${questions.length} 题`}</span>
-          </div>
-          <p class="sr-only">${state.mode === 'retry' ? '错题重练' : `第 ${stageNumber} 个知识关卡`}</p>
-          <h1 id="question-heading" class="prompt" tabindex="-1">${escapeHtml(question.prompt)}</h1>
-          <div class="expression" aria-label="题目信息">${escapeHtml(question.expression)}</div>
-          <div id="answer-area" class="answer-area">${renderAnswerControl(question)}</div>
-          ${hint ? renderHint(question, hint) : ''}
-          <div class="action-row">
-            <button id="submit-answer" class="primary-button" type="button" disabled>提交答案</button>
-          </div>
-        </section>`;
-
-      wireAnswerControls(question);
-      document.getElementById('submit-answer').addEventListener('click', submitCurrentAnswer);
-      focusHeading();
-    }
-
-    function renderAnswerControl(question) {
-      if (question.type === 'number-input') {
-        return `
-          <div class="number-entry">
-            <label for="number-answer" class="sr-only">输入答案</label>
-            <input id="number-answer" class="answer-input" type="text" inputmode="numeric" autocomplete="off" maxlength="3" aria-describedby="input-help">
-            <span id="input-help" class="sr-only">可以使用键盘，也可以点击下面的数字</span>
-            <div class="keypad" aria-label="屏幕数字键盘">
-              ${[1, 2, 3, 4, 5, 6, 7, 8, 9, 0].map((number) => `<button type="button" data-key="${number}">${number}</button>`).join('')}
-              <button type="button" data-key="backspace" aria-label="删除最后一位">⌫</button>
-              <button type="button" data-key="clear">清空</button>
-            </div>
-          </div>`;
-      }
-
-      if (question.type === 'number-line') {
-        return `
-          <div class="number-line-control" role="group" aria-label="在数轴上选择一个刻度">
-            ${question.options.map((option, index) => `
-              <button class="number-line-tick" type="button" data-option-index="${index}" aria-pressed="false" aria-label="选择刻度 ${option}">
-                ${escapeHtml(option)}
-              </button>`).join('')}
-          </div>`;
-      }
-
-      return `
-        <div class="options-grid" role="group" aria-label="请选择一个答案">
-          ${question.options.map((option, index) => `
-            <button class="answer-option" type="button" data-option-index="${index}" aria-pressed="false">
-              ${escapeHtml(option)}
-            </button>`).join('')}
-        </div>`;
-    }
-
-    function wireAnswerControls(question) {
-      state.selectedAnswer = null;
-      const submitButton = document.getElementById('submit-answer');
-      if (question.type === 'number-input') {
-        const input = document.getElementById('number-answer');
-        const syncInput = () => {
-          input.value = input.value.replace(/[^0-9]/g, '').slice(0, 3);
-          state.selectedAnswer = input.value;
-          submitButton.disabled = input.value.length === 0;
-        };
-        input.addEventListener('input', syncInput);
-        input.addEventListener('keydown', (event) => {
-          if (event.key === 'Enter' && !submitButton.disabled) submitCurrentAnswer();
-        });
-        document.querySelectorAll('[data-key]').forEach((button) => {
-          button.addEventListener('click', () => {
-            const key = button.dataset.key;
-            if (key === 'backspace') input.value = input.value.slice(0, -1);
-            else if (key === 'clear') input.value = '';
-            else input.value = `${input.value}${key}`.slice(0, 3);
-            syncInput();
-            input.focus();
-          });
-        });
-        input.focus();
-        return;
-      }
-
-      document.querySelectorAll('[data-option-index]').forEach((button) => {
-        button.addEventListener('click', () => {
-          document.querySelectorAll('[data-option-index]').forEach((item) => {
-            item.classList.remove('selected');
-            item.setAttribute('aria-pressed', 'false');
-          });
-          button.classList.add('selected');
-          button.setAttribute('aria-pressed', 'true');
-          state.selectedAnswer = question.options[Number(button.dataset.optionIndex)];
-          submitButton.disabled = false;
-        });
-      });
-    }
-
-    function submitCurrentAnswer() {
-      const question = getCurrentQuestion();
-      if (!question || state.selectedAnswer === null || state.selectedAnswer === '') return;
-      state.currentAttempts += 1;
-
-      if (evaluateAnswer(question, state.selectedAnswer)) {
-        const record = {
-          questionId: question.id,
-          dimension: question.dimension,
-          firstTryCorrect: state.currentAttempts === 1,
-          attempts: state.currentAttempts,
-          maxHint: state.currentMaxHint,
-          completed: true
-        };
-        if (state.mode === 'course') {
-          const existingIndex = state.records.findIndex((item) => item.questionId === question.id);
-          if (existingIndex >= 0) state.records[existingIndex] = record;
-          else state.records.push(record);
-        } else {
-          state.retryResults.push(record);
-        }
-        state.currentResolved = true;
-        state.lastHint = null;
-        saveProgress();
-        renderResolvedQuestion(question);
-        return;
-      }
-
-      const hint = getHint(question, state.currentAttempts);
-      state.currentMaxHint = Math.max(state.currentMaxHint, hint.level);
-      state.lastHint = hint;
-      state.selectedAnswer = null;
-      saveProgress();
-      renderLesson();
-      announce(`再想一想。${hint.text}`);
-    }
-
-    function renderHint(question, hint) {
-      return `
-        <aside class="feedback hint" role="status" aria-live="polite">
-          <h2>${hint.level === 1 ? '💡 小提示' : hint.level === 2 ? '🧩 我们画一画' : '🪄 一步一步来'}</h2>
-          <p>${escapeHtml(hint.text)}</p>
-          ${hint.level >= 2 ? `<div class="visual-hint" aria-label="图形提示">${makeVisualHint(question)}</div>` : ''}
-        </aside>`;
-    }
-
-    function makeVisualHint(question) {
-      if (question.type === 'compare') {
-        return `<span>先看十位</span><strong>${escapeHtml(question.expression)}</strong>`;
-      }
-      if (question.type === 'number-line') {
-        return '<span>40</span><span>➖</span><span>50</span><span>➖</span><span>60</span>';
-      }
-      if (typeof question.answer === 'number' && question.answer <= 20) {
-        return Array.from({ length: question.answer }, (_, index) => `<span aria-hidden="true">${index < 10 ? '●' : '○'}</span>`).join('');
-      }
-      if (typeof question.answer === 'number') {
-        const tens = Math.floor(question.answer / 10);
-        const ones = question.answer % 10;
-        return `<span>${'▰'.repeat(tens)}</span><span>${'●'.repeat(ones)}</span><small>${tens}个十和${ones}个一</small>`;
-      }
-      return `<strong>${escapeHtml(question.explanation)}</strong>`;
-    }
-
-    function renderResolvedQuestion(question) {
-      const questions = currentQuestions();
-      const isLast = state.questionIndex >= questions.length - 1;
-      pauseButton.hidden = false;
-      updateToolbar();
-      app.innerHTML = `
-        <section aria-labelledby="correct-heading">
-          <div class="lesson-header">
-            <span class="stage-chip">${STAGES[question.stage].icon} ${escapeHtml(STAGES[question.stage].title)}</span>
-            <span class="question-count">${state.mode === 'retry' ? '错题重练' : `第 ${state.questionIndex + 1} / ${questions.length} 题`}</span>
-          </div>
-          <div class="expression">${escapeHtml(question.expression)}</div>
-          <div class="feedback correct" role="status" aria-live="polite">
-            <h1 id="correct-heading" tabindex="-1">🎉 找到了！</h1>
-            <p>${escapeHtml(question.explanation)}</p>
-          </div>
-          <div class="action-row">
-            <button id="next-question" class="primary-button" type="button">${isLast ? '查看成长报告 🌟' : '继续前进 ➜'}</button>
-          </div>
-        </section>`;
-      document.getElementById('next-question').addEventListener('click', moveNext);
-      focusHeading('correct-heading');
-      announce(`答对了！${question.explanation}`);
-    }
-
-    function moveNext() {
-      const question = getCurrentQuestion();
-      const questions = currentQuestions();
-      const nextQuestion = questions[state.questionIndex + 1];
-      if (state.mode === 'course' && question && (!nextQuestion || nextQuestion.stage !== question.stage)) {
-        if (!state.stars.includes(question.stage)) state.stars.push(question.stage);
-      }
-      state.questionIndex += 1;
-      state.currentAttempts = 0;
-      state.currentMaxHint = 0;
-      state.currentResolved = false;
-      state.lastHint = null;
-      state.selectedAnswer = null;
-      saveProgress();
-
-      if (state.questionIndex >= questions.length) finishCurrentMode();
-      else renderLesson();
-    }
-
-    function finishCurrentMode() {
-      if (state.mode === 'retry') {
-        state.mode = 'course';
-        state.questionIndex = QUESTION_BANK.length;
-      }
-      state.screen = 'report';
-      state.currentResolved = false;
-      state.lastHint = null;
-      saveProgress();
-      renderReport();
-    }
-
-    function renderReport() {
-      const report = buildReport(state.records);
-      const wrongQuestions = report.wrongQuestionIds
-        .map((id) => QUESTION_BANK.find((question) => question.id === id))
-        .filter(Boolean);
-      state.screen = 'report';
-      pauseButton.hidden = true;
-      updateToolbar();
-
-      app.innerHTML = `
-        <section aria-labelledby="report-heading">
-          <div class="report-title">
-            <div class="planet" aria-hidden="true">🏆</div>
-            <h1 id="report-heading" tabindex="-1">冒险完成！</h1>
-            <p class="lead">你已经唤醒了所有基础能量。每一次认真思考，都让数学本领更强一点。</p>
-            <div class="celebration" aria-label="获得 ${Math.min(state.stars.length, 6)} 颗星">${'⭐'.repeat(Math.min(state.stars.length, 6))}</div>
-          </div>
-          <div class="report-grid">
-            ${Object.entries(DIMENSIONS).map(([key, meta]) => {
-              const result = report.dimensions[key];
-              return `
-                <article class="skill-card">
-                  <div class="skill-icon" aria-hidden="true">${meta.icon}</div>
-                  <h3>${meta.title}</h3>
-                  <p class="status-pill">${escapeHtml(result.status)}</p>
-                  <p>${result.total ? `第一次答对 ${result.correct} / ${result.total} 题` : '本次没有相关题目'}</p>
-                </article>`;
-            }).join('')}
-          </div>
-          <div class="feedback ${wrongQuestions.length ? 'hint' : 'correct'}">
-            <h2>${wrongQuestions.length ? '🌱 下一步建议' : '🌟 基础能量满满'}</h2>
-            <p>${wrongQuestions.length
-              ? `有 ${wrongQuestions.length} 道题值得再练一次。先看提示、画一画，你一定能找到办法。`
-              : '20 道题第一次都完成得很好，可以带着这份自信进入二年级啦！'}</p>
-          </div>
-          <div class="action-row">
-            ${wrongQuestions.length ? '<button id="retry-wrong" class="primary-button" type="button">只重练错题 🌱</button>' : ''}
-            <button id="report-home" class="tool-button" type="button">返回课程首页</button>
-            <button id="report-restart" class="tool-button" type="button">重新挑战</button>
-          </div>
-          <details class="parent-panel">
-            <summary>家长查看学习详情</summary>
-            <p>首次作答正确率：<strong>${report.firstTryRate}%</strong>。提示后的完成不等同于首次掌握，建议优先关注下面列出的知识点。</p>
-            <table>
-              <thead><tr><th>具体题目</th><th>首次作答</th><th>提示</th><th>尝试</th><th>重练</th></tr></thead>
-              <tbody>
-                ${state.records.map((record) => {
-                  const question = QUESTION_BANK.find((item) => item.id === record.questionId);
-                  const retryRecord = state.retryResults.find((item) => item.questionId === record.questionId);
-                  return `<tr>
-                    <td><strong>${escapeHtml(question ? question.tag : record.questionId)}</strong><br><span>${escapeHtml(question ? question.expression : record.questionId)}</span></td>
-                    <td>${record.firstTryCorrect ? '✅ 正确' : '⚠️ 需要提示'}</td>
-                    <td>${record.maxHint ? `${record.maxHint}级提示` : '未用提示'}</td>
-                    <td>${record.attempts}次</td>
-                    <td>${retryRecord ? (retryRecord.firstTryCorrect ? '✅ 重练正确' : `完成（${retryRecord.attempts}次）`) : '—'}</td>
-                  </tr>`;
-                }).join('')}
-              </tbody>
-            </table>
-          </details>
-        </section>`;
-
-      const retryButton = document.getElementById('retry-wrong');
-      if (retryButton) retryButton.addEventListener('click', startWrongRetry);
-      document.getElementById('report-home').addEventListener('click', () => renderHome());
-      document.getElementById('report-restart').addEventListener('click', openRestartDialog);
-      focusHeading('report-heading');
-      announce('冒险完成！成长报告已经准备好了。');
-    }
-
-    function startWrongRetry() {
-      const report = buildReport(state.records);
-      state.mode = 'retry';
-      state.retryQueue = [...report.wrongQuestionIds];
-      state.retryResults = [];
-      state.questionIndex = 0;
-      state.screen = 'lesson';
-      state.currentAttempts = 0;
-      state.currentMaxHint = 0;
-      state.currentResolved = false;
-      state.lastHint = null;
-      saveProgress();
-      renderLesson();
-    }
-
-    function openRestartDialog() {
-      const trigger = document.activeElement;
-      const backdrop = document.createElement('div');
-      backdrop.className = 'dialog-backdrop';
-      backdrop.id = 'restart-dialog';
-      backdrop.setAttribute('role', 'dialog');
-      backdrop.setAttribute('aria-modal', 'true');
-      backdrop.setAttribute('aria-labelledby', 'restart-title');
-      backdrop.innerHTML = `
-        <div class="dialog-card">
-          <h2 id="restart-title">要重新开始吗？</h2>
-          <p>这会清除本课程当前的进度和成长报告。</p>
-          <div class="action-row">
-            <button id="confirm-restart" class="primary-button" type="button">确定重新开始</button>
-            <button id="cancel-restart" class="tool-button" type="button">保留进度</button>
-          </div>
-        </div>`;
-      document.body.appendChild(backdrop);
-      const confirmButton = document.getElementById('confirm-restart');
-      const cancelButton = document.getElementById('cancel-restart');
-      const closeDialog = () => {
-        backdrop.remove();
-        if (trigger && typeof trigger.focus === 'function') trigger.focus();
-      };
-      backdrop.addEventListener('keydown', (event) => {
-        if (event.key === 'Escape') {
-          event.preventDefault();
-          closeDialog();
-          return;
-        }
-        if (event.key !== 'Tab') return;
-        if (event.shiftKey && document.activeElement === confirmButton) {
-          event.preventDefault();
-          cancelButton.focus();
-        } else if (!event.shiftKey && document.activeElement === cancelButton) {
-          event.preventDefault();
-          confirmButton.focus();
-        }
-      });
-      confirmButton.addEventListener('click', () => {
-        clearProgress();
-        state = createInitialState();
-        savedState = null;
-        backdrop.remove();
-        renderHome();
-      });
-      cancelButton.addEventListener('click', closeDialog);
-      confirmButton.focus();
-    }
-
-    function focusHeading(id = 'question-heading') {
-      requestAnimationFrame(() => {
-        const heading = document.getElementById(id) || document.querySelector('h1');
-        if (heading && heading.hasAttribute('tabindex')) heading.focus({ preventScroll: true });
-      });
-    }
-
-    function showToast(message) {
-      const existing = document.querySelector('.toast');
-      if (existing) existing.remove();
-      const toast = document.createElement('div');
-      toast.className = 'toast';
-      toast.setAttribute('role', 'status');
-      toast.textContent = message;
-      document.body.appendChild(toast);
-      window.setTimeout(() => toast.remove(), 3200);
-    }
-
-    function announce(message) {
-      if (!('speechSynthesis' in window) || typeof SpeechSynthesisUtterance === 'undefined') return;
-      window.speechSynthesis.cancel();
-      const utterance = new SpeechSynthesisUtterance(message);
-      utterance.lang = 'zh-CN';
-      utterance.rate = 0.9;
-      window.speechSynthesis.speak(utterance);
-    }
-
-    function speakCurrent() {
-      const visibleText = (app.innerText || '').replace(/\s+/g, ' ').trim();
-      announce(visibleText.slice(0, 700));
-    }
-
-    pauseButton.addEventListener('click', () => {
-      saveProgress();
-      renderHome();
-      showToast('进度已经保存在这台设备上。');
-    });
-    speechButton.addEventListener('click', speakCurrent);
-    if (!('speechSynthesis' in window) || typeof SpeechSynthesisUtterance === 'undefined') speechButton.hidden = true;
-
-    let savedState = loadProgress();
-    let state = savedState || createInitialState();
-    window.MathQuestTestHooks.getCurrentQuestion = getCurrentQuestion;
-    window.MathQuestTestHooks.getState = () => JSON.parse(JSON.stringify(state));
-    window.MathQuestTestHooks.clearProgress = clearProgress;
-    renderHome();
-  </script>
 </body>
 </html>
