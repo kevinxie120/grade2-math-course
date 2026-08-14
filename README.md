@@ -2,6 +2,8 @@
 
 本仓库通过 GitHub Pages 发布互动课程。
 
+**在线课程首页：[打开二年级数学互动自学课程](https://kevinxie120.github.io/grade2-math-course/)**
+
 ## 页面
 
 - 课程目录首页：`index.html`
