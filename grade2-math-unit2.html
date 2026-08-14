@@ -1,0 +1,1296 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#7047eb">
+  <title>计算城建造师｜100以内加减法</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #25233f;
+      --muted: #615e78;
+      --paper: #fffdf8;
+      --purple: #7047eb;
+      --purple-dark: #4d2eb8;
+      --blue: #2d73d5;
+      --yellow: #ffcd57;
+      --mint: #c8f3df;
+      --coral: #ff8d72;
+      --line: #ddd8f4;
+      --shadow: 0 18px 50px rgba(55, 37, 118, 0.16);
+    }
+
+    * { box-sizing: border-box; }
+
+    html { min-height: 100%; background: #ece9ff; }
+
+    body {
+      min-height: 100vh;
+      margin: 0;
+      color: var(--ink);
+      font: 19px/1.65 system-ui, -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+      background:
+        radial-gradient(circle at 12% 8%, rgba(255, 205, 87, .75) 0 7%, transparent 7.5%),
+        radial-gradient(circle at 88% 15%, rgba(111, 210, 255, .42) 0 10%, transparent 10.5%),
+        linear-gradient(145deg, #f6f0ff 0%, #e8f7ff 52%, #fff5df 100%);
+    }
+
+    button, input { font: inherit; }
+
+    button {
+      min-height: 48px;
+      border: 0;
+      border-radius: 16px;
+      cursor: pointer;
+      touch-action: manipulation;
+    }
+
+    button:focus-visible, input:focus-visible, [tabindex]:focus-visible {
+      outline: 4px solid #1d6fd7;
+      outline-offset: 4px;
+    }
+
+    .app-shell { width: min(1120px, calc(100% - 28px)); margin: 0 auto; padding: 18px 0 40px; }
+
+    .topbar {
+      display: grid;
+      grid-template-columns: auto minmax(120px, 1fr) auto;
+      gap: 16px;
+      align-items: center;
+      margin-bottom: 18px;
+      padding: 12px 16px;
+      border: 1px solid rgba(112, 71, 235, .14);
+      border-radius: 20px;
+      background: rgba(255, 255, 255, .88);
+      box-shadow: 0 8px 24px rgba(55, 37, 118, .1);
+      backdrop-filter: blur(12px);
+    }
+
+    .brand { font-weight: 900; color: var(--purple-dark); white-space: nowrap; }
+    .progress-track { height: 14px; overflow: hidden; border-radius: 99px; background: #e7e2f8; }
+    .progress-fill { width: 0; height: 100%; border-radius: inherit; background: linear-gradient(90deg, var(--purple), #39a7ef); transition: width .35s ease; }
+    .toolbar-actions { display: flex; gap: 8px; }
+    .compact-button { padding: 8px 13px; color: var(--purple-dark); background: #eee9ff; font-weight: 800; }
+
+    .card {
+      min-height: 660px;
+      padding: clamp(24px, 4vw, 52px);
+      border: 1px solid rgba(112, 71, 235, .13);
+      border-radius: 32px;
+      background: rgba(255, 253, 248, .96);
+      box-shadow: var(--shadow);
+    }
+
+    .hero { max-width: 920px; margin: 0 auto; text-align: center; }
+    .city-mark { font-size: clamp(72px, 11vw, 118px); line-height: 1; filter: drop-shadow(0 10px 10px rgba(73, 44, 153, .18)); }
+    h1, h2, h3, p { margin-top: 0; }
+    h1 { margin-bottom: 16px; font-size: clamp(2rem, 5.4vw, 3.6rem); line-height: 1.15; color: #352170; }
+    h2 { color: #3f2a84; }
+    .lead { max-width: 760px; margin-right: auto; margin-left: auto; color: var(--muted); font-size: 1.14rem; }
+
+    .facts { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin: 24px 0; }
+    .fact { display: inline-flex; align-items: center; min-height: 42px; padding: 6px 14px; border-radius: 999px; color: #493782; background: #f0ecff; font-weight: 800; }
+
+    .route {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin: 28px 0;
+      text-align: left;
+    }
+
+    .route-stop { min-height: 100px; padding: 14px; border: 2px solid #e0daf5; border-radius: 20px; background: white; }
+    .route-stop strong { display: block; color: #463182; }
+    .route-stop small { color: var(--muted); }
+
+    .primary-button, .secondary-button, .tool-button {
+      padding: 12px 24px;
+      font-weight: 900;
+      box-shadow: 0 8px 18px rgba(74, 47, 160, .14);
+    }
+
+    .primary-button { color: white; background: linear-gradient(135deg, var(--purple), #486eea); }
+    .primary-button:hover { background: linear-gradient(135deg, #5e39d0, #325bcf); }
+    .secondary-button { color: #382273; background: var(--yellow); }
+    .tool-button { color: #3e3470; background: #ebe7f8; }
+    .primary-button:disabled, .secondary-button:disabled { cursor: not-allowed; opacity: .48; box-shadow: none; }
+
+    .lesson-header { display: flex; justify-content: space-between; gap: 12px; align-items: center; margin-bottom: 22px; }
+    .phase-chip, .activity-count { display: inline-flex; min-height: 40px; align-items: center; padding: 5px 13px; border-radius: 999px; font-weight: 900; }
+    .phase-chip { color: #453083; background: #eee9ff; }
+    .activity-count { color: #245a6e; background: #dff7f1; }
+    .prompt { max-width: 820px; font-size: clamp(1.7rem, 4vw, 2.65rem); }
+    .instruction { max-width: 780px; color: var(--muted); font-size: 1.08rem; }
+
+    .base-ten-board {
+      display: grid;
+      grid-template-columns: minmax(180px, 1fr) minmax(180px, 1fr);
+      gap: 18px;
+      margin: 26px 0;
+    }
+
+    .place-column { min-height: 270px; padding: 18px; border: 3px solid #d9d1f6; border-radius: 24px; background: #faf8ff; text-align: center; }
+    .place-column h2 { margin-bottom: 4px; }
+    .place-value { display: block; margin-bottom: 14px; color: var(--muted); font-weight: 800; }
+    .blocks { display: flex; flex-wrap: wrap; justify-content: center; gap: 9px; align-content: flex-start; min-height: 130px; }
+    .ten-rod { display: inline-flex; width: 24px; height: 126px; align-items: center; justify-content: center; border: 2px solid #7755cc; border-radius: 8px; color: #452791; background: repeating-linear-gradient(to bottom, #d9cdfd 0 10px, #bfaaf6 10px 12px); font-size: .8rem; font-weight: 900; }
+    .one-cube { display: inline-flex; width: 32px; height: 32px; align-items: center; justify-content: center; border: 2px solid #e18a38; border-radius: 9px; color: #7b3f08; background: #ffd690; font-weight: 900; }
+    .block-summary { margin: 14px 0 0; font-weight: 900; color: #493782; }
+
+    .vertical-board { width: min(440px, 100%); margin: 26px auto; padding: 20px; border: 3px solid #d9d1f6; border-radius: 24px; background: #faf8ff; }
+    .vertical-row { display: grid; grid-template-columns: 52px 1fr 1fr; text-align: center; font-size: 1.5rem; font-weight: 900; }
+    .vertical-label { color: var(--muted); font-size: 1rem; }
+    .vertical-line { margin: 8px 0; border-top: 4px solid #443273; }
+    .marker { color: #c44d2d; }
+
+    .choice-cards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin: 24px 0; }
+    .choice-card { padding: 16px; border: 3px solid #ddd6f3; color: #3f2a80; background: white; font-weight: 900; }
+    .choice-card:hover { border-color: #8a6de3; background: #f7f4ff; }
+
+    .feedback { margin: 22px 0; padding: 20px; border-radius: 22px; }
+    .feedback.success { border: 3px solid #7fd2aa; background: #e7faef; }
+    .feedback.hint { border: 3px solid #efc35b; background: #fff7d9; }
+    .feedback.misconception { border: 3px solid #eea089; background: #fff0e9; }
+    .feedback h2 { margin-bottom: 6px; }
+    .action-row { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 24px; }
+
+    .expression {
+      width: min(620px, 100%);
+      margin: 20px auto;
+      padding: 18px;
+      border: 3px solid #ddd5f5;
+      border-radius: 22px;
+      color: #33206f;
+      background: #f9f7ff;
+      text-align: center;
+      font-size: clamp(1.8rem, 5vw, 3rem);
+      font-weight: 950;
+      letter-spacing: .04em;
+    }
+
+    .answer-area { margin: 24px 0; }
+    .options-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+    .answer-option { padding: 16px; border: 3px solid #ddd6f3; color: #3d2c73; background: white; font-size: 1.15rem; font-weight: 900; }
+    .answer-option:hover { border-color: #9b82e5; background: #faf8ff; }
+    .answer-option.selected { border-color: var(--purple); background: #eee9ff; box-shadow: inset 0 0 0 2px var(--purple); }
+
+    .number-entry { display: grid; gap: 15px; justify-items: center; }
+    .answer-input { width: min(260px, 100%); min-height: 64px; padding: 8px 16px; border: 4px solid #bfb2e8; border-radius: 18px; color: #352170; background: white; text-align: center; font-size: 2rem; font-weight: 950; }
+    .keypad { display: grid; grid-template-columns: repeat(4, minmax(58px, 1fr)); gap: 9px; width: min(440px, 100%); }
+    .keypad button { border: 2px solid #ddd6f3; color: #3c2b72; background: white; font-weight: 900; }
+
+    .visual-hint { margin-top: 14px; padding: 14px; border-radius: 16px; background: rgba(255,255,255,.72); }
+    .mini-blocks { display: flex; flex-wrap: wrap; gap: 5px; align-items: flex-end; }
+    .scene-card { display: flex; gap: 16px; align-items: center; margin: 20px 0; padding: 18px; border: 3px solid #bfe7da; border-radius: 22px; background: #eefbf6; }
+    .scene-icon { font-size: 3rem; }
+    .quality-card { margin: 20px 0; padding: 18px; border: 3px dashed #8e75d8; border-radius: 22px; background: #f8f5ff; text-align: center; }
+
+    .break-card { max-width: 700px; margin: 30px auto; text-align: center; }
+    .stretch-steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 26px 0; }
+    .stretch-step { padding: 18px 12px; border-radius: 22px; background: #e8f8ef; }
+    .stretch-step span { display: block; font-size: 2.4rem; }
+
+    .badges { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin: 20px 0; font-size: 2rem; }
+    .report-title { text-align: center; }
+    .report-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin: 26px 0; }
+    .skill-card { padding: 20px; border: 2px solid #ddd6f3; border-radius: 22px; background: white; }
+    .skill-card h3 { margin-bottom: 8px; color: #3f2a84; }
+    .skill-icon { font-size: 2.2rem; }
+    .status-pill { display: inline-flex; min-height: 38px; align-items: center; padding: 4px 11px; border-radius: 999px; color: #3f2a84; background: #eee9ff; font-weight: 900; }
+    .parent-panel { margin-top: 28px; padding: 18px; border: 2px solid #d9d3ed; border-radius: 20px; background: #faf9fd; }
+    .parent-panel summary { cursor: pointer; color: #3f2a84; font-weight: 950; }
+    .table-wrap { overflow-x: auto; }
+    table { width: 100%; margin-top: 16px; border-collapse: collapse; font-size: .92rem; }
+    th, td { padding: 11px; border-bottom: 1px solid #ddd7eb; text-align: left; vertical-align: top; }
+    th { color: #493782; background: #f0ecff; }
+
+    .dialog-backdrop { position: fixed; inset: 0; z-index: 10; display: grid; place-items: center; padding: 18px; background: rgba(28, 20, 55, .62); }
+    .dialog-card { width: min(520px, 100%); padding: 28px; border-radius: 26px; background: white; box-shadow: var(--shadow); }
+    .toast { position: fixed; right: 18px; bottom: 18px; z-index: 12; max-width: min(420px, calc(100% - 36px)); padding: 13px 18px; border-radius: 15px; color: white; background: #34246b; box-shadow: var(--shadow); font-weight: 850; }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    @media (max-width: 720px) {
+      .app-shell { width: min(100% - 16px, 1120px); padding-top: 8px; }
+      .topbar { grid-template-columns: 1fr auto; gap: 9px; padding: 9px; }
+      .progress-track { grid-column: 1 / -1; grid-row: 2; }
+      .button-label { display: none; }
+      .card { min-height: calc(100vh - 118px); padding: 22px 16px; border-radius: 22px; }
+      .route { grid-template-columns: 1fr; }
+      .route-stop { min-height: auto; }
+      .base-ten-board, .choice-cards { grid-template-columns: 1fr; }
+      .place-column { min-height: 210px; }
+      .options-grid, .report-grid, .stretch-steps { grid-template-columns: 1fr; }
+      .keypad { grid-template-columns: repeat(3, minmax(58px, 1fr)); }
+      .expression { font-size: 1.7rem; }
+      table { min-width: 680px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .001ms !important; animation-duration: .001ms !important; animation-iteration-count: 1 !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar" aria-label="课程工具栏">
+      <div class="brand">🏗️ 计算城</div>
+      <div class="progress-track" aria-label="课程进度">
+        <div id="progress-bar" class="progress-fill" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"></div>
+      </div>
+      <div class="toolbar-actions">
+        <button id="speech-button" class="compact-button" type="button" aria-label="朗读当前内容">🔊<span class="button-label"> 朗读</span></button>
+        <button id="pause-button" class="compact-button" type="button" aria-label="暂停并返回首页" hidden>⏸️<span class="button-label"> 暂停</span></button>
+      </div>
+    </header>
+
+    <main id="app" class="card">
+      <section class="hero" aria-labelledby="course-title">
+        <div class="city-mark" aria-hidden="true">🏙️</div>
+        <p class="fact">二年级数学 · 新知识预习</p>
+        <h1 id="course-title">计算城建造师</h1>
+        <p class="lead">用小棒建高楼、搭竖式、检查工程，学会100以内的进位加法和退位减法。</p>
+        <div class="facts" aria-label="课程特点">
+          <span class="fact">⏱️ 建议60分钟</span>
+          <span class="fact">🧩 9个动手探索</span>
+          <span class="fact">✏️ 22道练习</span>
+          <span class="fact">🌿 中途可休息</span>
+        </div>
+        <div class="route" aria-label="课程路线">
+          <div class="route-stop"><strong>🧱 数位材料站</strong><small>认清十位和个位</small></div>
+          <div class="route-stop"><strong>🏢 加法竖式塔</strong><small>个位满十要进位</small></div>
+          <div class="route-stop"><strong>🌿 伸展休息站</strong><small>动一动再出发</small></div>
+          <div class="route-stop"><strong>🌉 减法竖式桥</strong><small>个位不够就拆十</small></div>
+          <div class="route-stop"><strong>🔎 城市质检局</strong><small>估一估、查一查</small></div>
+          <div class="route-stop"><strong>🏙️ 智慧生活城</strong><small>解决生活中的问题</small></div>
+        </div>
+        <button id="start-course" class="primary-button" type="button">开始建造 🚧</button>
+      </section>
+    </main>
+    <div id="live-region" class="sr-only" aria-live="polite" aria-atomic="true"></div>
+  </div>
+
+  <script>
+    'use strict';
+
+    /* TESTABLE_CORE_START */
+    const PHASES = {
+      placeValue: { title: '数位材料站', minutes: 5, icon: '🧱' },
+      nonCarryAddition: { title: '加法施工区', minutes: 6, icon: '🏗️' },
+      carryAddition: { title: '加法竖式塔', minutes: 12, icon: '🏢' },
+      break: { title: '伸展休息站', minutes: 2, icon: '🌿' },
+      nonBorrowSubtraction: { title: '减法施工区', minutes: 6, icon: '🚧' },
+      regroupSubtraction: { title: '减法竖式桥', minutes: 12, icon: '🌉' },
+      checking: { title: '城市质检局', minutes: 7, icon: '🔎' },
+      application: { title: '智慧生活城', minutes: 7, icon: '🏙️' },
+      report: { title: '成长报告', minutes: 3, icon: '🏆' }
+    };
+
+    const EXPLORATIONS = [
+      { id: 'explore-place-build', phase: 'placeValue', type: 'place-build', title: '把46放进数位屋', instruction: '先放4捆十，再放6根一。', actionLabel: '放好46', success: '46里面有4个十和6个一。' },
+      { id: 'explore-place-split', phase: 'placeValue', type: 'place-split', title: '把73拆成两部分', instruction: '找到73里面的整十和个位。', actionLabel: '拆成70和3', success: '73可以分成70和3。' },
+      { id: 'explore-add-merge', phase: 'nonCarryAddition', type: 'add-merge', title: '把23和14合起来', instruction: '十位和十位合，个位和个位合。', actionLabel: '合并小棒', success: '2个十加1个十，3个一加4个一，一共37。' },
+      { id: 'explore-carry-bundle', phase: 'carryAddition', type: 'bundle-ten', title: '个位满十要成捆', instruction: '28加7，个位有15根一。把10根一捆成1个十。', actionLabel: '捆成一个十', success: '15个一变成1个十和5个一。' },
+      { id: 'explore-carry-marker', phase: 'carryAddition', type: 'carry-marker', title: '把进位1送到十位', instruction: '个位满十后，把新得到的1个十记在十位上。', actionLabel: '放置进位1', success: '十位现在要计算1加2加0。' },
+      { id: 'explore-borrow-decide', phase: 'regroupSubtraction', type: 'borrow-decide', title: '个位够不够减', instruction: '42减7，2不够减7，应该先做什么？', actionLabel: '从十位拆一个十', success: '判断正确：个位不够减，需要拆十。' },
+      { id: 'explore-borrow-unbundle', phase: 'regroupSubtraction', type: 'unbundle-ten', title: '把一个十拆开', instruction: '把42中的1个十拆成10个一。', actionLabel: '拆成10个一', success: '42变成3个十和12个一，总数没有变。' },
+      { id: 'explore-borrow-decrement', phase: 'regroupSubtraction', type: 'borrow-decrement', title: '十位也要少一个', instruction: '拆走一个十以后，十位从4变成几？', actionLabel: '十位变成3', success: '对！借走一个十，十位要减1。' },
+      { id: 'explore-inverse-check', phase: 'checking', type: 'inverse-check', title: '用相反运算检查', instruction: '58加27等于85，用哪道减法可以检查？', actionLabel: '选择85−27＝58', success: '加法可以用减法检查：和减去一个加数，等于另一个加数。' }
+    ];
+
+    const QUESTION_BANK = [
+      {
+        id: 'place-01', phase: 'placeValue', dimension: 'concept', tags: ['数位', '数的组成'], type: 'choice',
+        prompt: '4个十和6个一组成哪个数？', expression: '4个十 ＋ 6个一', answer: 46, options: [64, 40, 46, 6],
+        hints: ['先看4个十是多少。', '4个十是40，再放6个一。', '40加6等于46，所以选46。'],
+        misconceptionRules: [{ code: 'reversed-place', answers: [64] }], explanation: '4个十是40，6个一是6，合起来是46。'
+      },
+      {
+        id: 'place-02', phase: 'placeValue', dimension: 'concept', tags: ['数位', '数的组成'], type: 'number-input',
+        prompt: '7个十和3个一组成多少？', expression: '70 ＋ 3 ＝ ?', answer: 73,
+        hints: ['7个十就是70。', '在70后面再放3个一。', '70加3等于73。'],
+        misconceptionRules: [{ code: 'reversed-place', answers: [37] }], explanation: '7个十和3个一组成73。'
+      },
+      {
+        id: 'noncarry-add-01', phase: 'nonCarryAddition', dimension: 'concept', tags: ['不进位加法', '小棒合并'], type: 'choice',
+        prompt: '23加14等于多少？', expression: '23 ＋ 14 ＝ ?', answer: 37, options: [27, 36, 37, 47],
+        hints: ['个位和个位相加，十位和十位相加。', '3加4等于7，2个十加1个十等于3个十。', '23加14等于30加7，也就是37。'],
+        misconceptionRules: [], explanation: '个位3加4得7，十位2加1得3，所以结果是37。'
+      },
+      {
+        id: 'noncarry-add-02', phase: 'nonCarryAddition', dimension: 'vertical', tags: ['不进位加法', '竖式'], type: 'vertical-choice',
+        prompt: '数位对齐后，45加32等于多少？', expression: '45 ＋ 32 ＝ ?', answer: 77, options: [67, 73, 77, 87],
+        hints: ['先算个位5加2。', '个位得7，再算十位4加3。', '个位7，十位7，结果是77。'],
+        misconceptionRules: [{ code: 'misaligned-place', when: 'misaligned' }], explanation: '相同数位对齐：5加2得7，4加3得7，结果是77。'
+      },
+      {
+        id: 'carry-add-01', phase: 'carryAddition', dimension: 'concept', tags: ['进位加法', '小棒成捆'], type: 'base-ten-bundle',
+        prompt: '28加7，个位满十以后结果是多少？', expression: '28 ＋ 7 ＝ ?', answer: 35, options: [25, 34, 35, 45],
+        hints: ['先算个位8加7。', '8加7是15，把10个一捆成1个十。', '2个十加新捆的1个十是3个十，还剩5个一，所以是35。'],
+        misconceptionRules: [{ code: 'forgot-carry', answers: [25] }], explanation: '8加7得15，个位写5，向十位进1，结果是35。'
+      },
+      {
+        id: 'carry-add-02', phase: 'carryAddition', dimension: 'concept', tags: ['进位加法', '数位'], type: 'choice',
+        prompt: '36加27等于多少？', expression: '36 ＋ 27 ＝ ?', answer: 63, options: [53, 57, 63, 73],
+        hints: ['先算6加7。', '6加7得13，个位写3，向十位进1。', '十位3加2再加进位1得6，结果是63。'],
+        misconceptionRules: [{ code: 'forgot-carry-addition', answers: [53] }], explanation: '个位6加7得13，向十位进1；十位3加2加1得6，所以是63。'
+      },
+      {
+        id: 'carry-add-03', phase: 'carryAddition', dimension: 'vertical', tags: ['进位加法', '竖式'], type: 'vertical',
+        prompt: '搭好竖式，算一算48加35。', expression: '48 ＋ 35 ＝ ?', answer: 83, options: [73, 82, 83, 93],
+        hints: ['个位8加5，要写几进几？', '8加5得13，个位写3，十位上记1。', '十位4加3再加1得8，所以结果是83。'],
+        misconceptionRules: [{ code: 'misaligned-place', when: 'misaligned' }, { code: 'forgot-carry-addition', answers: [73] }], explanation: '个位写3进1，十位4加3再加1得8，结果是83。'
+      },
+      {
+        id: 'carry-add-04', phase: 'carryAddition', dimension: 'vertical', tags: ['进位加法', '竖式'], type: 'number-input',
+        prompt: '独立算一算57加26。', expression: '57 ＋ 26 ＝ ?', answer: 83,
+        hints: ['先算个位7加6。', '7加6得13，个位写3，向十位进1。', '十位5加2加1得8，答案是83。'],
+        misconceptionRules: [{ code: 'forgot-carry-addition', answers: [73] }], explanation: '个位写3进1，十位5加2加1得8，所以57加26等于83。'
+      },
+      {
+        id: 'nonborrow-sub-01', phase: 'nonBorrowSubtraction', dimension: 'concept', tags: ['不退位减法', '小棒拿走'], type: 'choice',
+        prompt: '65减23等于多少？', expression: '65 − 23 ＝ ?', answer: 42, options: [32, 41, 42, 48],
+        hints: ['个位5够减3，不用拆十。', '个位5减3得2，十位6减2得4。', '个位2，十位4，结果是42。'],
+        misconceptionRules: [], explanation: '5减3得2，6个十减2个十剩4个十，所以结果是42。'
+      },
+      {
+        id: 'nonborrow-sub-02', phase: 'nonBorrowSubtraction', dimension: 'vertical', tags: ['不退位减法', '竖式'], type: 'vertical-choice',
+        prompt: '数位对齐后，78减36等于多少？', expression: '78 − 36 ＝ ?', answer: 42, options: [32, 42, 44, 52],
+        hints: ['从个位8减6开始。', '个位得2，十位7减3得4。', '竖式中个位写2，十位写4，结果是42。'],
+        misconceptionRules: [{ code: 'misaligned-place', when: 'misaligned' }], explanation: '相同数位对齐，从个位算起，78减36等于42。'
+      },
+      {
+        id: 'regroup-sub-01', phase: 'regroupSubtraction', dimension: 'concept', tags: ['退位减法', '拆十'], type: 'base-ten-unbundle',
+        prompt: '42减7，拆开一个十以后结果是多少？', expression: '42 − 7 ＝ ?', answer: 35, options: [25, 35, 45, 49],
+        hints: ['个位2不够减7，要从十位拆一个十。', '42变成3个十和12个一，12减7得5。', '十位还剩3，个位剩5，所以结果是35。'],
+        misconceptionRules: [{ code: 'reversed-subtraction', answers: [45] }], explanation: '拆十后是3个十和12个一，12减7得5，结果是35。'
+      },
+      {
+        id: 'regroup-sub-02', phase: 'regroupSubtraction', dimension: 'concept', tags: ['退位减法', '十位减1'], type: 'choice',
+        prompt: '51减28等于多少？', expression: '51 − 28 ＝ ?', answer: 23, options: [23, 27, 33, 43],
+        hints: ['个位1不够减8，先拆一个十。', '11减8得3，十位原来5，拆走一个十后变4。', '十位4减2得2，个位是3，答案是23。'],
+        misconceptionRules: [{ code: 'forgot-borrow-decrement', answers: [33] }], explanation: '拆十后十位从5变4；11减8得3，4减2得2，所以是23。'
+      },
+      {
+        id: 'regroup-sub-03', phase: 'regroupSubtraction', dimension: 'vertical', tags: ['退位减法', '竖式'], type: 'vertical',
+        prompt: '搭好竖式，算一算73减48。', expression: '73 − 48 ＝ ?', answer: 25, options: [25, 35, 45, 55],
+        hints: ['个位3不够减8，需要拆十。', '13减8得5，十位7借走1后剩6。', '十位6减4得2，个位是5，结果是25。'],
+        misconceptionRules: [{ code: 'misaligned-place', when: 'misaligned' }, { code: 'forgot-borrow-decrement', answers: [35] }], explanation: '13减8得5，十位6减4得2，所以73减48等于25。'
+      },
+      {
+        id: 'regroup-sub-04', phase: 'regroupSubtraction', dimension: 'vertical', tags: ['退位减法', '整十退位'], type: 'number-input',
+        prompt: '独立算一算80减36。', expression: '80 − 36 ＝ ?', answer: 44,
+        hints: ['个位0不够减6，也可以拆十。', '80拆成7个十和10个一，10减6得4。', '十位7减3得4，所以答案是44。'],
+        misconceptionRules: [{ code: 'forgot-borrow-decrement', answers: [54] }], explanation: '从8个十中拆1个十：10减6得4，7减3得4，结果是44。'
+      },
+      {
+        id: 'check-01', phase: 'checking', dimension: 'checking', tags: ['估算', '合理性'], type: 'choice',
+        prompt: '47加36的结果大约在什么位置？', expression: '47 ＋ 36 ≈ ?', answer: '80左右', options: ['40左右', '60左右', '80左右', '100以上'],
+        hints: ['把47看成接近50，把36看成接近40。', '50加40大约是90，准确结果会比90小一点。', '47加36是83，所以选择80左右最合理。'],
+        misconceptionRules: [], explanation: '47接近50，36接近40，结果83在80左右。'
+      },
+      {
+        id: 'check-02', phase: 'checking', dimension: 'checking', tags: ['加法验算', '加减互逆'], type: 'choice',
+        prompt: '58加27等于85，哪道算式可以检查？', expression: '58 ＋ 27 ＝ 85', answer: '85 − 27 ＝ 58', options: ['85 ＋ 27 ＝ 112', '85 − 27 ＝ 58', '58 − 27 ＝ 31', '58 ＋ 85 ＝ 143'],
+        hints: ['加法可以用减法来检查。', '和减去一个加数，应该等于另一个加数。', '85减27等于58，所以原来的加法正确。'],
+        misconceptionRules: [], explanation: '和85减去加数27，得到另一个加数58，检查正确。'
+      },
+      {
+        id: 'check-03', phase: 'checking', dimension: 'checking', tags: ['易错辨析', '忘记进位'], type: 'choice',
+        prompt: '乐乐算48加27等于65，他错在哪里？', expression: '48 ＋ 27 ＝ 65（错误）', answer: '十位忘记加进位1', options: ['个位算错了', '十位忘记加进位1', '不应该从个位算', '数位不需要对齐'],
+        hints: ['先检查个位8加7。', '8加7得15，个位写5，还要向十位进1。', '十位4加2再加进位1应该得7，所以正确结果是75。'],
+        misconceptionRules: [], explanation: '8加7得15，十位还要加进位1；正确结果是75。'
+      },
+      {
+        id: 'check-04', phase: 'checking', dimension: 'checking', tags: ['减法验算', '加减互逆'], type: 'choice',
+        prompt: '72减38等于34，哪道加法能检查？', expression: '72 − 38 ＝ 34', answer: '34 ＋ 38 ＝ 72', options: ['34 ＋ 38 ＝ 72', '72 ＋ 38 ＝ 110', '72 ＋ 34 ＝ 106', '38 − 34 ＝ 4'],
+        hints: ['减法可以用加法检查。', '差加上减数，应该等于被减数。', '34加38等于72，所以减法结果正确。'],
+        misconceptionRules: [], explanation: '差34加减数38等于被减数72，验算成功。'
+      },
+      {
+        id: 'app-01', phase: 'application', dimension: 'application', tags: ['求总数', '选择运算'], type: 'scene-choice',
+        prompt: '图书角有28本故事书，又放进35本。现在共有多少本？', expression: '28 ＋ 35 ＝ ?', answer: 63, options: [53, 57, 63, 73], operation: '加法',
+        hints: ['“又放进”以后数量变多了。', '求一共有多少，要用加法。', '28加35，个位写3进1，十位2加3加1得6，所以是63。'],
+        misconceptionRules: [{ code: 'wrong-operation', answers: [7] }, { code: 'forgot-carry-addition', answers: [53] }], explanation: '数量变多，用加法：28加35等于63本。'
+      },
+      {
+        id: 'app-02', phase: 'application', dimension: 'application', tags: ['求剩余', '选择运算'], type: 'scene-input',
+        prompt: '书架原有72本书，借出28本，还剩多少本？', expression: '72 − 28 ＝ ?', answer: 44, operation: '减法',
+        hints: ['“借出”以后数量变少了。', '求剩余要用减法，个位2不够减8需要拆十。', '12减8得4，十位6减2得4，所以还剩44本。'],
+        misconceptionRules: [{ code: 'wrong-operation', answers: [100] }, { code: 'forgot-borrow-decrement', answers: [54] }], explanation: '数量变少，用减法：72减28等于44本。'
+      },
+      {
+        id: 'app-03', phase: 'application', dimension: 'application', tags: ['相差多少', '选择运算'], type: 'scene-choice',
+        prompt: '一队跳绳64下，二队跳29下。一队比二队多多少下？', expression: '64 − 29 ＝ ?', answer: 35, options: [25, 35, 45, 93], operation: '减法',
+        hints: ['“多多少”是在比较两个数量。', '求相差多少，用大数减小数。', '64减29：14减9得5，十位5减2得3，所以相差35下。'],
+        misconceptionRules: [{ code: 'wrong-operation', answers: [93] }, { code: 'forgot-borrow-decrement', answers: [45] }], explanation: '求相差多少用减法，64减29等于35下。'
+      },
+      {
+        id: 'app-04', phase: 'application', dimension: 'application', tags: ['两步思考', '生活应用'], type: 'number-input',
+        prompt: '车上原有26人，先上来18人，又下去9人。现在有多少人？', expression: '26 ＋ 18 − 9 ＝ ?', answer: 35,
+        hints: ['先算上来18人以后有多少人。', '26加18等于44，再从44里面减9。', '44减9等于35，所以现在有35人。'],
+        misconceptionRules: [{ code: 'stopped-after-one-step', answers: [44] }], explanation: '先加再减：26加18等于44，44减9等于35人。'
+      }
+    ];
+
+    function evaluateAnswer(question, answer) {
+      if (answer === null || answer === undefined || String(answer).trim() === '') return false;
+      if (typeof question.answer === 'number') return Number(answer) === question.answer;
+      return String(answer).trim() === String(question.answer);
+    }
+
+    function getHint(question, attempts) {
+      const level = Math.min(Math.max(Number(attempts) || 1, 1), 3);
+      return { level, text: question.hints[level - 1] };
+    }
+
+    function detectMisconception(question, answer, stepState = {}) {
+      if (answer === null || answer === undefined || String(answer).trim() === '') return null;
+      const rules = Array.isArray(question.misconceptionRules) ? question.misconceptionRules : [];
+      for (const rule of rules) {
+        if (rule.when === 'misaligned' && stepState.aligned === false) return rule.code;
+        if (rule.when === 'carry-missing' && stepState.carryPlaced === false) return rule.code;
+        if (rule.when === 'borrow-not-decremented' && stepState.borrowDecremented === false) return rule.code;
+        if (Array.isArray(rule.answers) && rule.answers.some((candidate) => String(candidate) === String(answer).trim())) return rule.code;
+      }
+      return null;
+    }
+
+    function bundleTen(model) {
+      if (!model || !Number.isInteger(model.tens) || !Number.isInteger(model.ones) || model.ones < 10) {
+        throw new Error('个位不足10，不能成捆');
+      }
+      return { tens: model.tens + 1, ones: model.ones - 10 };
+    }
+
+    function unbundleTen(model) {
+      if (!model || !Number.isInteger(model.tens) || !Number.isInteger(model.ones) || model.tens < 1) {
+        throw new Error('十位没有小棒，不能拆十');
+      }
+      return { tens: model.tens - 1, ones: model.ones + 10 };
+    }
+
+    function validateVerticalStep(model, selectedPlace) {
+      return Boolean(model && model.expectedStep === selectedPlace);
+    }
+
+    function buildActivityQueue() {
+      const exploration = (id) => {
+        const item = EXPLORATIONS.find((candidate) => candidate.id === id);
+        return { kind: 'exploration', id, phase: item.phase };
+      };
+      const question = (id) => {
+        const item = QUESTION_BANK.find((candidate) => candidate.id === id);
+        return { kind: 'question', id, phase: item.phase };
+      };
+      return [
+        exploration('explore-place-build'),
+        question('place-01'),
+        exploration('explore-place-split'),
+        question('place-02'),
+        exploration('explore-add-merge'),
+        question('noncarry-add-01'),
+        question('noncarry-add-02'),
+        exploration('explore-carry-bundle'),
+        question('carry-add-01'),
+        question('carry-add-02'),
+        exploration('explore-carry-marker'),
+        question('carry-add-03'),
+        question('carry-add-04'),
+        { kind: 'break', id: 'mid-course-break', phase: 'break' },
+        question('nonborrow-sub-01'),
+        question('nonborrow-sub-02'),
+        exploration('explore-borrow-decide'),
+        question('regroup-sub-01'),
+        exploration('explore-borrow-unbundle'),
+        question('regroup-sub-02'),
+        exploration('explore-borrow-decrement'),
+        question('regroup-sub-03'),
+        question('regroup-sub-04'),
+        exploration('explore-inverse-check'),
+        question('check-01'),
+        question('check-02'),
+        question('check-03'),
+        question('check-04'),
+        question('app-01'),
+        question('app-02'),
+        question('app-03'),
+        question('app-04')
+      ];
+    }
+
+    const DIMENSION_KEYS = ['concept', 'vertical', 'checking', 'application'];
+
+    function buildReport(records) {
+      const safeRecords = Array.isArray(records)
+        ? records.filter((record) => record && record.completed === true && DIMENSION_KEYS.includes(record.dimension))
+        : [];
+      const dimensions = {};
+      for (const key of DIMENSION_KEYS) {
+        const related = safeRecords.filter((record) => record.dimension === key);
+        const correct = related.filter((record) => record.firstTryCorrect).length;
+        const rate = related.length ? Math.round((correct / related.length) * 100) : 0;
+        const maxHint = related.reduce((maximum, record) => Math.max(maximum, Number(record.maxHint) || 0), 0);
+        let status = '还没有题目';
+        if (related.length && rate >= 80 && maxHint <= 1) status = '理解得很清楚';
+        else if (related.length && rate >= 60 && maxHint <= 2) status = '继续练一练';
+        else if (related.length) status = '建议一起复习';
+        dimensions[key] = { total: related.length, correct, rate, maxHint, status };
+      }
+
+      const misconceptions = {};
+      for (const record of safeRecords) {
+        if (!record.misconception) continue;
+        misconceptions[record.misconception] = (misconceptions[record.misconception] || 0) + 1;
+      }
+
+      const firstTryCorrect = safeRecords.filter((record) => record.firstTryCorrect).length;
+      return {
+        dimensions,
+        misconceptions,
+        wrongQuestionIds: safeRecords.filter((record) => !record.firstTryCorrect).map((record) => record.questionId),
+        firstTryRate: safeRecords.length ? Math.round((firstTryCorrect / safeRecords.length) * 100) : 0
+      };
+    }
+
+    function createInitialState() {
+      return {
+        version: 1,
+        screen: 'home',
+        activityIndex: 0,
+        questionIndex: 0,
+        explorationIndex: 0,
+        explorationStep: 0,
+        completedExplorations: [],
+        records: [],
+        badges: [],
+        mode: 'course',
+        retryQueue: [],
+        retryResults: [],
+        currentAttempts: 0,
+        currentMaxHint: 0,
+        currentResolved: false,
+        selectedAnswer: null,
+        selectedOperation: null,
+        lastHint: null,
+        lastMisconception: null
+      };
+    }
+
+    function validRecord(record) {
+      const questionIds = new Set(QUESTION_BANK.map((question) => question.id));
+      return Boolean(record)
+        && questionIds.has(record.questionId)
+        && DIMENSION_KEYS.includes(record.dimension)
+        && typeof record.firstTryCorrect === 'boolean'
+        && Number.isInteger(record.attempts) && record.attempts >= 1
+        && Number.isInteger(record.maxHint) && record.maxHint >= 0 && record.maxHint <= 3
+        && record.completed === true
+        && (record.misconception === null || record.misconception === undefined || typeof record.misconception === 'string');
+    }
+
+    function validateSave(value) {
+      if (!value || typeof value !== 'object' || value.version !== 1) return false;
+      const queueLength = buildActivityQueue().length;
+      const questionIds = new Set(QUESTION_BANK.map((question) => question.id));
+      const explorationIds = new Set(EXPLORATIONS.map((exploration) => exploration.id));
+      const badgePhases = new Set(['placeValue', 'nonCarryAddition', 'carryAddition', 'nonBorrowSubtraction', 'regroupSubtraction', 'checking', 'application']);
+      if (!['home', 'activity', 'report'].includes(value.screen)) return false;
+      if (!Number.isInteger(value.activityIndex) || value.activityIndex < 0 || value.activityIndex > queueLength) return false;
+      if (!Number.isInteger(value.questionIndex) || value.questionIndex < 0 || value.questionIndex > QUESTION_BANK.length) return false;
+      if (!Number.isInteger(value.explorationIndex) || value.explorationIndex < 0 || value.explorationIndex > EXPLORATIONS.length) return false;
+      if (!Number.isInteger(value.explorationStep) || value.explorationStep < 0) return false;
+      if (!Array.isArray(value.completedExplorations) || !value.completedExplorations.every((id) => explorationIds.has(id))) return false;
+      if (!Array.isArray(value.records) || !value.records.every(validRecord)) return false;
+      if (!Array.isArray(value.badges) || !value.badges.every((phase) => badgePhases.has(phase)) || new Set(value.badges).size !== value.badges.length) return false;
+      if (!['course', 'retry'].includes(value.mode)) return false;
+      if (!Array.isArray(value.retryQueue) || !value.retryQueue.every((id) => questionIds.has(id))) return false;
+      if (!Array.isArray(value.retryResults) || !value.retryResults.every(validRecord)) return false;
+      if (!Number.isInteger(value.currentAttempts) || value.currentAttempts < 0) return false;
+      if (!Number.isInteger(value.currentMaxHint) || value.currentMaxHint < 0 || value.currentMaxHint > 3) return false;
+      if (typeof value.currentResolved !== 'boolean') return false;
+      if (!(value.selectedAnswer === null || ['string', 'number'].includes(typeof value.selectedAnswer))) return false;
+      if (!(value.selectedOperation === null || ['加法', '减法'].includes(value.selectedOperation))) return false;
+      if (!(value.lastHint === null || (value.lastHint && Number.isInteger(value.lastHint.level) && value.lastHint.level >= 1 && value.lastHint.level <= 3 && typeof value.lastHint.text === 'string'))) return false;
+      if (!(value.lastMisconception === null || typeof value.lastMisconception === 'string')) return false;
+      return true;
+    }
+
+    window.MathCityTestHooks = {
+      PHASES,
+      EXPLORATIONS,
+      QUESTION_BANK,
+      evaluateAnswer,
+      getHint,
+      detectMisconception,
+      bundleTen,
+      unbundleTen,
+      validateVerticalStep,
+      buildActivityQueue,
+      buildReport,
+      createInitialState,
+      validateSave
+    };
+    /* TESTABLE_CORE_END */
+
+    const SAVE_KEY = 'mathQuest.grade2.unit2.v1';
+    const COURSE_QUEUE = buildActivityQueue();
+    const LEARNING_PHASES = ['placeValue', 'nonCarryAddition', 'carryAddition', 'nonBorrowSubtraction', 'regroupSubtraction', 'checking', 'application'];
+    const DIMENSIONS = {
+      concept: { title: '概念理解', icon: '🧠', copy: '数位、进位和退位的意义' },
+      vertical: { title: '竖式计算', icon: '✍️', copy: '数位对齐、计算顺序和算法' },
+      checking: { title: '检查能力', icon: '🔎', copy: '估算、验算和错误定位' },
+      application: { title: '生活应用', icon: '🏙️', copy: '选择运算并解决真实问题' }
+    };
+    const MISCONCEPTION_COPY = {
+      'reversed-place': { feedback: '十位和个位的位置放反了。交换回来：十位在左，个位在右。', report: '十位个位顺序弄反' },
+      'misaligned-place': { feedback: '相同数位还没有站在同一列。个位对个位，十位对十位。', report: '竖式数位未对齐' },
+      'forgot-carry': { feedback: '10个一已经成捆，但新得到的1个十还没有送到十位。', report: '成捆后忘记进位' },
+      'forgot-carry-addition': { feedback: '个位已经进1，十位计算时也要把这个1加上。', report: '十位忘记加进位1' },
+      'reversed-subtraction': { feedback: '个位不够减时，不能把减数反过来减，要先拆一个十。', report: '个位不够时反着减' },
+      'forgot-borrow-decrement': { feedback: '拆走一个十以后，原来的十位要少1。', report: '拆十后十位未减1' },
+      'wrong-operation': { feedback: '再看一看数量是变多、变少，还是在比较相差多少。', report: '生活题运算选择错误' },
+      'stopped-after-one-step': { feedback: '这道题有两次变化，完成第一步后还要继续。', report: '两步题只完成第一步' }
+    };
+
+    const app = document.getElementById('app');
+    const progressBar = document.getElementById('progress-bar');
+    const speechButton = document.getElementById('speech-button');
+    const pauseButton = document.getElementById('pause-button');
+    const liveRegion = document.getElementById('live-region');
+
+    function escapeHtml(value) {
+      return String(value)
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#039;');
+    }
+
+    function loadProgress() {
+      try {
+        const raw = localStorage.getItem(SAVE_KEY);
+        if (!raw) return null;
+        const value = JSON.parse(raw);
+        return validateSave(value) ? value : null;
+      } catch (_error) {
+        return null;
+      }
+    }
+
+    function saveProgress() {
+      if (!validateSave(state)) return;
+      try {
+        localStorage.setItem(SAVE_KEY, JSON.stringify(state));
+      } catch (_error) {
+        showToast('浏览器暂时无法保存进度，请保持本页打开。');
+      }
+    }
+
+    function clearProgress() {
+      localStorage.removeItem(SAVE_KEY);
+    }
+
+    let state = loadProgress() || createInitialState();
+
+    function getCurrentActivity() {
+      if (state.mode === 'retry') {
+        const id = state.retryQueue[state.questionIndex];
+        const question = QUESTION_BANK.find((item) => item.id === id);
+        return question ? { kind: 'question', id, phase: question.phase } : null;
+      }
+      return COURSE_QUEUE[state.activityIndex] || null;
+    }
+
+    function getCurrentQuestion() {
+      const activity = getCurrentActivity();
+      return activity?.kind === 'question' ? QUESTION_BANK.find((item) => item.id === activity.id) || null : null;
+    }
+
+    function getCurrentExploration() {
+      const activity = getCurrentActivity();
+      return activity?.kind === 'exploration' ? EXPLORATIONS.find((item) => item.id === activity.id) || null : null;
+    }
+
+    function progressPercent() {
+      if (state.screen === 'report') return 100;
+      if (state.mode === 'retry') return state.retryQueue.length ? Math.round((state.questionIndex / state.retryQueue.length) * 100) : 0;
+      return Math.round((state.activityIndex / COURSE_QUEUE.length) * 100);
+    }
+
+    function updateToolbar() {
+      const value = progressPercent();
+      progressBar.style.width = `${value}%`;
+      progressBar.setAttribute('aria-valuenow', String(value));
+    }
+
+    function resetCurrentActivityState() {
+      state.currentAttempts = 0;
+      state.currentMaxHint = 0;
+      state.currentResolved = false;
+      state.selectedAnswer = null;
+      state.selectedOperation = null;
+      state.lastHint = null;
+      state.lastMisconception = null;
+      state.explorationStep = 0;
+    }
+
+    function renderHome() {
+      pauseButton.hidden = true;
+      updateToolbar();
+      const hasProgress = state.activityIndex > 0 || state.records.length > 0 || state.completedExplorations.length > 0 || state.mode === 'retry' || state.screen === 'report';
+      const primaryLabel = state.screen === 'report' ? '查看成长报告 🏆' : hasProgress ? '继续建造 🚧' : '开始建造 🚧';
+      app.innerHTML = `
+        <section class="hero" aria-labelledby="course-title">
+          <div class="city-mark" aria-hidden="true">🏙️</div>
+          <p class="fact">二年级数学 · 新知识预习</p>
+          <h1 id="course-title">计算城建造师</h1>
+          <p class="lead">用小棒建高楼、搭竖式、检查工程，学会100以内的进位加法和退位减法。</p>
+          <div class="facts" aria-label="课程特点">
+            <span class="fact">⏱️ 建议60分钟</span><span class="fact">🧩 9个动手探索</span>
+            <span class="fact">✏️ 22道练习</span><span class="fact">🌿 中途可休息</span>
+          </div>
+          <div class="route" aria-label="课程路线">
+            <div class="route-stop"><strong>🧱 数位材料站</strong><small>认清十位和个位 · 5分钟</small></div>
+            <div class="route-stop"><strong>🏢 加法竖式塔</strong><small>理解进位并搭竖式 · 18分钟</small></div>
+            <div class="route-stop"><strong>🌿 伸展休息站</strong><small>动一动再出发 · 2分钟</small></div>
+            <div class="route-stop"><strong>🌉 减法竖式桥</strong><small>理解退位并搭竖式 · 18分钟</small></div>
+            <div class="route-stop"><strong>🔎 城市质检局</strong><small>估一估、查一查 · 7分钟</small></div>
+            <div class="route-stop"><strong>🏙️ 智慧生活城</strong><small>解决真实问题 · 7分钟</small></div>
+          </div>
+          <p class="instruction">60分钟只是建议节奏，不倒计时。累了可以随时暂停，下次从这里继续。</p>
+          <div class="action-row" style="justify-content:center">
+            <button id="start-course" class="primary-button" type="button">${primaryLabel}</button>
+            ${hasProgress ? '<button id="home-restart" class="tool-button" type="button">重新开始</button>' : ''}
+          </div>
+        </section>`;
+      document.getElementById('start-course').addEventListener('click', () => {
+        if (!hasProgress) state = createInitialState();
+        if (state.screen === 'report') renderReport();
+        else {
+          state.screen = 'activity';
+          saveProgress();
+          renderCurrent();
+        }
+      });
+      document.getElementById('home-restart')?.addEventListener('click', openRestartDialog);
+    }
+
+    function renderBlocks(count, kind) {
+      const className = kind === 'tens' ? 'ten-rod' : 'one-cube';
+      const label = kind === 'tens' ? '十' : '一';
+      return Array.from({ length: Math.max(0, count) }, () => `<span class="${className}" aria-hidden="true">${label}</span>`).join('');
+    }
+
+    function explorationModel(exploration, resolved) {
+      const models = {
+        'place-build': { before: { tens: 0, ones: 0 }, after: { tens: 4, ones: 6 } },
+        'place-split': { before: { tens: 7, ones: 3 }, after: { tens: 7, ones: 3 } },
+        'add-merge': { before: { tens: 2, ones: 3 }, after: { tens: 3, ones: 7 } },
+        'bundle-ten': { before: { tens: 2, ones: 15 }, after: bundleTen({ tens: 2, ones: 15 }) },
+        'borrow-decide': { before: { tens: 4, ones: 2 }, after: { tens: 4, ones: 2 } },
+        'unbundle-ten': { before: { tens: 4, ones: 2 }, after: unbundleTen({ tens: 4, ones: 2 }) }
+      };
+      const selected = models[exploration.type] || { before: { tens: 0, ones: 0 }, after: { tens: 0, ones: 0 } };
+      return resolved ? selected.after : selected.before;
+    }
+
+    function renderBaseTenBoard(model, label) {
+      return `
+        <div class="base-ten-board" aria-label="${escapeHtml(label)}：十位有${model.tens}捆，个位有${model.ones}根">
+          <section class="place-column"><h2>十位</h2><span class="place-value">${model.tens} 个十</span><div class="blocks">${renderBlocks(model.tens, 'tens')}</div><p class="block-summary">${model.tens * 10}</p></section>
+          <section class="place-column"><h2>个位</h2><span class="place-value">${model.ones} 个一</span><div class="blocks">${renderBlocks(model.ones, 'ones')}</div><p class="block-summary">${model.ones}</p></section>
+        </div>`;
+    }
+
+    function renderVerticalModel(exploration, resolved) {
+      if (exploration.type === 'carry-marker') {
+        return `<div class="vertical-board" aria-label="28加7的进位竖式">
+          <div class="vertical-row vertical-label"><span></span><span>十位</span><span>个位</span></div>
+          <div class="vertical-row marker"><span></span><span>${resolved ? '1' : '□'}</span><span></span></div>
+          <div class="vertical-row"><span></span><span>2</span><span>8</span></div><div class="vertical-row"><span>＋</span><span>0</span><span>7</span></div>
+          <div class="vertical-line"></div><div class="vertical-row"><span></span><span>3</span><span>5</span></div></div>`;
+      }
+      return `<div class="vertical-board" aria-label="42减7的退位竖式">
+        <div class="vertical-row vertical-label"><span></span><span>十位</span><span>个位</span></div>
+        <div class="vertical-row marker"><span></span><span>${resolved ? '3' : '4'}</span><span>${resolved ? '12' : '2'}</span></div>
+        <div class="vertical-row"><span>−</span><span>0</span><span>7</span></div><div class="vertical-line"></div>
+        <div class="vertical-row"><span></span><span>3</span><span>5</span></div></div>`;
+    }
+
+    function renderExplorationVisual(exploration, resolved) {
+      if (['carry-marker', 'borrow-decrement'].includes(exploration.type)) return renderVerticalModel(exploration, resolved);
+      if (exploration.type === 'inverse-check') {
+        return `<div class="choice-cards" aria-label="加法和减法互相检查"><div class="choice-card">58 ＋ 27 ＝ 85</div><div class="choice-card">${resolved ? '✓ ' : ''}85 − 27 ＝ 58</div></div>`;
+      }
+      return renderBaseTenBoard(explorationModel(exploration, resolved), exploration.title);
+    }
+
+    function renderExploration(exploration) {
+      const resolved = state.currentResolved;
+      const number = EXPLORATIONS.findIndex((item) => item.id === exploration.id) + 1;
+      app.innerHTML = `<section aria-labelledby="exploration-heading">
+        <div class="lesson-header"><span class="phase-chip">${PHASES[exploration.phase].icon} ${escapeHtml(PHASES[exploration.phase].title)}</span><span class="activity-count">探索 ${number} / 9</span></div>
+        <h1 id="exploration-heading" class="prompt" tabindex="-1">${escapeHtml(exploration.title)}</h1>
+        <p class="instruction">${escapeHtml(exploration.instruction)}</p>
+        ${renderExplorationVisual(exploration, resolved)}
+        ${resolved ? `<div class="feedback success" role="status" aria-live="polite"><h2>🎉 探索成功！</h2><p>${escapeHtml(exploration.success)}</p></div>
+          <div class="action-row"><button id="next-activity" class="primary-button" type="button">继续建造 ➜</button></div>` :
+          `<div class="action-row"><button id="do-exploration" class="secondary-button" type="button">${escapeHtml(exploration.actionLabel)}</button></div>`}
+      </section>`;
+      document.getElementById('do-exploration')?.addEventListener('click', () => {
+        state.currentResolved = true;
+        state.explorationStep = 1;
+        if (!state.completedExplorations.includes(exploration.id)) state.completedExplorations.push(exploration.id);
+        state.explorationIndex = state.completedExplorations.length;
+        saveProgress();
+        renderExploration(exploration);
+        announceText(`探索成功。${exploration.success}`);
+      });
+      document.getElementById('next-activity')?.addEventListener('click', moveNext);
+      focusHeading('exploration-heading');
+    }
+
+    function parseExpressionNumbers(expression) {
+      return (String(expression).match(/\d+/g) || []).slice(0, 2).map(Number);
+    }
+
+    function renderQuestionVisual(question) {
+      if (question.type === 'base-ten-bundle') return renderBaseTenBoard({ tens: 2, ones: 15 }, '28加7，个位共有15个一');
+      if (question.type === 'base-ten-unbundle') return renderBaseTenBoard({ tens: 3, ones: 12 }, '42拆十以后是3个十和12个一');
+      if (question.type.includes('vertical')) {
+        const [first = 0, second = 0] = parseExpressionNumbers(question.expression);
+        const sign = question.expression.includes('−') ? '−' : '＋';
+        return `<div class="vertical-board" aria-label="数位对齐的竖式">
+          <div class="vertical-row vertical-label"><span></span><span>十位</span><span>个位</span></div>
+          <div class="vertical-row"><span></span><span>${Math.floor(first / 10)}</span><span>${first % 10}</span></div>
+          <div class="vertical-row"><span>${sign}</span><span>${Math.floor(second / 10)}</span><span>${second % 10}</span></div>
+          <div class="vertical-line"></div><div class="vertical-row"><span></span><span>?</span><span>?</span></div></div>`;
+      }
+      if (question.phase === 'checking') return `<div class="quality-card"><strong>🔎 质检提醒</strong><p>先判断结果大约在哪，再检查每一步。</p></div>`;
+      if (question.phase === 'application') return `<div class="scene-card"><span class="scene-icon" aria-hidden="true">${question.id === 'app-01' ? '📚' : question.id === 'app-02' ? '📖' : question.id === 'app-03' ? '🏃‍♀️' : '🚌'}</span><p>点击下面的运算，找出数量之间的关系。</p></div>`;
+      return '';
+    }
+
+    function renderOperationPicker(question) {
+      if (!question.operation) return '';
+      if (state.selectedOperation === question.operation) return `<div class="feedback success"><strong>✓ 运算选对了：</strong>${escapeHtml(question.operation)}。现在完成计算。</div>`;
+      return `<div class="answer-area" role="group" aria-label="先选择运算">
+        <h2>第一步：这道题用什么运算？</h2>
+        <div class="choice-cards">
+          <button class="choice-card" type="button" data-operation="加法">用加法 ＋</button>
+          <button class="choice-card" type="button" data-operation="减法">用减法 −</button>
+        </div>
+      </div>`;
+    }
+
+    function renderAnswerControl(question) {
+      if (['number-input', 'scene-input'].includes(question.type)) {
+        return `<div class="number-entry">
+          <label for="number-answer" class="sr-only">输入答案</label>
+          <input id="number-answer" class="answer-input" type="text" inputmode="numeric" autocomplete="off" maxlength="3" value="${state.selectedAnswer ?? ''}" aria-describedby="input-help">
+          <span id="input-help" class="sr-only">可以使用键盘，也可以点击下面的数字</span>
+          <div class="keypad" aria-label="屏幕数字键盘">
+            ${[1,2,3,4,5,6,7,8,9,0].map((number) => `<button type="button" data-key="${number}">${number}</button>`).join('')}
+            <button type="button" data-key="backspace" aria-label="删除最后一位">⌫</button><button type="button" data-key="clear">清空</button>
+          </div></div>`;
+      }
+      return `<div class="options-grid" role="group" aria-label="请选择一个答案">
+        ${question.options.map((option, index) => `<button class="answer-option${String(state.selectedAnswer) === String(option) ? ' selected' : ''}" type="button" data-option-index="${index}" aria-pressed="${String(state.selectedAnswer) === String(option)}">${escapeHtml(option)}</button>`).join('')}
+      </div>`;
+    }
+
+    function wireOperationPicker(question) {
+      document.querySelectorAll('[data-operation]').forEach((button) => {
+        button.addEventListener('click', () => {
+          const choice = button.dataset.operation;
+          if (choice === question.operation) {
+            state.selectedOperation = choice;
+            state.lastHint = null;
+            saveProgress();
+            renderQuestion(question);
+            announceText('运算选对了，现在完成计算。');
+            return;
+          }
+          state.currentAttempts += 1;
+          state.currentMaxHint = Math.max(state.currentMaxHint, 1);
+          state.lastMisconception = 'wrong-operation';
+          state.lastHint = { level: 1, text: question.hints[0] };
+          saveProgress();
+          renderQuestion(question);
+          announceText(`再看一看。${question.hints[0]}`);
+        });
+      });
+    }
+
+    function wireAnswerControls(question) {
+      const submit = document.getElementById('submit-answer');
+      if (!submit) return;
+      if (['number-input', 'scene-input'].includes(question.type)) {
+        const input = document.getElementById('number-answer');
+        const sync = () => {
+          input.value = input.value.replace(/[^0-9]/g, '').slice(0, 3);
+          state.selectedAnswer = input.value;
+          submit.disabled = input.value.length === 0;
+          saveProgress();
+        };
+        input.addEventListener('input', sync);
+        input.addEventListener('keydown', (event) => {
+          if (event.key === 'Enter' && !submit.disabled) submitCurrentAnswer();
+        });
+        document.querySelectorAll('[data-key]').forEach((button) => button.addEventListener('click', () => {
+          const key = button.dataset.key;
+          if (key === 'backspace') input.value = input.value.slice(0, -1);
+          else if (key === 'clear') input.value = '';
+          else input.value = `${input.value}${key}`.slice(0, 3);
+          sync();
+          input.focus();
+        }));
+        submit.disabled = input.value.length === 0;
+        return;
+      }
+      document.querySelectorAll('[data-option-index]').forEach((button) => button.addEventListener('click', () => {
+        document.querySelectorAll('[data-option-index]').forEach((item) => {
+          item.classList.remove('selected');
+          item.setAttribute('aria-pressed', 'false');
+        });
+        button.classList.add('selected');
+        button.setAttribute('aria-pressed', 'true');
+        state.selectedAnswer = question.options[Number(button.dataset.optionIndex)];
+        submit.disabled = false;
+        saveProgress();
+      }));
+      submit.disabled = state.selectedAnswer === null;
+    }
+
+    function misconceptionFeedback(code) {
+      const item = MISCONCEPTION_COPY[code];
+      return item ? `<div class="feedback misconception" role="status"><strong>🔧 找到问题：</strong> ${escapeHtml(item.feedback)}</div>` : '';
+    }
+
+    function makeVisualHint(question) {
+      if (typeof question.answer === 'number') {
+        const tens = Math.floor(question.answer / 10);
+        const ones = question.answer % 10;
+        return `<div class="mini-blocks" aria-label="答案由${tens}个十和${ones}个一组成">${renderBlocks(tens, 'tens')}${renderBlocks(ones, 'ones')}</div>`;
+      }
+      return `<strong>${escapeHtml(question.explanation)}</strong>`;
+    }
+
+    function renderHint(question) {
+      const hint = state.lastHint;
+      if (!hint) return '';
+      const titles = { 1: '💡 先找关键', 2: '🧩 摆一摆', 3: '🪄 一步一步' };
+      return `${misconceptionFeedback(state.lastMisconception)}<aside class="feedback hint" role="status" aria-live="polite">
+        <h2>${titles[hint.level]}</h2><p>${escapeHtml(hint.text)}</p>
+        ${hint.level >= 2 ? `<div class="visual-hint">${makeVisualHint(question)}</div>` : ''}
+      </aside>`;
+    }
+
+    function renderQuestion(question) {
+      if (state.currentResolved) {
+        renderResolvedQuestion(question);
+        return;
+      }
+      const questionNumber = QUESTION_BANK.findIndex((item) => item.id === question.id) + 1;
+      const operationReady = !question.operation || state.selectedOperation === question.operation;
+      app.innerHTML = `<section aria-labelledby="question-heading">
+        <div class="lesson-header"><span class="phase-chip">${PHASES[question.phase].icon} ${escapeHtml(PHASES[question.phase].title)}</span><span class="activity-count">${state.mode === 'retry' ? '错题重练' : `练习 ${questionNumber} / 22`}</span></div>
+        <h1 id="question-heading" class="prompt" tabindex="-1">${escapeHtml(question.prompt)}</h1>
+        ${renderQuestionVisual(question)}
+        ${renderOperationPicker(question)}
+        ${operationReady ? `<div class="expression" aria-label="题目信息">${escapeHtml(question.expression)}</div><div id="answer-area" class="answer-area">${renderAnswerControl(question)}</div>` : ''}
+        ${renderHint(question)}
+        ${operationReady ? '<div class="action-row"><button id="submit-answer" class="primary-button" type="button" disabled>提交答案</button></div>' : ''}
+      </section>`;
+      wireOperationPicker(question);
+      if (operationReady) {
+        wireAnswerControls(question);
+        document.getElementById('submit-answer').addEventListener('click', submitCurrentAnswer);
+      }
+      focusHeading('question-heading');
+    }
+
+    function submitCurrentAnswer() {
+      const question = getCurrentQuestion();
+      if (!question || state.selectedAnswer === null || String(state.selectedAnswer).trim() === '') {
+        announceText('请先选择或输入答案。');
+        return;
+      }
+      state.currentAttempts += 1;
+      if (evaluateAnswer(question, state.selectedAnswer)) {
+        const record = {
+          questionId: question.id,
+          phase: question.phase,
+          dimension: question.dimension,
+          firstTryCorrect: state.currentAttempts === 1,
+          attempts: state.currentAttempts,
+          maxHint: state.currentMaxHint,
+          misconception: state.lastMisconception,
+          relationCorrect: question.operation ? state.lastMisconception !== 'wrong-operation' : null,
+          completed: true
+        };
+        if (state.mode === 'course') {
+          const existing = state.records.findIndex((item) => item.questionId === question.id);
+          if (existing >= 0) state.records[existing] = record;
+          else state.records.push(record);
+          state.questionIndex = state.records.length;
+        } else {
+          const existing = state.retryResults.findIndex((item) => item.questionId === question.id);
+          if (existing >= 0) state.retryResults[existing] = record;
+          else state.retryResults.push(record);
+        }
+        state.currentResolved = true;
+        state.lastHint = null;
+        state.selectedAnswer = null;
+        saveProgress();
+        renderResolvedQuestion(question);
+        return;
+      }
+      const misconception = detectMisconception(question, state.selectedAnswer, { aligned: true });
+      if (misconception && !state.lastMisconception) state.lastMisconception = misconception;
+      const hint = getHint(question, state.currentAttempts);
+      state.currentMaxHint = Math.max(state.currentMaxHint, hint.level);
+      state.lastHint = hint;
+      state.selectedAnswer = null;
+      saveProgress();
+      renderQuestion(question);
+      announceText(`再想一想。${hint.text}`);
+    }
+
+    function renderResolvedQuestion(question) {
+      const nextLabel = state.mode === 'retry' && state.questionIndex >= state.retryQueue.length - 1
+        ? '返回成长报告 🏆'
+        : state.mode === 'course' && state.activityIndex >= COURSE_QUEUE.length - 1
+          ? '查看成长报告 🏆'
+          : '继续建造 ➜';
+      app.innerHTML = `<section aria-labelledby="correct-heading">
+        <div class="lesson-header"><span class="phase-chip">${PHASES[question.phase].icon} ${escapeHtml(PHASES[question.phase].title)}</span><span class="activity-count">完成</span></div>
+        <div class="expression">${escapeHtml(question.expression)}</div>
+        <div class="feedback success" role="status" aria-live="polite"><h1 id="correct-heading" tabindex="-1">🎉 建造正确！</h1><p>${escapeHtml(question.explanation)}</p></div>
+        <div class="action-row"><button id="next-activity" class="primary-button" type="button">${nextLabel}</button></div>
+      </section>`;
+      document.getElementById('next-activity').addEventListener('click', moveNext);
+      focusHeading('correct-heading');
+      announceText(`答对了。${question.explanation}`);
+    }
+
+    function renderBreak() {
+      app.innerHTML = `<section class="break-card" aria-labelledby="break-heading">
+        <div class="city-mark" aria-hidden="true">🌿</div><p class="phase-chip">学习到一半啦</p>
+        <h1 id="break-heading" tabindex="-1">伸展休息站</h1>
+        <p class="lead">眼睛和身体也要充充电。可以休息约2分钟，准备好了随时继续。</p>
+        <div class="stretch-steps"><div class="stretch-step"><span>👀</span>看看远处</div><div class="stretch-step"><span>🙆‍♀️</span>伸伸手臂</div><div class="stretch-step"><span>🥛</span>喝一口水</div></div>
+        <button id="next-activity" class="primary-button" type="button">准备好了，继续 ➜</button>
+      </section>`;
+      document.getElementById('next-activity').addEventListener('click', moveNext);
+      focusHeading('break-heading');
+    }
+
+    function renderCurrent() {
+      const activity = getCurrentActivity();
+      if (!activity) {
+        finishCurrentMode();
+        return;
+      }
+      state.screen = 'activity';
+      pauseButton.hidden = false;
+      updateToolbar();
+      saveProgress();
+      if (activity.kind === 'exploration') renderExploration(getCurrentExploration());
+      else if (activity.kind === 'question') renderQuestion(getCurrentQuestion());
+      else renderBreak();
+    }
+
+    function moveNext() {
+      const current = getCurrentActivity();
+      if (state.mode === 'retry') {
+        state.questionIndex += 1;
+        resetCurrentActivityState();
+        if (state.questionIndex >= state.retryQueue.length) finishCurrentMode();
+        else {
+          saveProgress();
+          renderCurrent();
+        }
+        return;
+      }
+      const next = COURSE_QUEUE[state.activityIndex + 1] || null;
+      if (current && LEARNING_PHASES.includes(current.phase) && (!next || next.phase !== current.phase) && !state.badges.includes(current.phase)) {
+        state.badges.push(current.phase);
+      }
+      state.activityIndex += 1;
+      resetCurrentActivityState();
+      if (state.activityIndex >= COURSE_QUEUE.length) finishCurrentMode();
+      else {
+        saveProgress();
+        renderCurrent();
+      }
+    }
+
+    function finishCurrentMode() {
+      if (state.mode === 'retry') {
+        state.mode = 'course';
+        state.questionIndex = QUESTION_BANK.length;
+      }
+      state.screen = 'report';
+      state.activityIndex = COURSE_QUEUE.length;
+      state.currentResolved = false;
+      state.selectedAnswer = null;
+      state.selectedOperation = null;
+      state.lastHint = null;
+      saveProgress();
+      renderReport();
+    }
+
+    function reportMisconception(code) {
+      return MISCONCEPTION_COPY[code]?.report || '—';
+    }
+
+    function renderReport() {
+      const report = buildReport(state.records);
+      const wrongQuestions = report.wrongQuestionIds.map((id) => QUESTION_BANK.find((question) => question.id === id)).filter(Boolean);
+      state.screen = 'report';
+      pauseButton.hidden = true;
+      updateToolbar();
+      saveProgress();
+      app.innerHTML = `<section aria-labelledby="report-heading">
+        <div class="report-title"><div class="city-mark" aria-hidden="true">🏆</div><h1 id="report-heading" tabindex="-1">计算城建成啦！</h1>
+          <p class="lead">你已经完成整座计算城。会摆小棒、会搭竖式，还会检查答案是不是合理。</p>
+          <div class="badges" aria-label="获得${state.badges.length}枚城区徽章">${state.badges.map((phase) => `<span title="${escapeHtml(PHASES[phase].title)}">${PHASES[phase].icon}</span>`).join('')}</div></div>
+        <div class="report-grid">${Object.entries(DIMENSIONS).map(([key, meta]) => {
+          const result = report.dimensions[key];
+          return `<article class="skill-card"><div class="skill-icon" aria-hidden="true">${meta.icon}</div><h3>${meta.title}</h3><p class="status-pill">${escapeHtml(result.status)}</p><p>${escapeHtml(meta.copy)}</p><p>${result.total ? `第一次答对 ${result.correct} / ${result.total} 题` : '本次没有相关题目'}</p></article>`;
+        }).join('')}</div>
+        <div class="feedback ${wrongQuestions.length ? 'hint' : 'success'}"><h2>${wrongQuestions.length ? '🌱 下一步建议' : '🌟 四项能力都很稳'}</h2><p>${wrongQuestions.length ? `有${wrongQuestions.length}道题值得再练一次。报告保留第一次结果，重练不会把它覆盖。` : '22道题第一次都完成得很好。接下来可以分几天做短练习，让方法越来越熟练。'}</p></div>
+        <div class="action-row">
+          ${wrongQuestions.length ? '<button id="retry-wrong" class="primary-button" type="button">只重练错题 🌱</button>' : ''}
+          <button id="report-home" class="tool-button" type="button">返回课程首页</button><button id="report-restart" class="tool-button" type="button">重新建造</button>
+        </div>
+        <details class="parent-panel"><summary>家长查看学习详情</summary>
+          <p>首次作答正确率：<strong>${report.firstTryRate}%</strong>。提示后完成不等同于首次掌握，建议优先关注具体错误类型。</p>
+          ${Object.keys(report.misconceptions).length ? `<p><strong>本次出现的典型错误：</strong>${Object.entries(report.misconceptions).map(([code, count]) => `${escapeHtml(reportMisconception(code))} ${count}次`).join('；')}</p>` : ''}
+          <div class="table-wrap"><table><thead><tr><th>题目</th><th>首次作答</th><th>提示</th><th>错误类型</th><th>重练</th></tr></thead><tbody>
+            ${state.records.map((record) => {
+              const question = QUESTION_BANK.find((item) => item.id === record.questionId);
+              const retry = state.retryResults.find((item) => item.questionId === record.questionId);
+              return `<tr><td><strong>${escapeHtml(question?.tags?.[0] || record.questionId)}</strong><br>${escapeHtml(question?.expression || '')}</td><td>${record.firstTryCorrect ? '✅ 正确' : '⚠️ 需要提示'}</td><td>${record.maxHint ? `${record.maxHint}级提示` : '未用提示'}</td><td>${escapeHtml(reportMisconception(record.misconception))}</td><td>${retry ? (retry.firstTryCorrect ? '✅ 重练正确' : `完成（${retry.attempts}次）`) : '—'}</td></tr>`;
+            }).join('')}
+          </tbody></table></div>
+        </details>
+      </section>`;
+      document.getElementById('retry-wrong')?.addEventListener('click', startWrongRetry);
+      document.getElementById('report-home').addEventListener('click', renderHome);
+      document.getElementById('report-restart').addEventListener('click', openRestartDialog);
+      focusHeading('report-heading');
+      announceText('计算城建成啦，成长报告已经准备好了。');
+    }
+
+    function startWrongRetry() {
+      const report = buildReport(state.records);
+      state.mode = 'retry';
+      state.retryQueue = [...report.wrongQuestionIds];
+      state.retryResults = [];
+      state.questionIndex = 0;
+      state.screen = 'activity';
+      resetCurrentActivityState();
+      saveProgress();
+      renderCurrent();
+    }
+
+    function openRestartDialog() {
+      const trigger = document.activeElement;
+      const backdrop = document.createElement('div');
+      backdrop.className = 'dialog-backdrop';
+      backdrop.id = 'restart-dialog';
+      backdrop.setAttribute('role', 'dialog');
+      backdrop.setAttribute('aria-modal', 'true');
+      backdrop.setAttribute('aria-labelledby', 'restart-title');
+      backdrop.innerHTML = `<div class="dialog-card"><h2 id="restart-title">要重新开始计算城吗？</h2><p>这会清除第二单元的进度和成长报告，不会影响第一单元。</p><div class="action-row"><button id="confirm-restart" class="primary-button" type="button">确定重新开始</button><button id="cancel-restart" class="tool-button" type="button">保留进度</button></div></div>`;
+      document.body.appendChild(backdrop);
+      const confirmButton = document.getElementById('confirm-restart');
+      const cancelButton = document.getElementById('cancel-restart');
+      const closeDialog = () => {
+        backdrop.remove();
+        if (trigger && typeof trigger.focus === 'function') trigger.focus();
+      };
+      backdrop.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') {
+          event.preventDefault();
+          closeDialog();
+          return;
+        }
+        if (event.key !== 'Tab') return;
+        if (event.shiftKey && document.activeElement === confirmButton) {
+          event.preventDefault();
+          cancelButton.focus();
+        } else if (!event.shiftKey && document.activeElement === cancelButton) {
+          event.preventDefault();
+          confirmButton.focus();
+        }
+      });
+      confirmButton.addEventListener('click', () => {
+        clearProgress();
+        state = createInitialState();
+        backdrop.remove();
+        renderHome();
+      });
+      cancelButton.addEventListener('click', closeDialog);
+      confirmButton.focus();
+    }
+
+    function focusHeading(id) {
+      requestAnimationFrame(() => document.getElementById(id)?.focus({ preventScroll: true }));
+    }
+
+    function announceText(text) {
+      liveRegion.textContent = '';
+      window.setTimeout(() => { liveRegion.textContent = text; }, 20);
+    }
+
+    function showToast(message) {
+      document.querySelector('.toast')?.remove();
+      const toast = document.createElement('div');
+      toast.className = 'toast';
+      toast.setAttribute('role', 'status');
+      toast.textContent = message;
+      document.body.appendChild(toast);
+      window.setTimeout(() => toast.remove(), 3200);
+    }
+
+    pauseButton.addEventListener('click', () => {
+      saveProgress();
+      renderHome();
+      showToast('进度已经保存在这台设备上。');
+    });
+    speechButton.addEventListener('click', () => {
+      if (!('speechSynthesis' in window) || typeof SpeechSynthesisUtterance === 'undefined') return;
+      window.speechSynthesis.cancel();
+      const utterance = new SpeechSynthesisUtterance((app.innerText || '').replace(/\s+/g, ' ').trim().slice(0, 900));
+      utterance.lang = 'zh-CN';
+      utterance.rate = .9;
+      window.speechSynthesis.speak(utterance);
+    });
+    if (!('speechSynthesis' in window) || typeof SpeechSynthesisUtterance === 'undefined') speechButton.hidden = true;
+
+    Object.assign(window.MathCityTestHooks, {
+      getCurrentActivity,
+      getCurrentQuestion,
+      getState: () => JSON.parse(JSON.stringify(state)),
+      clearProgress
+    });
+    renderHome();
+  </script>
+</body>
+</html>
