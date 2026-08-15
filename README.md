@@ -12,10 +12,15 @@
 - 第三单元独立地址：`grade2-math-unit3.html`
 - 第四单元独立地址：`grade2-math-unit4.html`
 - 第五单元独立地址：`grade2-math-unit5.html`
+- 第六单元独立地址：`grade2-math-unit6.html`
+- 第七单元独立地址：`grade2-math-unit7.html`
+- 第八单元独立地址：`grade2-math-unit8.html`
+- 第九单元独立地址：`grade2-math-unit9.html`
+- 第十单元独立地址：`grade2-math-unit10.html`
 
 ## 朗读功能
 
-五个单元右上角的“朗读”按钮第一次点击开始朗读，再次点击立即停止。自然读完或发生语音错误后，按钮会自动恢复为“朗读”。
+十个单元右上角的“朗读”按钮第一次点击开始朗读，再次点击立即停止。自然读完或发生语音错误后，按钮会自动恢复为“朗读”。
 
 ## 更新课程
 
@@ -27,7 +32,12 @@ cp ../grade2-math-unit2.html grade2-math-unit2.html
 cp ../grade2-math-unit3.html grade2-math-unit3.html
 cp ../grade2-math-unit4.html grade2-math-unit4.html
 cp ../grade2-math-unit5.html grade2-math-unit5.html
-git add grade2-math-unit1.html grade2-math-unit2.html grade2-math-unit3.html grade2-math-unit4.html grade2-math-unit5.html
+cp ../grade2-math-unit6.html grade2-math-unit6.html
+cp ../grade2-math-unit7.html grade2-math-unit7.html
+cp ../grade2-math-unit8.html grade2-math-unit8.html
+cp ../grade2-math-unit9.html grade2-math-unit9.html
+cp ../grade2-math-unit10.html grade2-math-unit10.html
+git add grade2-math-unit1.html grade2-math-unit2.html grade2-math-unit3.html grade2-math-unit4.html grade2-math-unit5.html grade2-math-unit6.html grade2-math-unit7.html grade2-math-unit8.html grade2-math-unit9.html grade2-math-unit10.html
 git commit -m "Update course content"
 git push
 ```
